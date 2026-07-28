@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Books | Dr. Despinur Dara</title>
+<meta name="description" content="The book channel by Dr. Despinur Dara, to be filled once the paper breakdowns are complete.">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+<meta name="theme-color" content="#2c5580">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="id" href="../../buku/index.html">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../index.html"><svg class="brand-ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M13 8h23l13 13v31a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5V13a5 5 0 0 1 5-5z" fill="#ffffff" stroke="#2c5580" stroke-width="4.5" stroke-linejoin="round"/><path d="M36 8v13h13" fill="none" stroke="#2c5580" stroke-width="4.5" stroke-linejoin="round"/><circle cx="30" cy="36" r="12.5" fill="#ddf7e3" stroke="#2c5580" stroke-width="5"/><path d="M39.5 45.5L51 57" stroke="#2c5580" stroke-width="6.5" stroke-linecap="round"/></svg><span class="brand-txt">Publication<span>Anatomy</span></span></a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <div class="nav-group active">
+        <button class="nav-btn" aria-expanded="false">Publications<span class="caret">&#9662;</span></button>
+        <div class="nav-menu">
+          <a href="../scopus/index.html">Scopus Papers</a>
+          <a href="../sinta/index.html">SINTA Papers</a>
+          <a href="../buku/index.html" class="active">Books</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-btn" aria-expanded="false">Pipeline<span class="caret">&#9662;</span></button>
+        <div class="nav-menu">
+          <a href="../proses-review.html">Under Review</a>
+          <a href="../proses-terbit.html">In Production</a>
+        </div>
+      </div>
+      <a href="../lesson-learned.html">Lessons Learned</a>
+      <a href="../tentang.html">About the Author</a>
+      <span class="lang-switch"><a href="../../buku/index.html" hreflang="id">ID</a><a class="on" href="#" aria-current="true">EN</a></span>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <p class="kicker">Cluster three</p>
+      <h1>Books</h1>
+      <p class="lead">This section will hold book projects along with the story behind them, from the first idea, through drafting, all the way to print.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="card-grid">
+        <div class="card">
+          <div class="meta-row"><span class="badge buku">Coming soon</span></div>
+          <h3>Currently in preparation</h3>
+          <p class="hook">The paper breakdowns come first. After that, this section will follow the same format: one page per book, with the whole process explained.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container backlink-row">
+    <a class="backlink" href="../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Home</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2026 Dr. Despinur Dara, S.T., M.M. &middot; <a href="../index.html">Back to home</a> &middot; Contact: <a href="mailto:dara@unj.ac.id">dara@unj.ac.id</a></p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('click', function (e) {
+  var btn = e.target.closest('.nav-btn');
+  document.querySelectorAll('.nav-group.open').forEach(function (g) {
+    if (!btn || g !== btn.parentElement) {
+      g.classList.remove('open');
+      g.querySelector('.nav-btn').setAttribute('aria-expanded', 'false');
+    }
+  });
+  if (btn) {
+    var open = btn.parentElement.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+    return;
+  }
+  var tgl = e.target.closest('.nav-toggle');
+  if (tgl) {
+    var open2 = document.querySelector('.nav').classList.toggle('open');
+    tgl.setAttribute('aria-expanded', open2);
+  }
+});
+document.querySelectorAll('.backlink').forEach(function (a) {
+  a.addEventListener('click', function (e) {
+    var ref = document.referrer;
+    if (ref && ref.indexOf(location.origin) === 0 && history.length > 1) {
+      e.preventDefault();
+      history.back();
+    }
+  });
+});
+</script>
+</body>
+</html>
