@@ -637,21 +637,32 @@ table.banding td:first-child { font-weight: 600; color: var(--ink); white-space:
 table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block; margin-top: 3px; }
 
 /* Daftar tanda bahaya */
-.tanda { display: grid; gap: 12px; margin: 20px 0 8px; }
+
+.tanda { display: grid; gap: 14px; counter-reset: td; margin: 18px 0 8px; }
+@media (min-width: 900px) { .tanda { grid-template-columns: 1fr 1fr; } }
+
 .tanda-item {
-  display: flex; gap: 14px; align-items: flex-start;
-  background: var(--surface); border: 1px solid var(--line);
-  border-left: 4px solid #d98b6a; border-radius: 0 12px 12px 0; padding: 16px 18px;
+  position: relative;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 20px 22px 20px 22px;
 }
+.tanda-item .no::after {
+  content: ""; display: block; width: 26px; height: 2px;
+  background: #d98b6a; border-radius: 2px; margin-top: 7px;
+}
+@media (max-width: 640px) { .tanda-item { padding: 17px 17px; } }
 .tanda-item .no {
-  font-family: var(--serif); font-size: 19px; font-weight: 600;
-  color: #8a3a1f; line-height: 1.2; flex-shrink: 0; min-width: 22px;
+  display: block;
+  font-family: var(--serif); font-size: 15px; font-weight: 600;
+  color: #a2543a; letter-spacing: 0.06em;
+  margin-bottom: 8px;
 }
-.tanda-item h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: var(--ink); }
-.tanda-item p { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+.tanda-item h3 { font-size: 15px; font-weight: 600; margin-bottom: 5px; color: var(--ink); }
+.tanda-item p { font-size: 14px; color: var(--ink-soft); line-height: 1.65; margin: 0; }
 
 /* Langkah verifikasi */
 .langkah { counter-reset: lg; display: grid; gap: 14px; margin: 20px 0 8px; }
+@media (min-width: 900px) { .langkah { grid-template-columns: 1fr 1fr; } }
 .langkah-item {
   position: relative; padding: 16px 18px 16px 56px;
   background: var(--pastel-mint); border-radius: 12px; color: #1d5c3a;
