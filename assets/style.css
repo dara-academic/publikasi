@@ -154,7 +154,7 @@ body {
 .hero-profile .peran {
   margin-top: 9px; font-size: 13px; line-height: 1.6; color: #43566d;
 }
-.hero-profile .peran span { color: #5f7285; }
+
 @media (max-width: 760px) {
   .hero-flex { flex-direction: column-reverse; align-items: flex-start; gap: 30px; }
   .hero-profile { width: 100%; text-align: left; }
