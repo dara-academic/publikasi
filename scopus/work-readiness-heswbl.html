@@ -81,6 +81,8 @@
   <div class="aksi-row">
     <button class="aksi-btn" data-cetak type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Cetak atau simpan PDF</button>
     <button class="aksi-btn" data-sitasi type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 7H6a3 3 0 0 0-3 3v3h6V7zM21 7h-3a3 3 0 0 0-3 3v3h6V7z"/><path d="M3 13v2a3 3 0 0 0 3 3M15 13v2a3 3 0 0 0 3 3"/></svg>Sitasi</button>
+
+    <span class="bagikan"><span class="label">Bagikan</span><a href="https://wa.me/?text=Bedah%20Paper%3A%20Work-Integrated%20Learning%20dan%20Kesiapan%20Kerja%20%28HESWBL%2C%20Q1%29%20https%3A//dara-academic.github.io/publikasi/scopus/work-readiness-heswbl.html" target="_blank" rel="noopener" title="Bagikan lewat WhatsApp" aria-label="Bagikan lewat WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.50-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.6 0-3-.4-4.3-1.2l-.3-.2-3.1.8.8-3-.2-.3c-.8-1.3-1.3-2.9-1.3-4.5C3.6 7.4 7.4 3.6 12 3.6s8.4 3.8 8.4 8.4-3.8 8.2-8.4 8.2z"/></svg></a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//dara-academic.github.io/publikasi/scopus/work-readiness-heswbl.html" target="_blank" rel="noopener" title="Bagikan ke LinkedIn" aria-label="Bagikan ke LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.75-1.95C21.4 8.75 22 11 22 14v7h-4v-6.2c0-1.5 0-3.4-2.1-3.4-2.1 0-2.4 1.6-2.4 3.3V21h-4z"/></svg></a><button type="button" data-salin-tautan data-ok="Tautan tersalin" title="Salin tautan halaman" aria-label="Salin tautan halaman"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7L12 19"/></svg></button></span>
   </div>
   <div id="sitasi-wrap" hidden>
     <div class="sitasi-box">
@@ -245,6 +247,34 @@ document.querySelectorAll('.backlink').forEach(function (a) {
       setTimeout(function () { btn.innerHTML = semula; btn.classList.remove('sukses'); }, 1800);
     });
   });
+})();
+</script>
+<script>
+(function () {
+  var salinTautan = document.querySelector('[data-salin-tautan]');
+  if (salinTautan) {
+    salinTautan.addEventListener('click', function () {
+      var b = this;
+      navigator.clipboard.writeText(location.href).then(function () {
+        b.classList.add('sukses');
+        b.setAttribute('title', b.dataset.ok);
+        setTimeout(function () { b.classList.remove('sukses'); }, 1800);
+      });
+    });
+  }
+  var tautanToc = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  if (!tautanToc.length || !('IntersectionObserver' in window)) return;
+  var judul = tautanToc.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); })
+                       .filter(Boolean);
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      tautanToc.forEach(function (a) { a.classList.remove('kini'); });
+      var aktif = document.querySelector('.toc a[href="#' + e.target.id + '"]');
+      if (aktif) aktif.classList.add('kini');
+    });
+  }, { rootMargin: '-84px 0px -70% 0px', threshold: 0 });
+  judul.forEach(function (h) { obs.observe(h); });
 })();
 </script>
 </body>
