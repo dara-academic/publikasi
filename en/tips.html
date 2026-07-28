@@ -23,6 +23,8 @@
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="icon" href="../assets/favicon.ico" sizes="32x32">
+<link rel="manifest" href="../site.webmanifest">
 <meta name="theme-color" content="#2c5580">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,6 +87,7 @@
 }</script>
 </head>
 <body>
+<a class="skip-link" href="#konten">Skip to main content</a>
 
 <header class="site-header">
   <div class="container">
@@ -92,7 +95,7 @@
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-    <nav class="nav">
+    <nav class="nav" aria-label="Main navigation">
       <a href="index.html">Home</a>
       <a href="mulai-dari-sini.html" class="nav-mulai">Start Here</a>
       <div class="nav-group">
@@ -126,7 +129,7 @@
   </div>
 </header>
 
-<main>
+<main id="konten">
   <section class="hero">
     <div class="container">
       <p class="kicker">Practical tips</p>
@@ -258,6 +261,25 @@ document.addEventListener('click', function (e) {
     tgl.setAttribute('aria-expanded', open2);
   }
 });
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Escape') return;
+  var terbuka = document.querySelector('.nav-group.open');
+  if (terbuka) {
+    terbuka.classList.remove('open');
+    var b = terbuka.querySelector('.nav-btn');
+    b.setAttribute('aria-expanded', 'false');
+    b.focus();
+    return;
+  }
+  var nav = document.querySelector('.nav.open');
+  if (nav) {
+    nav.classList.remove('open');
+    var t = document.querySelector('.nav-toggle');
+    t.setAttribute('aria-expanded', 'false');
+    t.focus();
+  }
+});
+
 document.querySelectorAll('.backlink').forEach(function (a) {
   a.addEventListener('click', function (e) {
     var ref = document.referrer;
