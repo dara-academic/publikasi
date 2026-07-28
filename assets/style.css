@@ -127,7 +127,7 @@ body {
 
 /* Hero */
 .hero {
-  position: relative; padding: 72px 0 56px; border-bottom: 1px solid var(--line);
+  position: relative; padding: 84px 0 68px; border-bottom: 1px solid var(--line);
   background-color: var(--pastel-blue);
   background-image: url('hero-akademik.jpg');
   background-size: cover; background-position: center; background-repeat: no-repeat;
@@ -212,7 +212,7 @@ body {
 
 /* Band: seksi berlatar warna */
 .band { background: #f7f4ed; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 44px; }
-.band .section { padding: 46px 0 50px; }
+.band .section { padding: 76px 0 68px; }
 
 /* Value grid */
 .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
@@ -248,8 +248,8 @@ body {
 @media (max-width: 700px) { .flow { grid-template-columns: 1fr; } }
 
 /* Sections */
-.section { padding: 52px 0 20px; }
-.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.section { padding: 64px 0 56px; }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
 .section-head h2 { font-family: var(--serif); font-size: 26px; font-weight: 600; position: relative; padding-left: 14px; }
 .section-head h2::before {
   content: ""; position: absolute; left: 0; top: 0.32em; bottom: 0.22em;
@@ -260,10 +260,10 @@ body {
 .section-note { font-size: 14px; color: var(--ink-soft); max-width: 680px; margin: -10px 0 22px; }
 
 /* Cards */
-.card-grid { display: grid; gap: 16px; }
+.card-grid { display: grid; gap: 22px; }
 .card {
   background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
-  padding: 22px 24px; display: block; text-decoration: none; color: var(--ink);
+  padding: 28px 30px; display: block; text-decoration: none; color: var(--ink);
   transition: border-color 0.15s ease, transform 0.15s ease;
 }
 a.card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 26px rgba(28, 52, 80, 0.09); }
@@ -275,7 +275,7 @@ a.card:hover { border-color: var(--accent); transform: translateY(-2px); box-sha
 .card .foot .read { color: var(--accent-dark); font-weight: 600; }
 
 /* Etalase buku */
-.book-grid { display: grid; gap: 20px; }
+.book-grid { display: grid; gap: 24px; }
 .book {
   background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
   padding: 24px 26px; display: flex; gap: 26px; align-items: flex-start;
@@ -715,7 +715,7 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 }
 .glos-intro { font-size: 14px; color: var(--ink-soft); max-width: 680px; margin-bottom: 16px; }
 
-.glos-list { display: grid; gap: 12px; }
+.glos-list { display: grid; gap: 16px; }
 @media (min-width: 900px) { .glos-list { grid-template-columns: 1fr 1fr; } }
 
 .glos-item {
@@ -768,7 +768,7 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
   color: var(--accent-dark); margin-bottom: 6px; line-height: 1.35;
 }
 .jalur-intro { font-size: 14px; color: var(--ink-soft); max-width: 700px; margin-bottom: 18px; }
-.jalur-list { display: grid; gap: 10px; }
+.jalur-list { display: grid; gap: 14px; }
 @media (min-width: 940px) { .jalur-list { grid-template-columns: 1fr 1fr; } }
 
 .jalur-langkah {
@@ -843,3 +843,12 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 
 /* Ringkasan kartu berhenti di lebar baca yang nyaman, judul dan sampul tidak bergeser */
 .card p.hook { max-width: 62ch; }
+
+/* Ruang napas dirapatkan di layar kecil supaya tidak boros gulir */
+@media (max-width: 760px) {
+  .section, .band .section { padding: 44px 0 38px; }
+  .section-head { margin-bottom: 20px; }
+  .card { padding: 20px 18px; }
+  .card-grid { gap: 14px; }
+  .book-grid { gap: 16px; }
+}
