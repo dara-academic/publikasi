@@ -78,6 +78,25 @@
     </div>
   </div>
 
+  <div class="aksi-row">
+    <button class="aksi-btn" data-cetak type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Cetak atau simpan PDF</button>
+    <button class="aksi-btn" data-sitasi type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 7H6a3 3 0 0 0-3 3v3h6V7zM21 7h-3a3 3 0 0 0-3 3v3h6V7z"/><path d="M3 13v2a3 3 0 0 0 3 3M15 13v2a3 3 0 0 0 3 3"/></svg>Sitasi</button>
+  </div>
+  <div id="sitasi-wrap" hidden>
+    <div class="sitasi-box">
+      <div class="sitasi-tab">
+        <button class="aktif" data-fmt="apa" type="button">APA 7</button>
+        <button data-fmt="bibtex" type="button">BibTeX</button>
+        <button data-fmt="ris" type="button">RIS</button>
+      </div>
+      <pre class="sitasi-teks" id="sitasi-teks"></pre>
+      <div style="margin-top: 14px;">
+        <button class="aksi-btn" data-salin data-ok="Tersalin" type="button">Salin ke papan klip</button>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" id="sitasi-data">{"apa": "Dara, D., Febriantina, S., & Suwatno, S. (2025). Enhancing well-being in hybrid work: The crucial role of organizational support for Indonesia's State Civil Apparatus. Cogent Psychology, 12(1), 2454084. https://doi.org/10.1080/23311908.2025.2454084", "bibtex": "@article{dara2025enhancing,\n  author  = {Dara, Despinur and Febriantina, Susan and Suwatno, Suwatno},\n  title   = {Enhancing well-being in hybrid work: the crucial role of organizational support for Indonesia's State Civil Apparatus},\n  journal = {Cogent Psychology},\n  year    = {2025},\n  volume  = {12},\n  number  = {1},\n  pages   = {2454084},\n  doi     = {10.1080/23311908.2025.2454084},\n  publisher = {Taylor and Francis}\n}", "ris": "TY  - JOUR\nAU  - Dara, Despinur\nAU  - Febriantina, Susan\nAU  - Suwatno, Suwatno\nTI  - Enhancing well-being in hybrid work: the crucial role of organizational support for Indonesia's State Civil Apparatus\nJO  - Cogent Psychology\nPY  - 2025\nVL  - 12\nIS  - 1\nSP  - 2454084\nDO  - 10.1080/23311908.2025.2454084\nPB  - Taylor and Francis\nER  - "}</script>
+
   <div class="paper-body">
     <nav class="toc">
       <p class="toc-title">Isi bedah</p>
@@ -204,6 +223,41 @@ document.querySelectorAll('.backlink').forEach(function (a) {
     }
   });
 });
+</script>
+<script>
+(function () {
+  var el = document.getElementById('sitasi-data');
+  if (!el) return;
+  var data = JSON.parse(el.textContent);
+  var wrap = document.getElementById('sitasi-wrap');
+  var teks = document.getElementById('sitasi-teks');
+  var fmt = 'apa';
+  function tampil() { teks.textContent = data[fmt]; }
+  document.querySelector('[data-cetak]').addEventListener('click', function () {
+    document.querySelectorAll('details.reviewer').forEach(function (d) { d.open = true; });
+    window.print();
+  });
+  document.querySelector('[data-sitasi]').addEventListener('click', function () {
+    wrap.hidden = !wrap.hidden;
+    if (!wrap.hidden) { tampil(); wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  });
+  document.querySelectorAll('.sitasi-tab button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.sitasi-tab button').forEach(function (x) { x.classList.remove('aktif'); });
+      b.classList.add('aktif');
+      fmt = b.dataset.fmt;
+      tampil();
+    });
+  });
+  document.querySelector('[data-salin]').addEventListener('click', function () {
+    var btn = this, semula = btn.innerHTML;
+    navigator.clipboard.writeText(data[fmt]).then(function () {
+      btn.textContent = btn.dataset.ok;
+      btn.classList.add('sukses');
+      setTimeout(function () { btn.innerHTML = semula; btn.classList.remove('sukses'); }, 1800);
+    });
+  });
+})();
 </script>
 </body>
 </html>

@@ -403,6 +403,34 @@ details.reviewer .content { padding: 0 18px 16px; font-size: 14.5px; color: var(
 .site-footer { border-top: 1px solid var(--line); margin-top: 56px; padding: 30px 0 42px; font-size: 13.5px; color: #6a5a54; background: var(--pastel-rose); }
 .site-footer a { color: #8a3d2a; font-weight: 600; }
 
+/* Baris aksi: cetak dan salin sitasi */
+.aksi-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 4px; }
+.aksi-btn {
+  display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+  font-family: inherit; font-size: 13.5px; font-weight: 600; color: var(--accent-dark);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 99px;
+  padding: 8px 16px;
+}
+.aksi-btn:hover { border-color: var(--accent); background: #f4f8fc; }
+.aksi-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+.aksi-btn.sukses { background: var(--pastel-mint); border-color: #9fd9b4; color: #1d5c3a; }
+.sitasi-box {
+  border: 1px solid var(--line); border-radius: 12px; background: var(--surface);
+  padding: 16px 18px; margin: 12px 0 0;
+}
+.sitasi-tab { display: flex; gap: 4px; margin-bottom: 12px; flex-wrap: wrap; }
+.sitasi-tab button {
+  cursor: pointer; font-family: inherit; font-size: 12.5px; font-weight: 600;
+  padding: 6px 13px; border-radius: 8px; border: 1px solid var(--line);
+  background: none; color: var(--ink-soft);
+}
+.sitasi-tab button.aktif { background: var(--accent-dark); color: #fff; border-color: var(--accent-dark); }
+.sitasi-teks {
+  font-family: var(--mono, ui-monospace, "Cascadia Code", Consolas, monospace);
+  font-size: 12.5px; line-height: 1.65; color: var(--ink);
+  white-space: pre-wrap; word-break: break-word; margin: 0;
+}
+
 @media (max-width: 760px) {
   .paper-body { grid-template-columns: 1fr; gap: 8px; }
   .toc { position: static; display: flex; flex-wrap: wrap; gap: 4px 14px; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
@@ -410,3 +438,78 @@ details.reviewer .content { padding: 0 18px 16px; font-size: 14.5px; color: var(
   .toc p.toc-title { width: 100%; }
   .hero { padding: 40px 0 28px; }
 }
+
+/* ============================================================
+   Gaya cetak: hasilkan PDF bersih lewat tombol Cetak browser
+   ============================================================ */
+@media print {
+  @page { size: A4; margin: 18mm 16mm 20mm; }
+
+  html { scroll-behavior: auto; }
+  body {
+    background: #fff !important; color: #000;
+    font-size: 10.5pt; line-height: 1.55;
+  }
+  .container { max-width: 100%; padding: 0; }
+
+  /* sembunyikan elemen antarmuka */
+  .site-header, .nav, .nav-toggle, .lang-switch, .site-footer,
+  .backlink-row, .aksi-row, .toc, .cta-row, .statbar,
+  .flow, .value-grid, .sitasi-tab { display: none !important; }
+
+  /* hero jadi kepala dokumen yang ringkas */
+  .hero {
+    background: none !important; padding: 0 0 10pt !important;
+    border-bottom: 1pt solid #999; margin-bottom: 12pt;
+  }
+  .hero::before { display: none !important; }
+  .hero-profile, .hero .kicker { display: none !important; }
+  .hero h1 { font-size: 19pt !important; color: #000 !important; margin-bottom: 6pt; }
+  .hero .lead { font-size: 11pt; color: #333; }
+
+  /* kepala halaman paper */
+  .paper-head { padding: 0 0 10pt; border-bottom: 1pt solid #999; }
+  .head-grid { display: block; }
+  .head-grid .cover { display: none !important; }
+  .paper-head h1 { font-size: 17pt; color: #000; }
+  .paper-head .authors, .paper-head .doi { font-size: 9.5pt; color: #333; }
+  .paper-body { display: block; padding: 12pt 0 0; }
+
+  /* buka semua akordion supaya isinya ikut tercetak */
+  details.reviewer { border: 1pt solid #bbb; page-break-inside: avoid; }
+  details.reviewer > div.content { display: block !important; }
+  details.reviewer summary { font-weight: 700; list-style: none; }
+  details.reviewer summary .hint { color: #555; }
+
+  /* teks dan kartu */
+  .prose h2 { font-size: 13pt; margin: 14pt 0 5pt; page-break-after: avoid; }
+  .prose h3 { page-break-after: avoid; }
+  .prose p { color: #000; orphans: 3; widows: 3; }
+  .callout, .access-note {
+    background: #f2f2f2 !important; color: #000 !important;
+    border: 1pt solid #ccc; page-break-inside: avoid;
+  }
+  .card, .book, .value, .sitasi-box {
+    border: 1pt solid #bbb !important; box-shadow: none !important;
+    page-break-inside: avoid; background: #fff !important;
+  }
+  .card-flex { display: block; }
+  .cover-sm { display: none !important; }
+  .book-cover { width: 32mm; }
+  .badge { border: 1pt solid #999; background: none !important; color: #000 !important; }
+  .band { background: none !important; border: 0; }
+  .section { padding: 10pt 0 0; }
+  .section-head h2 { font-size: 14pt; padding-left: 0; }
+  .section-head h2::before { display: none; }
+  .timeline { page-break-inside: avoid; }
+  .tl-step .dot { background: #000 !important; outline: none !important; }
+
+  /* tampilkan alamat tautan agar berguna di versi cetak */
+  a { color: #000; text-decoration: none; }
+  .prose a[href^="http"]::after,
+  .book-meta a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 8.5pt; color: #555; }
+
+  img { max-width: 100% !important; page-break-inside: avoid; }
+  .cetak-only { display: block !important; }
+}
+.cetak-only { display: none; }

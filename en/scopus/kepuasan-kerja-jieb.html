@@ -78,6 +78,25 @@
     </div>
   </div>
 
+  <div class="aksi-row">
+    <button class="aksi-btn" data-cetak type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Print or save as PDF</button>
+    <button class="aksi-btn" data-sitasi type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 7H6a3 3 0 0 0-3 3v3h6V7zM21 7h-3a3 3 0 0 0-3 3v3h6V7z"/><path d="M3 13v2a3 3 0 0 0 3 3M15 13v2a3 3 0 0 0 3 3"/></svg>Cite</button>
+  </div>
+  <div id="sitasi-wrap" hidden>
+    <div class="sitasi-box">
+      <div class="sitasi-tab">
+        <button class="aktif" data-fmt="apa" type="button">APA 7</button>
+        <button data-fmt="bibtex" type="button">BibTeX</button>
+        <button data-fmt="ris" type="button">RIS</button>
+      </div>
+      <pre class="sitasi-teks" id="sitasi-teks"></pre>
+      <div style="margin-top: 14px;">
+        <button class="aksi-btn" data-salin data-ok="Copied" type="button">Copy to clipboard</button>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" id="sitasi-data">{"apa": "Dara, D., & Saparuddin. (2025). Exploring the dynamics of work satisfaction and innovation among young lecturers in post-pandemic Indonesia. Journal of Indonesian Economy and Business, 40(1), 17-43. https://doi.org/10.22146/jieb.v40i1.9972", "bibtex": "@article{dara2025exploring,\n  author  = {Dara, Despinur and Saparuddin},\n  title   = {Exploring the dynamics of work satisfaction and innovation among young lecturers in post-pandemic Indonesia},\n  journal = {Journal of Indonesian Economy and Business},\n  year    = {2025},\n  volume  = {40},\n  number  = {1},\n  pages   = {17--43},\n  doi     = {10.22146/jieb.v40i1.9972},\n  publisher = {Universitas Gadjah Mada}\n}", "ris": "TY  - JOUR\nAU  - Dara, Despinur\nAU  - Saparuddin\nTI  - Exploring the dynamics of work satisfaction and innovation among young lecturers in post-pandemic Indonesia\nJO  - Journal of Indonesian Economy and Business\nPY  - 2025\nVL  - 40\nIS  - 1\nSP  - 17\nEP  - 43\nDO  - 10.22146/jieb.v40i1.9972\nPB  - Universitas Gadjah Mada\nER  - "}</script>
+
   <div class="container" style="padding: 30px 0 10px;">
     <article class="prose" style="max-width: 760px;">
       <h2 id="summary">In brief</h2>
@@ -137,6 +156,41 @@ document.querySelectorAll('.backlink').forEach(function (a) {
     }
   });
 });
+</script>
+<script>
+(function () {
+  var el = document.getElementById('sitasi-data');
+  if (!el) return;
+  var data = JSON.parse(el.textContent);
+  var wrap = document.getElementById('sitasi-wrap');
+  var teks = document.getElementById('sitasi-teks');
+  var fmt = 'apa';
+  function tampil() { teks.textContent = data[fmt]; }
+  document.querySelector('[data-cetak]').addEventListener('click', function () {
+    document.querySelectorAll('details.reviewer').forEach(function (d) { d.open = true; });
+    window.print();
+  });
+  document.querySelector('[data-sitasi]').addEventListener('click', function () {
+    wrap.hidden = !wrap.hidden;
+    if (!wrap.hidden) { tampil(); wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  });
+  document.querySelectorAll('.sitasi-tab button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.sitasi-tab button').forEach(function (x) { x.classList.remove('aktif'); });
+      b.classList.add('aktif');
+      fmt = b.dataset.fmt;
+      tampil();
+    });
+  });
+  document.querySelector('[data-salin]').addEventListener('click', function () {
+    var btn = this, semula = btn.innerHTML;
+    navigator.clipboard.writeText(data[fmt]).then(function () {
+      btn.textContent = btn.dataset.ok;
+      btn.classList.add('sukses');
+      setTimeout(function () { btn.innerHTML = semula; btn.classList.remove('sukses'); }, 1800);
+    });
+  });
+})();
 </script>
 </body>
 </html>
