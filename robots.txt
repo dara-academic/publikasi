@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://doniebelva.github.io/publikasi-dara/sitemap.xml
+Sitemap: https://dara-academic.github.io/publikasi/sitemap.xml
