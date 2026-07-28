@@ -3,7 +3,7 @@
   --surface: #ffffff;
   --ink: #2b3440;
   --ink-soft: #5a6675;
-  --ink-muted: #8d97a3;
+  --ink-muted: #66717f;
   --line: #eae6e0;
   --pastel-pink: #f7dde2;
   --pastel-peach: #ffe3c8;
@@ -226,7 +226,7 @@ body {
 @media (max-width: 700px) { .flow { grid-template-columns: 1fr; } }
 
 /* Sections */
-.section { padding: 44px 0 8px; }
+.section { padding: 52px 0 20px; }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
 .section-head h2 { font-family: var(--serif); font-size: 25px; font-weight: 600; position: relative; padding-left: 14px; }
 .section-head h2::before {
@@ -251,6 +251,32 @@ a.card:hover { border-color: var(--accent); transform: translateY(-2px); box-sha
 .card p.hook { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 12px; }
 .card .foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--ink-muted); }
 .card .foot .read { color: var(--accent-dark); font-weight: 600; }
+
+/* Etalase buku */
+.book-grid { display: grid; gap: 20px; }
+.book {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 24px 26px; display: flex; gap: 26px; align-items: flex-start;
+}
+.book-cover {
+  width: 152px; flex-shrink: 0; border-radius: 8px; overflow: hidden;
+  box-shadow: 0 10px 26px rgba(28, 52, 80, 0.18); background: var(--pastel-gray);
+}
+.book-cover img { display: block; width: 100%; height: auto; }
+.book-body { flex: 1; min-width: 0; }
+.book-body h3 { font-family: var(--serif); font-size: 21px; line-height: 1.35; font-weight: 600; margin-bottom: 8px; }
+.book-body .penulis { font-size: 14px; color: var(--ink-soft); margin-bottom: 12px; }
+.book-body .penulis strong { color: var(--ink); font-weight: 600; }
+.book-body p.ringkas { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 14px; }
+.book-meta {
+  display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12.5px; color: var(--ink-muted);
+  border-top: 1px solid var(--line); padding-top: 12px;
+}
+.book-meta b { color: var(--ink-soft); font-weight: 600; }
+@media (max-width: 620px) {
+  .book { flex-direction: column; gap: 18px; }
+  .book-cover { width: 130px; }
+}
 
 /* Badges */
 .badge {
@@ -374,8 +400,8 @@ details.reviewer .content { padding: 0 18px 16px; font-size: 14.5px; color: var(
 }
 .access-note a { color: #7a4a12; font-weight: 600; }
 /* Footer */
-.site-footer { border-top: 1px solid var(--line); margin-top: 56px; padding: 28px 0 40px; font-size: 13.5px; color: var(--ink-muted); background: var(--pastel-rose); }
-.site-footer a { color: var(--accent-dark); }
+.site-footer { border-top: 1px solid var(--line); margin-top: 56px; padding: 30px 0 42px; font-size: 13.5px; color: #6a5a54; background: var(--pastel-rose); }
+.site-footer a { color: #8a3d2a; font-weight: 600; }
 
 @media (max-width: 760px) {
   .paper-body { grid-template-columns: 1fr; gap: 8px; }
