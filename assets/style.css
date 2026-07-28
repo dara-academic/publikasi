@@ -862,15 +862,17 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 .band-buku::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg,
-    rgba(250, 247, 241, 0.9) 0%,
-    rgba(250, 247, 241, 0.83) 45%,
-    rgba(250, 247, 241, 0.9) 100%);
+    rgba(250, 247, 241, 0.79) 0%,
+    rgba(250, 247, 241, 0.68) 45%,
+    rgba(250, 247, 241, 0.79) 100%);
 }
 .band-buku .book { background: rgba(255, 255, 255, 0.95); }
-.band-buku .section-note { color: #414c5c; }
+.band-buku .section-note { color: #2d3642; }
+.band-buku .section-head h2 { color: #142c4a; }
+.band-buku .section-head a { color: #143252; }
 @media (max-width: 760px) {
   .band-buku { background-attachment: scroll; }
-  .band-buku::before { background: rgba(250, 247, 241, 0.9); }
+  .band-buku::before { background: rgba(250, 247, 241, 0.84); }
 }
 @media print {
   .band-buku { background-image: none !important; }
