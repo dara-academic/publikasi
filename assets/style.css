@@ -541,3 +541,59 @@ details.reviewer .content { padding: 0 18px 16px; font-size: 14.5px; color: var(
 .nf h1 { font-family: var(--serif); font-size: 28px; font-weight: 600; margin-bottom: 12px; }
 .nf p { font-size: 16px; color: var(--ink-soft); max-width: 520px; margin: 0 auto 26px; }
 .nf .cta-row { justify-content: center; }
+
+/* ============================================================
+   Etalase kolaborasi: linimasa kronologis, bukan kartu bedah
+   ============================================================ */
+.tahun-blok { margin-bottom: 8px; }
+.tahun-label {
+  display: flex; align-items: center; gap: 14px; margin: 34px 0 18px;
+}
+.tahun-label .angka {
+  font-family: var(--serif); font-size: 30px; font-weight: 600;
+  color: var(--accent-dark); line-height: 1;
+}
+.tahun-label .garis { flex: 1; height: 1px; background: var(--line); }
+.tahun-label .hitung { font-size: 13px; color: var(--ink-muted); white-space: nowrap; }
+
+.kolab-list { border-left: 2px solid var(--line); padding-left: 0; margin-left: 8px; }
+.kolab {
+  position: relative; padding: 18px 0 18px 28px;
+  border-bottom: 1px solid var(--line);
+}
+.kolab:last-child { border-bottom: 0; }
+.kolab::before {
+  content: ""; position: absolute; left: -7px; top: 27px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--accent);
+}
+.kolab:hover::before { background: var(--accent); }
+.kolab .tgl {
+  font-size: 12px; color: var(--ink-muted); letter-spacing: 0.04em;
+  text-transform: uppercase; font-weight: 600; margin-bottom: 5px;
+}
+.kolab h3 {
+  font-family: var(--serif); font-size: 18.5px; line-height: 1.4;
+  font-weight: 600; margin-bottom: 7px;
+}
+.kolab h3 a { color: var(--ink); text-decoration: none; }
+.kolab h3 a:hover { color: var(--accent-dark); text-decoration: underline; }
+.kolab .tim { font-size: 14px; color: var(--ink-soft); margin-bottom: 9px; line-height: 1.6; }
+.kolab .tim strong { color: var(--accent-dark); font-weight: 600; }
+.kolab .terbitan {
+  display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center;
+  font-size: 12.5px; color: var(--ink-muted);
+}
+.kolab .terbitan .jurnal { color: var(--ink-soft); font-weight: 600; }
+.kolab .terbitan a {
+  color: var(--accent-dark); font-weight: 600; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.kolab .terbitan a:hover { text-decoration: underline; }
+.kolab .terbitan a svg { width: 12px; height: 12px; }
+.badge.kutip { background: var(--pastel-lavender); color: #4a3d8f; }
+.badge.jenis { background: var(--pastel-gray); color: #55524a; }
+@media (max-width: 600px) {
+  .kolab { padding-left: 20px; }
+  .tahun-label .angka { font-size: 25px; }
+}
