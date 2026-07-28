@@ -1,0 +1,9 @@
+# Berkas sistem
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Berkas sementara editor
+*~
+*.tmp
+*.bak
