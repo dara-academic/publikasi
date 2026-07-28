@@ -840,3 +840,25 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 }
 
 .prose { max-width: 68ch; }
+
+/* ===== Halaman daftar: lebih lebar, kartu dua kolom ===== */
+.halaman-daftar .container { max-width: 1240px; }
+
+@media (min-width: 1080px) {
+  .halaman-daftar .card-grid { grid-template-columns: 1fr 1fr; align-items: start; }
+  /* kartu pertama melebar penuh sebagai sorotan, hanya bila kartunya tiga atau lebih */
+  .halaman-daftar .card-grid > .card:first-child:nth-last-child(n+3) { grid-column: 1 / -1; }
+  .halaman-daftar .book-grid { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+/* di layar lebar sekali, glosarium boleh tiga kolom */
+@media (min-width: 1240px) {
+  .halaman-daftar .glos-list { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* Teks di dalam kartu tetap pendek walau kartunya melebar */
+.card p.hook { max-width: 62ch; }
+.card h3 { max-width: 48ch; }
+@media (min-width: 1080px) {
+  /* kartu tunggal ikut melebar penuh daripada menyisakan kolom kosong */
+  .halaman-daftar .card-grid > .card:only-child { grid-column: 1 / -1; }
+}
