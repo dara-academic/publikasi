@@ -852,3 +852,33 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
   .card-grid { gap: 14px; }
   .book-grid { gap: 16px; }
 }
+
+/* ===== Band kutipan reviewer ===== */
+.band-kutip { background: var(--pastel-rose); }
+.kutip-grid { display: grid; gap: 20px; }
+@media (min-width: 860px) { .kutip-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.kutip-kartu {
+  background: var(--surface); border: 1px solid rgba(140, 100, 90, 0.14);
+  border-radius: 14px; padding: 26px 26px 22px; margin: 0;
+  display: flex; flex-direction: column;
+}
+.kutip-kartu blockquote {
+  margin: 0 0 18px; font-family: var(--serif); font-size: 18px; line-height: 1.55;
+  color: var(--ink); flex: 1;
+}
+.kutip-kartu figcaption { display: block; }
+.kutip-kartu .siapa {
+  display: block; font-size: 13px; font-weight: 700; color: var(--accent-dark);
+  letter-spacing: 0.03em; text-transform: uppercase;
+}
+.kutip-kartu .jurnal { display: block; font-size: 13px; color: var(--ink-muted); margin-bottom: 10px; }
+.kutip-kartu .hasil { display: block; font-size: 14px; line-height: 1.6; color: var(--ink-soft); margin-bottom: 12px; }
+.kutip-kartu a { font-size: 14px; font-weight: 600; color: var(--accent-dark); text-decoration: none; }
+.kutip-kartu a:hover { text-decoration: underline; }
+
+@media (max-width: 760px) {
+  .kutip-kartu { padding: 20px 18px 18px; }
+  .kutip-kartu blockquote { font-size: 17px; }
+}
+@media print { .band-kutip { display: none; } }
