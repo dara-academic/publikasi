@@ -1,4 +1,15 @@
 User-agent: *
 Allow: /
 
+# Perayap mesin pencari utama
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Perayap pengumpul data model bahasa, silakan sesuaikan bila tidak dikehendaki
+User-agent: GPTBot
+Allow: /
+
 Sitemap: https://dara-academic.github.io/publikasi/sitemap.xml
