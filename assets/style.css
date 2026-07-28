@@ -840,3 +840,6 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 }
 
 .prose { max-width: 68ch; }
+
+/* Ringkasan kartu berhenti di lebar baca yang nyaman, judul dan sampul tidak bergeser */
+.card p.hook { max-width: 62ch; }
