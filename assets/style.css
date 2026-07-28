@@ -56,7 +56,7 @@ body {
   font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--ink);
   text-decoration: none; display: inline-flex; align-items: center; gap: 7px;
 }
-.brand-ico { width: 21px; height: 21px; flex-shrink: 0; display: block; }
+.brand-ico { width: 27px; height: 27px; flex-shrink: 0; display: block; }
 .brand .brand-txt span { color: var(--accent); }
 .hero-profile .peran span { color: #4a5a6d; }
 
