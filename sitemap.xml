@@ -26,11 +26,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://dara-academic.github.io/publikasi/en/perkakas.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://dara-academic.github.io/publikasi/en/proses-review.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -86,6 +81,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dara-academic.github.io/publikasi/en/tips.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dara-academic.github.io/publikasi/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
@@ -97,11 +97,6 @@
   </url>
   <url>
     <loc>https://dara-academic.github.io/publikasi/lesson-learned.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dara-academic.github.io/publikasi/perkakas.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -157,6 +152,11 @@
   </url>
   <url>
     <loc>https://dara-academic.github.io/publikasi/tentang.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dara-academic.github.io/publikasi/tips.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
