@@ -993,3 +993,59 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 .ka-toast.tampil { opacity: 1; transform: translateY(0); }
 @media (max-width: 640px) { .ka-toast { right: 14px; bottom: 74px; font-size: 13px; } }
 @media print { .ka-toast { display: none !important; } }
+
+/* ===== Panduan menulis bagian per bagian ===== */
+.mb-kunci {
+  background: var(--pastel-blue); border: 1px solid rgba(44, 85, 128, 0.18);
+  border-radius: 14px; padding: 20px 24px; margin-bottom: 34px;
+}
+.mb-kunci p { font-size: 15px; line-height: 1.7; color: #1c4e7d; margin: 0; }
+
+.mb-bagian { margin-bottom: 40px; scroll-margin-top: 84px; }
+.mb-kepala { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 18px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.mb-nomor {
+  flex: none; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--accent-dark); color: #fff;
+  font-family: var(--serif); font-size: 17px; font-weight: 600;
+  line-height: 34px; text-align: center;
+}
+.mb-kepala h2 { font-family: var(--serif); font-size: 23px; font-weight: 600; color: var(--accent-dark); margin-bottom: 4px; }
+.mb-intro { font-size: 14.5px; color: var(--ink-soft); margin: 0; }
+
+.mb-butir {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 14px; padding: 22px 24px; margin-bottom: 14px;
+}
+.mb-butir h3 { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 7px; }
+.mb-dicari { font-size: 14.5px; line-height: 1.7; color: var(--ink-soft); margin-bottom: 16px; }
+
+.mb-bukti {
+  margin: 0 0 14px; padding: 14px 18px;
+  background: var(--pastel-gray); border-left: 3px solid #b9a06a; border-radius: 0 10px 10px 0;
+}
+.mb-bukti blockquote { margin: 0 0 8px; font-size: 14px; line-height: 1.68; color: #4a4335; }
+.mb-bukti figcaption { font-size: 12.5px; font-weight: 600; color: #6f6349; letter-spacing: 0.02em; }
+
+.mb-langkah {
+  background: var(--pastel-mint); border: 1px solid rgba(47, 125, 79, 0.18);
+  border-radius: 10px; padding: 14px 18px;
+}
+.mb-label {
+  display: block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #1d5c3a; margin-bottom: 6px;
+}
+.mb-langkah p { font-size: 14.5px; line-height: 1.7; color: #2a4d3a; margin: 0; }
+
+@media (max-width: 640px) {
+  .mb-butir { padding: 18px 17px; }
+  .mb-kunci { padding: 17px 18px; }
+  .mb-kepala { gap: 12px; }
+  .mb-nomor { width: 30px; height: 30px; line-height: 30px; font-size: 15px; }
+  .mb-kepala h2 { font-size: 20px; }
+}
+@media print {
+  .mb-butir, .mb-bukti, .mb-langkah { border: 0; break-inside: avoid; }
+  .mb-kunci { border: 0; }
+  .glos-chips, .glos-lanjut { display: none; }
+}
