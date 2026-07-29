@@ -964,3 +964,42 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
   .tj-jawab { display: block !important; }
   .kanal-grid, .glos-tool, .glos-chips { display: none; }
 }
+
+/* ===== Tombol kontak melayang ===== */
+.kontak-apung {
+  position: fixed; right: 18px; bottom: 18px; z-index: 90;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.kontak-apung .ka {
+  position: relative;
+  width: 50px; height: 50px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(20, 40, 65, 0.22);
+  transition: transform .16s, box-shadow .16s;
+  -webkit-tap-highlight-color: transparent;
+}
+.kontak-apung .ka svg { width: 25px; height: 25px; }
+.kontak-apung .ka:hover, .kontak-apung .ka:focus-visible {
+  transform: translateY(-2px); box-shadow: 0 7px 20px rgba(20, 40, 65, 0.3);
+}
+.ka-wa { background: #25d366; color: #fff; }
+.ka-mail { background: var(--accent-dark); color: #fff; }
+.ka-mail svg { width: 23px; height: 23px; }
+
+/* keterangan muncul saat disentuh atau difokus */
+.kontak-apung .ka::after {
+  content: attr(data-tip);
+  position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
+  background: #22303f; color: #fff; font-size: 13px; font-weight: 500;
+  padding: 7px 12px; border-radius: 8px; white-space: nowrap;
+  opacity: 0; pointer-events: none; transition: opacity .16s;
+}
+.kontak-apung .ka:hover::after, .kontak-apung .ka:focus-visible::after { opacity: 1; }
+
+@media (max-width: 640px) {
+  .kontak-apung { right: 14px; bottom: 14px; gap: 9px; }
+  .kontak-apung .ka { width: 46px; height: 46px; }
+  .kontak-apung .ka svg { width: 23px; height: 23px; }
+  .kontak-apung .ka::after { display: none; }
+}
+@media print { .kontak-apung { display: none !important; } }
