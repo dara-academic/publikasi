@@ -1003,3 +1003,17 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
   .kontak-apung .ka::after { display: none; }
 }
 @media print { .kontak-apung { display: none !important; } }
+
+/* Pemberitahuan singkat setelah alamat email tersalin */
+.ka-toast {
+  position: fixed; right: 18px; bottom: 86px; z-index: 95;
+  max-width: min(320px, calc(100vw - 36px));
+  background: #22303f; color: #fff;
+  font-size: 13.5px; line-height: 1.55; font-weight: 500;
+  padding: 12px 16px; border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(20, 40, 65, 0.28);
+  opacity: 0; transform: translateY(8px); transition: opacity .25s, transform .25s;
+}
+.ka-toast.tampil { opacity: 1; transform: translateY(0); }
+@media (max-width: 640px) { .ka-toast { right: 14px; bottom: 74px; font-size: 13px; } }
+@media print { .ka-toast { display: none !important; } }
