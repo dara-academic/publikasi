@@ -529,7 +529,6 @@ details.reviewer .content { padding: 0 18px 16px; font-size: 14px; color: var(--
   img { max-width: 100% !important; page-break-inside: avoid; }
   
 }
-.cetak-only { display: none; }
 
 /* Tombol bagikan */
 .bagikan { display: inline-flex; gap: 6px; align-items: center; }
@@ -923,27 +922,6 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 .tj-kontak > h2 { font-family: var(--serif); font-size: 24px; font-weight: 600; color: var(--accent-dark); margin-bottom: 8px; }
 .tj-intro { font-size: 15px; color: var(--ink-soft); max-width: 680px; margin-bottom: 20px; line-height: 1.7; }
 
-.kanal-grid { display: grid; gap: 16px; margin-bottom: 26px; }
-@media (min-width: 760px) { .kanal-grid { grid-template-columns: 1fr 1fr; } }
-.kanal {
-  display: flex; flex-direction: column; gap: 8px;
-  padding: 22px 24px; border-radius: 14px; text-decoration: none;
-  border: 1px solid var(--line); background: var(--surface);
-  transition: transform .15s, box-shadow .15s;
-}
-.kanal:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(28, 58, 94, 0.09); }
-.kanal-judul {
-  display: flex; align-items: center; gap: 9px;
-  font-size: 17px; font-weight: 700; color: var(--accent-dark);
-}
-.kanal-judul svg { width: 20px; height: 20px; flex: none; }
-.kanal-ket { font-size: 14px; line-height: 1.65; color: var(--ink-soft); flex: 1; }
-.kanal-aksi { font-size: 14px; font-weight: 600; color: var(--accent-dark); }
-.kanal-form { background: var(--pastel-blue); border-color: rgba(44, 85, 128, 0.18); }
-.kanal-wa { background: var(--pastel-mint); border-color: rgba(47, 125, 79, 0.2); }
-.kanal-wa .kanal-judul, .kanal-wa .kanal-aksi { color: #1d5c3a; }
-.kanal-wa .kanal-ket { color: #33513f; }
-
 .tj-batas {
   background: var(--pastel-butter); border: 1px solid rgba(160, 130, 20, 0.2);
   border-radius: 14px; padding: 22px 24px;
@@ -956,13 +934,11 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 @media (max-width: 640px) {
   .tj-item > summary { padding: 14px 40px 14px 16px; font-size: 15px; }
   .tj-jawab { padding: 0 16px 16px; }
-  .kanal { padding: 18px 18px; }
   .tj-batas { padding: 18px 18px; }
 }
 @media print {
   .tj-item { border: 0; break-inside: avoid; }
   .tj-jawab { display: block !important; }
-  .kanal-grid, .glos-tool, .glos-chips { display: none; }
 }
 
 /* ===== Tombol kontak melayang ===== */
