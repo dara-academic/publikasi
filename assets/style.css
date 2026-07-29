@@ -126,7 +126,7 @@ body {
 .hero {
   position: relative; padding: 84px 0 68px; border-bottom: 1px solid var(--line);
   background-color: var(--pastel-blue);
-  background-image: url('hero-akademik.jpg');
+  background-image: url('hero-akademik.jpg?v=ebd08f8b');
   background-size: cover; background-position: center; background-repeat: no-repeat;
 }
 .hero::before {
@@ -864,7 +864,7 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 .band-buku {
   position: relative;
   background-color: #f7f4ed;
-  background-image: url('latar-buku.jpg');
+  background-image: url('latar-buku.jpg?v=4f3e2708');
   background-size: cover;
   background-position: center;
   isolation: isolate;
