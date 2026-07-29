@@ -83,15 +83,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dara-academic.github.io/publikasi/proses-review.html"/>
   </url>
   <url>
-    <loc>https://dara-academic.github.io/publikasi/en/proses-terbit.html</loc>
-    <lastmod>2026-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="id" href="https://dara-academic.github.io/publikasi/proses-terbit.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dara-academic.github.io/publikasi/en/proses-terbit.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dara-academic.github.io/publikasi/proses-terbit.html"/>
-  </url>
-  <url>
     <loc>https://dara-academic.github.io/publikasi/en/scopus/burnout-latency-ijoa.html</loc>
     <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
@@ -261,15 +252,6 @@
     <xhtml:link rel="alternate" hreflang="id" href="https://dara-academic.github.io/publikasi/proses-review.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://dara-academic.github.io/publikasi/en/proses-review.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dara-academic.github.io/publikasi/proses-review.html"/>
-  </url>
-  <url>
-    <loc>https://dara-academic.github.io/publikasi/proses-terbit.html</loc>
-    <lastmod>2026-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="id" href="https://dara-academic.github.io/publikasi/proses-terbit.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dara-academic.github.io/publikasi/en/proses-terbit.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dara-academic.github.io/publikasi/proses-terbit.html"/>
   </url>
   <url>
     <loc>https://dara-academic.github.io/publikasi/scopus/burnout-latency-ijoa.html</loc>
