@@ -1536,3 +1536,10 @@ body.ak .hero, body.ak .hero-tipis { background: var(--bg); }
 .ak-utama .band-buku::after, .ak-utama .band::after { display: none; }
 .ak-utama .band .section { padding: 0; }
 .ak-utama .band-buku .book { background: none; }
+
+/* Wadah satu kolom untuk halaman selain halaman utama. Spanduk dan kolom
+   identitas sengaja tidak dipasang di sini, supaya begitu sebuah menu dibuka
+   perhatian langsung tertuju ke isi menu itu, bukan ke profil yang sudah
+   dilihat di halaman utama. */
+.ak-halaman { max-width: 964px; margin: 0 auto; padding: 0 26px 80px; }
+.ak-halaman .ak-utama { padding-top: 46px; }
