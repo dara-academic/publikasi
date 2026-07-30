@@ -1522,3 +1522,17 @@ body.ak .hero, body.ak .hero-tipis { background: var(--bg); }
 
 .ak-utama .paper-head { padding: 0 0 22px; }
 .ak-utama .backlink-row { padding: 26px 0 0; }
+
+/* Pita berlatar gambar dari tata letak lama dinetralkan di dalam kolom kanan.
+   Latar bergambar itu dirancang untuk pita selebar layar. Begitu dipaksa masuk
+   ke kolom 678 piksel, gambarnya jadi terpotong dan tulisannya justru sulit
+   dibaca. Di sini isinya cukup ditampilkan sebagai daftar sederhana, karena
+   uraian lengkapnya memang sudah ada di halaman masing-masing. */
+.ak-utama .band, .ak-utama .band-buku {
+  background: none; background-image: none; padding: 0; margin: 0;
+  border: 0; isolation: auto;
+}
+.ak-utama .band-buku::before, .ak-utama .band::before,
+.ak-utama .band-buku::after, .ak-utama .band::after { display: none; }
+.ak-utama .band .section { padding: 0; }
+.ak-utama .band-buku .book { background: none; }

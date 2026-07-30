@@ -31,6 +31,11 @@ RedirectMatch 404 /\.git
 
   # Halaman yang sudah digabung, dialihkan permanen
   RewriteRule ^proses-terbit\.html$ /proses-review.html#menunggu-terbit [R=301,L]
+
+  # Beranda portal sempat berada di portal.html sebelum ditukar menjadi
+  # halaman utama. Tautan yang sudah terlanjur beredar diarahkan ke akar,
+  # bukan dibiarkan mati.
+  RewriteRule ^portal\.html$ / [R=301,L]
   RewriteRule ^en/proses-terbit\.html$ /en/proses-review.html#menunggu-terbit [R=301,L]
 </IfModule>
 
