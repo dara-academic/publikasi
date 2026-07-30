@@ -1135,3 +1135,28 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
   .pk-temu { gap: 12px; }
   .pk-no { width: 36px; }
 }
+
+/* Halaman Bimbingan */
+.bm-grid {
+  display: grid; gap: 18px; margin-bottom: 34px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.bm-kartu {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 14px; padding: 22px 24px;
+}
+.bm-jenjang {
+  display: inline-block; font-size: 12px; font-weight: 600;
+  letter-spacing: 0.04em; color: var(--accent-dark);
+  background: var(--pastel-blue); border-radius: 99px;
+  padding: 4px 12px; margin-bottom: 12px;
+}
+.bm-kartu h3 { font-family: var(--serif); font-size: 19px; font-weight: 600; margin-bottom: 8px; }
+.bm-kartu p { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
+.bm-segera {
+  background: var(--pastel-butter); border-radius: 14px;
+  padding: 24px 26px; margin: 34px 0 26px;
+}
+.bm-segera b { display: block; font-family: var(--serif); font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+.bm-segera p { font-size: 14px; color: #5c4a1f; line-height: 1.7; }
+.bm-segera p + p { margin-top: 10px; }
