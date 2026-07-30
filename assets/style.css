@@ -1481,6 +1481,15 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
 }
 .ak-utama .section + .section { margin-top: 4px; }
 .ak-utama .glos-wrap, .ak-utama .paper-wrap { max-width: none; }
+.ak-utama .prose,
+.ak-utama .section-note,
+.ak-utama .glos-intro,
+.ak-utama .tj-intro,
+.ak-utama .jalur-intro,
+.ak-utama .glos-tutup p,
+.ak-utama .hero h1,
+.ak-utama .hero-tipis .lead,
+.ak-utama .paper-head h1 { max-width: none; }
 
 /* Judul dan paragraf pembuka disamakan dengan halaman modul */
 .ak-utama .hero h1, .ak-utama .paper-head h1 {
