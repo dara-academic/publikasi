@@ -1684,3 +1684,28 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
 .tp-ket { display: block; margin-top: 2px; font-size: 13px; font-style: italic; color: var(--ink-soft); }
 .ak-tema a { color: inherit; text-decoration: none; }
 .ak-tema a:hover { color: var(--accent-dark); text-decoration: underline; }
+
+/* Keterangan tambahan pada butir garis waktu materi: bahan kajian menurut RPS
+   dan topik yang benar-benar dibahas di dalam salindianya. Keduanya ditarik
+   dari sumber, bukan ditulis ulang, sehingga tidak bisa menyimpang dari isi. */
+.tl-kajian {
+  display: block; margin-top: 6px; font-size: 12.5px; color: var(--ink-muted);
+}
+.tl-topik {
+  display: block; margin-top: 5px; font-size: 13px; line-height: 1.55;
+  color: var(--ink-soft);
+}
+.tl-teks .pk-unduh { margin-top: 12px; }
+
+/* Daftar topik di halaman materi */
+.mt-topik { margin: 22px 0 0; }
+.mt-topik b { display: block; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.mt-topik ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 7px; }
+.mt-topik li {
+  padding-left: 15px; position: relative; font-size: 15px;
+  line-height: 1.55; color: var(--ink-soft);
+}
+.mt-topik li::before {
+  content: ""; position: absolute; left: 0; top: 9px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+}
