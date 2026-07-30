@@ -1642,3 +1642,31 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
 .mt-kanan { margin-left: auto; }
 .kicker a { color: inherit; text-decoration: none; }
 .kicker a:hover { text-decoration: underline; }
+
+/* Tiga pintu masuk berbasis niat di beranda. Dinamai menurut keperluan
+   pengunjung, bukan struktur situs, karena orang datang membawa keperluan. */
+.ak-pintu-rak { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 26px 0 6px; }
+.ak-pintu {
+  display: flex; flex-direction: column; gap: 7px; padding: 18px 20px;
+  background: var(--bg); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+  border-radius: 12px; text-decoration: none; color: var(--ink);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+.ak-pintu:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 12px 28px rgba(28, 52, 80, 0.13); }
+.ak-pintu b { font-size: 16px; font-weight: 700; }
+.ak-pintu span { font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+
+/* Blok Baru di situs ini, dibaca dari kabar.json yang juga mengisi feed.xml */
+.kabar { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 16px; }
+.kabar li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 14px; }
+.kb-tgl {
+  font-size: 12.5px; font-weight: 700; color: var(--accent-dark);
+  background: var(--pastel-blue); border-radius: 8px; padding: 5px 0;
+  text-align: center; height: fit-content;
+}
+.kabar a { font-size: 15.5px; font-weight: 600; color: var(--ink); text-decoration: none; }
+.kabar a:hover { color: var(--accent-dark); text-decoration: underline; }
+.kb-ket { display: block; margin-top: 3px; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+
+/* Tanggal pembaruan di kaki halaman, diisi otomatis dari riwayat git */
+.kaki-tgl { font-size: 12px; color: var(--ink-muted); margin-bottom: 4px; }

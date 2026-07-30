@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>Belajar bersama Dr. Dara</title>
+  <link>https://despinurdara.id/</link>
+  <description>Kabar terbaru dari portal Dr. Despinur Dara: materi kuliah baru, paper terbit, dan fitur situs.</description>
+  <language>id</language>
+  <item>
+    <title>Setiap materi kuliah kini punya halaman sendiri</title>
+    <link>https://despinurdara.id/mata-kuliah/index.html</link>
+    <guid isPermaLink="false">2026-07-30-mata-kuliah/index.html</guid>
+    <pubDate>Thu, 30 Jul 2026 07:00:00 +0000</pubDate>
+    <description>51 materi dari 7 mata kuliah semester 124 kini punya halaman berisi bahan kajian, sampul, dan tombol unduh, tidak lagi langsung PDF.</description>
+  </item>
+  <item>
+    <title>Pencarian seluruh situs</title>
+    <link>https://despinurdara.id/</link>
+    <guid isPermaLink="false">2026-07-30-index.html</guid>
+    <pubDate>Thu, 30 Jul 2026 07:00:00 +0000</pubDate>
+    <description>Kotak cari di bilah menu menjangkau semua halaman, materi kuliah, glosarium, dan paper, tanpa meninggalkan situs.</description>
+  </item>
+  <item>
+    <title>Panduan penulisan tesis FEB UNJ</title>
+    <link>https://despinurdara.id/bimbingan/index.html</link>
+    <guid isPermaLink="false">2026-07-30-bimbingan/index.html</guid>
+    <pubDate>Thu, 30 Jul 2026 07:00:00 +0000</pubDate>
+    <description>Panduan resmi fakultas, 39 halaman, bisa diunduh di halaman Bimbingan karya ilmiah.</description>
+  </item>
+  <item>
+    <title>Halaman Penelitian: agenda riset dan publikasi</title>
+    <link>https://despinurdara.id/penelitian.html</link>
+    <guid isPermaLink="false">2026-07-30-penelitian.html</guid>
+    <pubDate>Thu, 30 Jul 2026 07:00:00 +0000</pubDate>
+    <description>Empat tema riset, tujuh paper dengan kuartilnya, lima buku, dan paper yang masih berjalan.</description>
+  </item>
+  <item>
+    <title>Materi tujuh mata kuliah semester 124 dibuka</title>
+    <link>https://despinurdara.id/mata-kuliah/index.html</link>
+    <guid isPermaLink="false">2026-07-29-mata-kuliah/index.html</guid>
+    <pubDate>Wed, 29 Jul 2026 07:00:00 +0000</pubDate>
+    <description>Rencana pembelajaran dan berkas tiap pertemuan dibuka penuh untuk diunduh, tanpa pendaftaran.</description>
+  </item>
+</channel>
+</rss>
