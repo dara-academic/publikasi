@@ -850,7 +850,8 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
   overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
 
-.prose { max-width: 68ch; }
+.prose { max-width: min(68ch, 100%); }
+.paper-body > * { min-width: 0; }
 
 /* Ringkasan kartu berhenti di lebar baca yang nyaman, judul dan sampul tidak bergeser */
 .card p.hook { max-width: 62ch; }
