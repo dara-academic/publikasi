@@ -14,7 +14,7 @@
 <meta property="og:image:height" content="630">
 <link rel="canonical" href="https://despinurdara.id/mengajar.html">
 <link rel="icon" href="assets/favicon.svg?v=500dc24e" type="image/svg+xml">
-<link rel="stylesheet" href="assets/style.css?v=d26ab837">
+<link rel="stylesheet" href="assets/style.css?v=818f5a38">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 </head>
@@ -24,6 +24,12 @@
   <div class="ak-bar-isi">
     <a class="ak-nama" href="index.html">Despinur Dara</a>
     <button class="nav-toggle" aria-label="Buka menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="cari">
+      <label class="sr-only" for="cari">Cari isi situs</label>
+      <input class="cari-input" id="cari" type="search" autocomplete="off"
+             placeholder="Cari materi, paper, istilah" data-naik="">
+      <div class="cari-hasil" hidden></div>
+    </div>
     <nav class="nav" aria-label="Navigasi utama">
         <a href="index.html">Beranda</a>
         <div class="nav-group active">
@@ -66,12 +72,6 @@
         </div>
         <a href="tentang.html">Profil</a>
     </nav>
-    <div class="cari">
-      <label class="sr-only" for="cari">Cari isi situs</label>
-      <input class="cari-input" id="cari" type="search" autocomplete="off"
-             placeholder="Cari materi, paper, istilah" data-naik="">
-      <div class="cari-hasil" hidden></div>
-    </div>
   </div>
 </header>
 
@@ -83,13 +83,76 @@
     <p>Tiap mata kuliah memuat rencana pembelajaran resmi enam belas pertemuan beserta berkas tiap pertemuannya dalam bentuk PDF. Pertemuan yang berkasnya belum ada ditandai apa adanya, bukan disembunyikan, supaya terlihat jelas mana yang sudah siap dan mana yang masih dikerjakan. Mata kuliah yang belum punya satu pun materi tidak dipajang di sini, karena etalase tanpa barang hanya membuat pengunjung kecewa.</p>
 
     <ul class="ak-mkl">
-      <li><a href="mata-kuliah/pengantar-manajemen.html">Pengantar Manajemen</a><span>Semester 124 &middot; 9 materi</span></li>
-      <li><a href="mata-kuliah/pengadaan-sdm-aparatur.html">Pengadaan SDM Aparatur</a><span>Semester 124 &middot; 9 materi</span></li>
-      <li><a href="mata-kuliah/kompensasi-perlindungan-sdm.html">Kompensasi dan Perlindungan SDM Aparatur</a><span>Semester 124 &middot; 7 materi</span></li>
-      <li><a href="mata-kuliah/pelatihan-dan-pengembangan.html">Pelatihan dan Pengembangan</a><span>Semester 124 &middot; 10 materi</span></li>
-      <li><a href="mata-kuliah/manajemen-kinerja.html">Manajemen Kinerja</a><span>Semester 124 &middot; 1 materi</span></li>
-      <li><a href="mata-kuliah/simulasi-bisnis.html">Simulasi Bisnis</a><span>Semester 124 &middot; 12 materi</span></li>
-      <li><a href="mata-kuliah/management-information-system.html">Management Information System</a><span>Semester 124 &middot; 3 materi</span></li>
+      <li>
+        <a href="mata-kuliah/pengantar-manajemen.html">
+          <img src="assets/mk/pengantar-manajemen.jpg?v=18e01c10" alt="" loading="lazy" decoding="async" width="640" height="360">
+          <span class="mkl-teks">
+            <b>Pengantar Manajemen</b>
+            <span class="mkl-meta">Semester 124 &middot; 9 materi siap unduh</span>
+          </span>
+          <svg class="mkl-panah" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li>
+        <a href="mata-kuliah/pengadaan-sdm-aparatur.html">
+          <img src="assets/mk/pengadaan-sdm-aparatur.jpg?v=a7a73ecd" alt="" loading="lazy" decoding="async" width="640" height="360">
+          <span class="mkl-teks">
+            <b>Pengadaan SDM Aparatur</b>
+            <span class="mkl-meta">Semester 124 &middot; 9 materi siap unduh</span>
+          </span>
+          <svg class="mkl-panah" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li>
+        <a href="mata-kuliah/kompensasi-perlindungan-sdm.html">
+          <img src="assets/mk/kompensasi-perlindungan-sdm.jpg?v=08144e91" alt="" loading="lazy" decoding="async" width="640" height="360">
+          <span class="mkl-teks">
+            <b>Kompensasi dan Perlindungan SDM Aparatur</b>
+            <span class="mkl-meta">Semester 124 &middot; 7 materi siap unduh</span>
+          </span>
+          <svg class="mkl-panah" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li>
+        <a href="mata-kuliah/pelatihan-dan-pengembangan.html">
+          <img src="assets/mk/pelatihan-dan-pengembangan.jpg?v=1de912dd" alt="" loading="lazy" decoding="async" width="640" height="360">
+          <span class="mkl-teks">
+            <b>Pelatihan dan Pengembangan</b>
+            <span class="mkl-meta">Semester 124 &middot; 10 materi siap unduh</span>
+          </span>
+          <svg class="mkl-panah" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li>
+        <a href="mata-kuliah/manajemen-kinerja.html">
+          <img src="assets/mk/manajemen-kinerja.jpg?v=aab64075" alt="" loading="lazy" decoding="async" width="640" height="360">
+          <span class="mkl-teks">
+            <b>Manajemen Kinerja</b>
+            <span class="mkl-meta">Semester 124 &middot; 1 materi siap unduh</span>
+          </span>
+          <svg class="mkl-panah" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li>
+        <a href="mata-kuliah/simulasi-bisnis.html">
+          <img src="assets/mk/simulasi-bisnis.jpg?v=096aacec" alt="" loading="lazy" decoding="async" width="640" height="360">
+          <span class="mkl-teks">
+            <b>Simulasi Bisnis</b>
+            <span class="mkl-meta">Semester 124 &middot; 12 materi siap unduh</span>
+          </span>
+          <svg class="mkl-panah" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
+      <li>
+        <a href="mata-kuliah/management-information-system.html">
+          <img src="assets/mk/management-information-system.jpg?v=013e38aa" alt="" loading="lazy" decoding="async" width="640" height="360">
+          <span class="mkl-teks">
+            <b>Management Information System</b>
+            <span class="mkl-meta">Semester 124 &middot; 3 materi siap unduh</span>
+          </span>
+          <svg class="mkl-panah" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
+      </li>
     </ul>
 
     <h2>Bimbingan karya ilmiah</h2>
