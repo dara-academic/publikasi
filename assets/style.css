@@ -957,10 +957,9 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 
 @media (max-width: 640px) {
         }
-@media print { .kontak-apung { display: none !important; } }
 
 /* Pemberitahuan singkat setelah alamat email tersalin */
-@media print { .ka-toast { display: none !important; } }
+@media print {  }
 
 /* ===== Panduan menulis bagian per bagian ===== */
 .mb-kunci {
@@ -1029,19 +1028,8 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 /* Tautan cepat ke bagian Bedah Publikasi */
 
 /* Bagian yang belum dibuka */
-.pk-segera {
-  display: grid; gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
-.pk-segera > div {
-  background: var(--surface); border: 1px dashed var(--line);
-  border-radius: 12px; padding: 18px 20px;
-}
-.pk-segera b { display: block; font-family: var(--serif); font-size: 17px; font-weight: 600; margin-bottom: 6px; }
-.pk-segera span { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
 
 /* Daftar enam belas pertemuan */
-.pk-belum { color: var(--ink-muted); background: var(--pastel-gray); }
 
 /* Halaman Bimbingan */
 .bm-grid {
@@ -1182,7 +1170,6 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
   border: 2px solid var(--line);
 }
 .tl-ada .tl-no { color: var(--accent-dark); background: var(--pastel-blue); border-color: transparent; }
-.tl-ujian .tl-no { color: #7a5c1f; background: var(--pastel-butter); border-color: transparent; }
 
 /* sampul materi di depan tiap pertemuan */
 .tl-sampul {
@@ -1199,7 +1186,6 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
   display: block; font-family: var(--serif); font-size: 17px;
   font-weight: 600; line-height: 1.4; margin-bottom: 10px;
 }
-.tl-ujian .tl-teks b { color: var(--ink-soft); }
 .tl-butir .pk-unduh { margin-top: 2px; }
 
 @media (max-width: 620px) {
@@ -1476,11 +1462,11 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
   padding: 0; border: 0; background: none; min-height: 0;
 }
 .ak-utama .hero::before, .ak-utama .hero::after { display: none; }
-.ak-utama .section, .ak-utama .section.alt {
+.ak-utama .section {
   padding: 0; background: none; border: 0;
 }
 .ak-utama .section + .section { margin-top: 4px; }
-.ak-utama .glos-wrap, .ak-utama .paper-wrap { max-width: none; }
+.ak-utama .glos-wrap { max-width: none; }
 .ak-utama .prose,
 .ak-utama .section-note,
 .ak-utama .glos-intro,
@@ -1773,10 +1759,10 @@ body[data-grup="profil"]          { --modul: #7a4a2a; --modul-tipis: #f6e6da; }
 /* Sasaran sentuh di layar sentuh. Tautan setinggi belasan piksel sulit
    dikenai jempol, jadi diberi ruang tekan tanpa mengubah tampilannya. */
 @media (max-width: 620px) {
-  .ak-utama a:not(.btn):not(.mk-ubin):not(.tl-sampul):not(.ak-modul):not(.ak-pintu) {
+  .ak-utama a:not(.btn):not(.mk-ubin):not(.tl-sampul):not(.ak-pintu) {
     padding-block: 3px;
   }
-  .kolab-tautan a, .tp-daftar a, .ak-mkl a, .mk-dukung a,
+  .tp-daftar a, .ak-mkl a, .mk-dukung a,
   .kabar a, .ak-pub-jdl { display: inline-block; min-height: 24px; }
   .ak-utama a:not([class]), .prose a, .card a:not(.card) {
     padding-block: 4px;
@@ -1813,4 +1799,39 @@ body.ak .ak-utama .mk-ubin p { max-width: none; }
    jadi diberi ruang tekan tanpa mengubah alur kalimatnya. */
 @media (max-width: 620px) {
   .ak-utama p > a:not([class]) { display: inline-block; padding-block: 5px; }
+}
+
+/* ------------------------------------------------------------------
+   Kuis periksa diri. Umpan baliknya langsung di bawah soal, bukan
+   ditunda sampai akhir, supaya pembahasannya terbaca selagi soalnya
+   masih segar di kepala.
+   ------------------------------------------------------------------ */
+.kz-soal {
+  margin: 0 0 18px; padding: 20px 22px; background: var(--bg);
+  border: 1px solid var(--line); border-radius: 12px;
+}
+.kz-tanya { font-size: 16px; font-weight: 600; line-height: 1.5; margin-bottom: 14px; }
+.kz-pilihan { display: grid; gap: 8px; }
+.kz-opsi {
+  display: flex; align-items: baseline; gap: 10px; text-align: left;
+  font-family: inherit; font-size: 15px; line-height: 1.5; color: var(--ink);
+  padding: 10px 14px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 9px; cursor: pointer;
+  transition: border-color 0.13s ease, background 0.13s ease;
+}
+.kz-opsi:hover:not(:disabled) { border-color: var(--modul); background: var(--modul-tipis); }
+.kz-opsi:disabled { cursor: default; opacity: 0.75; }
+.kz-opsi b { flex-shrink: 0; color: var(--modul); }
+.kz-opsi.kz-benar {
+  opacity: 1; border-color: #2f7d4f; background: var(--pastel-mint); font-weight: 600;
+}
+.kz-opsi.kz-salah { opacity: 1; border-color: #b3563e; background: var(--pastel-rose); }
+.kz-bahas {
+  margin: 12px 0 0; padding: 12px 14px; font-size: 14px; line-height: 1.65;
+  color: #6e4535; background: var(--pastel-rose); border-radius: 8px;
+}
+.kz-bahas-benar { color: #1d5b34; background: var(--pastel-mint); }
+.kz-hasil {
+  margin-top: 24px; padding: 18px 22px; font-size: 16px; line-height: 1.6;
+  background: var(--modul-tipis); color: var(--ink); border-radius: 12px;
 }
