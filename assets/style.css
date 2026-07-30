@@ -1160,3 +1160,14 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 .bm-segera b { display: block; font-family: var(--serif); font-size: 18px; font-weight: 600; margin-bottom: 10px; }
 .bm-segera p { font-size: 14px; color: #5c4a1f; line-height: 1.7; }
 .bm-segera p + p { margin-top: 10px; }
+
+/* Tautan unduh materi per pertemuan */
+.pk-unduh {
+  display: inline-flex; align-items: baseline; gap: 8px;
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  color: #1f5c33; background: var(--pastel-mint);
+  border-radius: 99px; padding: 5px 14px; white-space: nowrap;
+  transition: background 0.15s ease;
+}
+.pk-unduh:hover { background: #c9efd3; }
+.pk-unduh span { font-weight: 400; font-size: 12px; opacity: 0.85; }
