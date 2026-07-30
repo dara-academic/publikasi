@@ -37,8 +37,7 @@ body {
   line-height: 1.75;
 }
 
-/* Lebarnya disamakan persis dengan .ak-bar-isi dan .ak-halaman, supaya isi
-   halaman Bedah Publikasi segaris dengan bilah navigasi di atasnya. Selisih
+/* Lebarnya disamakan persis dengan .ak-bar-isi dan    halaman Bedah Publikasi segaris dengan bilah navigasi di atasnya. Selisih
    dua puluh piksel saja sudah membuat halamannya terasa situs yang berbeda. */
 .container { max-width: 964px; margin: 0 auto; padding: 0 26px; }
 
@@ -1126,7 +1125,6 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 
 /* Rak mata kuliah */
 
-/* Rak sampul */
 
 /* Dua pintu besar */
 
@@ -1365,32 +1363,8 @@ body.ak { background: var(--surface); }
 }
 .ak-angka span { font-size: 12.5px; color: var(--ink-muted); }
 
-/* Kartu submodul */
-.ak-modul-rak { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-.ak-modul {
-  display: flex; flex-direction: column; background: var(--bg);
-  border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
-  text-decoration: none; color: var(--ink);
-  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
-}
-.ak-modul:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 16px 34px rgba(28, 52, 80, 0.13); }
-.ak-modul-gbr { line-height: 0; background: var(--pastel-gray); }
-.ak-modul-gbr img { width: 100%; height: 124px; object-fit: cover; display: block; }
-.ak-modul-isi { display: flex; flex-direction: column; gap: 5px; padding: 16px 18px 18px; }
-.ak-modul-isi b { font-family: var(--sans); font-size: 18px; font-weight: 700; letter-spacing: -0.012em; }
-.ak-modul-angka { font-size: 12.5px; font-weight: 600; color: var(--accent-dark); }
-.ak-modul-ket { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 4px; }
 
-/* Rak sampul */
-/* Tingginya yang disamakan, bukan lebarnya, karena sampul jurnal dan buku
-   nisbahnya berbeda-beda. Kalau lebarnya yang dipatok, deretannya jadi
-   bergerigi di sisi atas. */
-.ak-rak { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; margin-top: 18px; }
-.ak-rak a { display: block; height: 146px; border-radius: 4px; overflow: hidden; line-height: 0;
   box-shadow: 0 7px 20px rgba(28, 52, 80, 0.14); transition: transform 0.18s ease, box-shadow 0.18s ease; }
-.ak-rak img { height: 100%; width: auto; display: block; }
-.ak-rak a:hover { transform: translateY(-6px); box-shadow: 0 15px 32px rgba(28, 52, 80, 0.22); }
-.ak-rak-buku a { height: 168px; }
 
 .ak-catatan {
   margin-top: 52px; padding: 20px 22px; background: var(--bg);
@@ -1411,14 +1385,8 @@ body.ak { background: var(--surface); }
 @media (max-width: 620px) {
   .ak-sisi { grid-template-columns: 1fr; margin-top: -56px; }
   .ak-potret { grid-row: auto; max-width: 140px; }
-  .ak-rak a { height: 118px; }
-  .ak-rak-buku a { height: 136px; }
-}
+    }
 
-/* Halaman modul, tanpa spanduk dan tanpa kolom kiri */
-.ak-halaman { max-width: 964px; margin: 0 auto; padding: 0 26px 80px; }
-.ak-halaman .ak-utama { padding-top: 52px; }
-.ak-halaman .kicker { margin-bottom: 12px; }
 body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
 body.ak .hero, body.ak .hero-tipis { background: var(--bg); }
 
@@ -1428,8 +1396,6 @@ body.ak .hero, body.ak .hero-tipis { background: var(--bg); }
    dengan nama jurnal dan kuartilnya, karena itulah yang dicari
    orang saat menilai rekam jejak seorang akademisi.
    ------------------------------------------------------------ */
-.ak-bidang { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; padding: 0; list-style: none; }
-.ak-bidang li {
   font-size: 13px; color: var(--accent-dark); background: var(--pastel-blue);
   padding: 5px 12px; border-radius: 999px;
 }
@@ -1443,13 +1409,24 @@ body.ak .hero, body.ak .hero-tipis { background: var(--bg); }
 .ak-mkl a:hover { color: var(--accent-dark); text-decoration: underline; }
 .ak-mkl li > span { margin-left: auto; font-size: 12.5px; color: var(--ink-muted); white-space: nowrap; }
 
-.ak-pub { list-style: none; padding: 0; margin: 22px 0 0; }
-.ak-pub li {
-  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 14px;
-  padding: 15px 0; border-top: 1px solid var(--line);
+/* Daftar publikasi disusun sebagai garis waktu tegak. Tahunnya menjadi simpul
+   di atas garis, sehingga urutan terbitnya terbaca sekali lihat tanpa perlu
+   membaca angkanya satu per satu. */
+.ak-pub { position: relative; list-style: none; padding: 0; margin: 26px 0 0; }
+.ak-pub::before {
+  content: ""; position: absolute; top: 15px; bottom: 22px; left: 29px; width: 2px;
+  background: linear-gradient(180deg, var(--pastel-blue) 0%, var(--line) 45%, var(--line) 100%);
 }
-.ak-pub li:first-child { border-top: none; padding-top: 2px; }
-.ak-pub-thn { font-size: 13px; font-weight: 700; color: var(--ink-muted); padding-top: 3px; }
+.ak-pub li { position: relative; padding: 0 0 26px 82px; }
+.ak-pub li:last-child { padding-bottom: 4px; }
+.ak-pub-thn {
+  position: absolute; left: 0; top: 0; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  width: 60px; height: 30px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 700; letter-spacing: 0.02em;
+  color: var(--accent-dark); background: var(--pastel-blue);
+  border: 3px solid var(--surface);
+}
 .ak-pub-jdl {
   display: block; font-size: 15.5px; font-weight: 600; line-height: 1.45;
   color: var(--ink); text-decoration: none;
@@ -1470,3 +1447,27 @@ body.ak .hero, body.ak .hero-tipis { background: var(--bg); }
   .ak-mkl li { flex-wrap: wrap; gap: 4px 12px; }
   .ak-mkl li > span { margin-left: 0; }
 }
+
+/* Deretan buku: sampul dan judulnya menyatu sebagai satu butir. Sebelumnya
+   sampul dipajang sendiri lalu judulnya didaftar lagi di bawahnya, padahal
+   keduanya menuju halaman yang sama. */
+.ak-buku-rak {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: 22px 16px; margin-top: 20px;
+}
+.ak-buku-rak a { display: block; text-decoration: none; color: var(--ink); }
+.ak-buku-rak img {
+  width: 100%; height: auto; display: block; border-radius: 4px;
+  box-shadow: 0 7px 20px rgba(28, 52, 80, 0.14);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.ak-buku-rak a:hover img { transform: translateY(-6px); box-shadow: 0 15px 32px rgba(28, 52, 80, 0.22); }
+.ak-buku-rak span { display: block; margin-top: 10px; font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
+.ak-buku-rak a:hover span { color: var(--accent-dark); }
+
+/* Tema riset, ditulis sebagai daftar bernama, bukan kartu, karena isinya
+   memang uraian dan bukan pintu ke halaman lain. */
+.ak-tema { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 18px; }
+.ak-tema li { padding-left: 16px; border-left: 3px solid var(--pastel-blue); }
+.ak-tema b { display: block; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.ak-tema span { display: block; font-size: 15px; line-height: 1.6; color: var(--ink-soft); }
