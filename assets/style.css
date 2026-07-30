@@ -1668,5 +1668,14 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
 .kabar a:hover { color: var(--accent-dark); text-decoration: underline; }
 .kb-ket { display: block; margin-top: 3px; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
 
-/* Tanggal pembaruan di kaki halaman, diisi otomatis dari riwayat git */
-.kaki-tgl { font-size: 12px; color: var(--ink-muted); margin-bottom: 4px; }
+/* Tanggal pembaruan menyatu di baris hak cipta, diisi dari riwayat git */
+.kaki-tgl { color: var(--ink-muted); }
+
+/* Daftar karya di halaman topik */
+.tp-daftar { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 12px; }
+.tp-daftar li { padding-left: 16px; border-left: 3px solid var(--pastel-blue); }
+.tp-daftar a { font-size: 15.5px; font-weight: 600; color: var(--ink); text-decoration: none; }
+.tp-daftar a:hover { color: var(--accent-dark); text-decoration: underline; }
+.tp-ket { display: block; margin-top: 2px; font-size: 13px; font-style: italic; color: var(--ink-soft); }
+.ak-tema a { color: inherit; text-decoration: none; }
+.ak-tema a:hover { color: var(--accent-dark); text-decoration: underline; }
