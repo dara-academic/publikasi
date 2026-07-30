@@ -1243,139 +1243,217 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 }
 
 /* ============================================================
-   Pola situs akademik personal: bilah nama, spanduk, dua kolom
+   Pola situs akademik personal.
+
+   Geometrinya diukur langsung dari robertavaltorta.com: bilah abu
+   setinggi 64px, spanduk selebar layar setinggi 320px, potret
+   persegi 210px yang menumpuk 105px ke atas spanduk, lalu dua
+   kolom 210px dan 678px dengan jarak 24px. Skala hurufnya sama,
+   yaitu 48px untuk judul, 20px untuk paragraf pembuka, dan 16px
+   untuk teks isi. Warna aksennya tetap navy, karena itu warna
+   merek situs ini dan sudah dipakai di seluruh halaman lain.
    ============================================================ */
 body.ak { background: var(--surface); }
 
 /* Bilah nama di paling atas */
-.ak-bar { background: var(--accent-dark); position: sticky; top: 0; z-index: 40; }
+.ak-bar { background: #f0f0f0; border-bottom: 1px solid #e2e2e2; position: sticky; top: 0; z-index: 40; }
 .ak-bar-isi {
-  max-width: 1220px; margin: 0 auto; padding: 0 26px;
-  display: flex; align-items: center; gap: 20px; min-height: 58px;
+  max-width: 964px; margin: 0 auto; padding: 0 26px;
+  display: flex; align-items: center; gap: 24px; min-height: 64px;
 }
 .ak-nama {
-  font-family: var(--serif); font-size: 19px; font-weight: 600;
-  color: #fff; text-decoration: none; white-space: nowrap;
+  font-family: var(--sans); font-size: 20px; font-weight: 700; letter-spacing: -0.012em;
+  color: var(--ink); text-decoration: none; white-space: nowrap;
 }
-.ak-menu { margin-left: auto; display: flex; gap: 4px; flex-wrap: wrap; }
+.ak-nama:hover { color: var(--accent-dark); }
+.ak-menu { margin-left: auto; display: flex; gap: 22px; flex-wrap: wrap; }
 .ak-menu a {
-  font-size: 14.5px; font-weight: 500; color: rgba(255, 255, 255, 0.86);
-  text-decoration: none; padding: 8px 14px; border-radius: 8px;
-  transition: background 0.15s ease, color 0.15s ease;
+  font-size: 15px; color: #212121; text-decoration: none;
+  padding: 3px 0; border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
-.ak-menu a:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
-.ak-menu a.aktif { background: rgba(255, 255, 255, 0.2); color: #fff; font-weight: 600; }
-.ak-toggle { display: none; }
+.ak-menu a:hover { color: var(--accent-dark); border-bottom-color: var(--accent); }
+.ak-menu a.aktif { color: var(--accent-dark); font-weight: 600; border-bottom-color: var(--accent-dark); }
 
-/* Spanduk lebar */
-.ak-spanduk { line-height: 0; background: var(--pastel-gray); }
-.ak-spanduk img { width: 100%; height: clamp(190px, 27vw, 330px); object-fit: cover; display: block; }
+/* Spanduk selebar layar */
+.ak-spanduk { line-height: 0; background: var(--pastel-gray); position: relative; }
+.ak-spanduk img {
+  width: 100%; height: clamp(170px, 25vw, 320px);
+  object-fit: cover; object-position: center 46%; display: block;
+}
+/* sisi kiri diredupkan tipis supaya potret yang menumpuk tetap terbaca */
+.ak-spanduk::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(28,52,80,0.18) 0%, rgba(28,52,80,0.05) 34%, rgba(28,52,80,0) 60%);
+}
 
 /* Dua kolom */
 .ak-wadah {
-  max-width: 1220px; margin: 0 auto; padding: 0 26px 70px;
-  display: grid; gap: 52px; grid-template-columns: 268px minmax(0, 1fr);
+  max-width: 964px; margin: 0 auto; padding: 0 26px 80px;
+  display: grid; gap: 24px; grid-template-columns: 210px minmax(0, 1fr);
   align-items: start;
 }
 
-/* Kolom kiri */
-.ak-sisi { margin-top: -86px; }
+/* Kolom kiri: identitas dan kontak.
+   z-index perlu dinaikkan supaya potret tampil utuh. Tanpa itu spanduk yang
+   ber-position relative akan dilukis di atasnya dan memotong bagian atas foto. */
+.ak-sisi { margin-top: -105px; position: relative; z-index: 2; }
 .ak-potret {
-  width: 100%; max-width: 268px; aspect-ratio: 1; object-fit: cover;
-  border: 7px solid var(--surface); border-radius: 4px;
-  box-shadow: 0 12px 32px rgba(28, 52, 80, 0.18); margin-bottom: 18px;
+  /* height perlu dikembalikan ke auto, karena atribut height pada tag img
+     terhitung sebagai petunjuk gaya dan itu mematikan aspect-ratio */
+  width: 100%; height: auto; aspect-ratio: 1; object-fit: cover;
+  border: 6px solid var(--surface); border-radius: 2px;
+  box-shadow: 0 10px 28px rgba(28, 52, 80, 0.20); margin-bottom: 16px;
 }
-.ak-sisi-nama { font-family: var(--serif); font-size: 20px; font-weight: 600; line-height: 1.35; margin-bottom: 8px; }
-.ak-sisi-peran { font-size: 14.5px; color: var(--ink); line-height: 1.6; margin-bottom: 12px; }
-.ak-sisi-lembaga { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 18px; }
-.ak-tautan { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 9px; }
-.ak-tautan a { font-size: 14px; color: var(--accent); text-decoration: none; }
+.ak-sisi-peran { font-size: 16px; color: var(--ink); line-height: 1.5; margin-bottom: 16px; }
+.ak-sisi-lembaga { font-size: 15px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 20px; }
+.ak-tautan { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 11px; }
+.ak-tautan li { display: flex; align-items: center; gap: 10px; }
+.ak-tautan svg {
+  flex-shrink: 0; width: 17px; height: 17px; fill: none;
+  stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+}
+.ak-tautan a { font-size: 15px; color: var(--accent); text-decoration: none; }
 .ak-tautan a:hover { text-decoration: underline; }
 .ak-sisi-kutip {
-  font-family: var(--serif); font-size: 14.5px; font-style: italic;
-  color: var(--ink-soft); line-height: 1.7;
-  padding-top: 18px; border-top: 1px solid var(--line);
+  font-size: 14px; font-style: italic; color: var(--ink-soft); line-height: 1.6;
+  padding-top: 16px; border-top: 1px solid var(--line);
 }
 
-/* Kolom kanan */
-.ak-utama { padding-top: 42px; }
-.ak-utama h1 { font-family: var(--serif); font-size: clamp(30px, 4vw, 42px); font-weight: 600; line-height: 1.2; margin-bottom: 18px; }
-.ak-utama h2 {
-  font-family: var(--serif); font-size: 25px; font-weight: 600;
-  margin: 48px 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line);
+/* Kolom kanan: isi */
+.ak-utama { padding-top: 48px; }
+.ak-utama h1 {
+  font-family: var(--sans); font-size: clamp(32px, 5vw, 48px); font-weight: 700;
+  line-height: 1.2; letter-spacing: -0.024em; margin-bottom: 16px;
 }
-.ak-utama > p { font-size: 15.5px; color: var(--ink-soft); line-height: 1.75; max-width: 68ch; margin-bottom: 16px; }
-.ak-intro { font-size: 17px !important; color: var(--ink) !important; }
+.ak-utama h2 {
+  font-family: var(--sans); font-size: 26px; font-weight: 700; letter-spacing: -0.016em;
+  margin: 52px 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line);
+}
+.ak-utama > p { font-size: 16px; color: var(--ink); line-height: 1.6; margin-bottom: 18px; }
+.ak-utama > p a { color: var(--accent); }
+.ak-intro {
+  font-size: 20px !important; line-height: 1.4 !important;
+  color: var(--ink) !important; margin-bottom: 28px !important;
+}
 
 /* Angka ringkas */
-.ak-angka { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
+.ak-angka { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 8px; }
 .ak-angka > div {
-  flex: 1 1 130px; background: var(--bg); border: 1px solid var(--line);
-  border-radius: 12px; padding: 16px 18px;
+  flex: 1 1 120px; background: var(--bg); border: 1px solid var(--line);
+  border-radius: 10px; padding: 15px 16px;
 }
-.ak-angka b { display: block; font-family: var(--serif); font-size: 30px; font-weight: 600; color: var(--accent-dark); line-height: 1; margin-bottom: 5px; }
+.ak-angka b {
+  display: block; font-family: var(--sans); font-size: 30px; font-weight: 700;
+  color: var(--accent-dark); line-height: 1; letter-spacing: -0.02em; margin-bottom: 5px;
+}
 .ak-angka span { font-size: 12.5px; color: var(--ink-muted); }
 
-/* Empat pintu masuk */
-.ak-modul-rak { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); }
+/* Kartu submodul */
+.ak-modul-rak { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .ak-modul {
   display: flex; flex-direction: column; background: var(--bg);
-  border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
   text-decoration: none; color: var(--ink);
   transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
 }
 .ak-modul:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 16px 34px rgba(28, 52, 80, 0.13); }
 .ak-modul-gbr { line-height: 0; background: var(--pastel-gray); }
-.ak-modul-gbr img { width: 100%; height: 132px; object-fit: cover; display: block; }
-.ak-modul-isi { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px 20px; }
-.ak-modul-isi b { font-family: var(--serif); font-size: 19px; font-weight: 600; }
+.ak-modul-gbr img { width: 100%; height: 124px; object-fit: cover; display: block; }
+.ak-modul-isi { display: flex; flex-direction: column; gap: 5px; padding: 16px 18px 18px; }
+.ak-modul-isi b { font-family: var(--sans); font-size: 18px; font-weight: 700; letter-spacing: -0.012em; }
 .ak-modul-angka { font-size: 12.5px; font-weight: 600; color: var(--accent-dark); }
 .ak-modul-ket { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 4px; }
 
 /* Rak sampul */
-.ak-rak { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; margin-top: 20px; }
-.ak-rak a { display: block; width: 118px; border-radius: 5px; overflow: hidden; line-height: 0;
+/* Tingginya yang disamakan, bukan lebarnya, karena sampul jurnal dan buku
+   nisbahnya berbeda-beda. Kalau lebarnya yang dipatok, deretannya jadi
+   bergerigi di sisi atas. */
+.ak-rak { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; margin-top: 18px; }
+.ak-rak a { display: block; height: 146px; border-radius: 4px; overflow: hidden; line-height: 0;
   box-shadow: 0 7px 20px rgba(28, 52, 80, 0.14); transition: transform 0.18s ease, box-shadow 0.18s ease; }
-.ak-rak img { width: 100%; height: auto; display: block; }
+.ak-rak img { height: 100%; width: auto; display: block; }
 .ak-rak a:hover { transform: translateY(-6px); box-shadow: 0 15px 32px rgba(28, 52, 80, 0.22); }
-.ak-rak-buku a { width: 132px; }
+.ak-rak-buku a { height: 168px; }
 
 .ak-catatan {
-  margin-top: 52px; padding: 22px 24px; background: var(--bg);
-  border: 1px solid var(--line); border-radius: 12px;
+  margin-top: 52px; padding: 20px 22px; background: var(--bg);
+  border: 1px solid var(--line); border-radius: 10px;
 }
 .ak-catatan p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.75; margin: 0; }
 
 @media (max-width: 900px) {
-  .ak-wadah { grid-template-columns: 1fr; gap: 30px; padding-bottom: 46px; }
-  .ak-sisi { margin-top: -64px; display: grid; grid-template-columns: 168px minmax(0, 1fr); gap: 20px; align-items: end; }
-  .ak-potret { max-width: 168px; margin-bottom: 0; grid-row: span 5; }
+  .ak-wadah { grid-template-columns: 1fr; gap: 28px; padding-bottom: 50px; }
+  .ak-sisi { margin-top: -80px; display: grid; grid-template-columns: 168px minmax(0, 1fr); gap: 22px; align-items: end; }
+  /* align-self perlu ditegaskan, karena butir grid meregang secara bawaan dan
+     peregangan itu mengalahkan aspect-ratio sehingga potretnya jadi lonjong */
+  .ak-potret { max-width: 168px; margin-bottom: 0; grid-row: span 5; align-self: start; }
   .ak-sisi-kutip { grid-column: 1 / -1; }
   .ak-utama { padding-top: 8px; }
-  .ak-utama h2 { margin-top: 38px; }
+  .ak-utama h2 { margin-top: 40px; }
 }
 @media (max-width: 620px) {
-  .ak-bar-isi { flex-wrap: wrap; padding: 10px 18px; }
-  .ak-menu { margin-left: 0; width: 100%; gap: 2px; }
-  .ak-menu a { padding: 7px 10px; font-size: 13.5px; }
-  .ak-sisi { grid-template-columns: 1fr; margin-top: -48px; }
+  .ak-bar-isi { flex-wrap: wrap; padding: 10px 18px; min-height: 0; gap: 8px; }
+  .ak-menu { margin-left: 0; width: 100%; gap: 16px; }
+  .ak-menu a { font-size: 14px; }
+  .ak-sisi { grid-template-columns: 1fr; margin-top: -56px; }
   .ak-potret { grid-row: auto; max-width: 140px; }
-  .ak-rak a { width: 92px; }
-  .ak-rak-buku a { width: 104px; }
+  .ak-rak a { height: 118px; }
+  .ak-rak-buku a { height: 136px; }
 }
 
-/* Halaman modul tanpa spanduk dan tanpa sidebar */
-.ak-halaman { max-width: 1000px; margin: 0 auto; padding: 0 26px 70px; }
-.ak-halaman .ak-utama { padding-top: 48px; }
+/* Halaman modul, tanpa spanduk dan tanpa kolom kiri */
+.ak-halaman { max-width: 964px; margin: 0 auto; padding: 0 26px 80px; }
+.ak-halaman .ak-utama { padding-top: 52px; }
 .ak-halaman .kicker { margin-bottom: 12px; }
-body.ak .glos-wrap { max-width: 1000px; margin-inline: auto; }
+body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
 body.ak .hero, body.ak .hero-tipis { background: var(--bg); }
 
-/* Spanduk mengambil pita tengah gambar, dan sisi kirinya diredupkan tipis
-   supaya potret yang menumpuk di situ tetap terbaca. */
-.ak-spanduk { position: relative; }
-.ak-spanduk img { object-position: center 46%; }
-.ak-spanduk::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(90deg, rgba(28,52,80,0.16) 0%, rgba(28,52,80,0.04) 34%, rgba(28,52,80,0) 60%);
+/* ------------------------------------------------------------
+   Isi profil di beranda: bidang keahlian, daftar mata kuliah,
+   dan daftar publikasi. Daftar publikasi sengaja ditulis lengkap
+   dengan nama jurnal dan kuartilnya, karena itulah yang dicari
+   orang saat menilai rekam jejak seorang akademisi.
+   ------------------------------------------------------------ */
+.ak-bidang { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; padding: 0; list-style: none; }
+.ak-bidang li {
+  font-size: 13px; color: var(--accent-dark); background: var(--pastel-blue);
+  padding: 5px 12px; border-radius: 999px;
+}
+
+.ak-mkl {
+  list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 1px;
+  background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+}
+.ak-mkl li { display: flex; align-items: baseline; gap: 12px; background: var(--bg); padding: 12px 16px; }
+.ak-mkl a { font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none; }
+.ak-mkl a:hover { color: var(--accent-dark); text-decoration: underline; }
+.ak-mkl li > span { margin-left: auto; font-size: 12.5px; color: var(--ink-muted); white-space: nowrap; }
+
+.ak-pub { list-style: none; padding: 0; margin: 22px 0 0; }
+.ak-pub li {
+  display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 14px;
+  padding: 15px 0; border-top: 1px solid var(--line);
+}
+.ak-pub li:first-child { border-top: none; padding-top: 2px; }
+.ak-pub-thn { font-size: 13px; font-weight: 700; color: var(--ink-muted); padding-top: 3px; }
+.ak-pub-jdl {
+  display: block; font-size: 15.5px; font-weight: 600; line-height: 1.45;
+  color: var(--ink); text-decoration: none;
+}
+.ak-pub-jdl:hover { color: var(--accent-dark); text-decoration: underline; }
+.ak-pub-jur { display: block; margin-top: 5px; font-size: 13.5px; font-style: italic; color: var(--ink-soft); }
+.ak-q {
+  display: inline-block; margin-left: 8px; font-style: normal; font-size: 11px;
+  font-weight: 700; letter-spacing: 0.04em; padding: 2px 7px; border-radius: 4px;
+}
+.ak-q1 { color: #1d5b34; background: var(--pastel-mint); }
+.ak-q2 { color: var(--accent-dark); background: var(--pastel-blue); }
+.ak-q3 { color: #7a5c1f; background: var(--pastel-butter); }
+.ak-qs { color: #7b3f3f; background: var(--pastel-rose); }
+
+@media (max-width: 620px) {
+  .ak-pub li { grid-template-columns: 1fr; gap: 4px; }
+  .ak-mkl li { flex-wrap: wrap; gap: 4px 12px; }
+  .ak-mkl li > span { margin-left: 0; }
 }
