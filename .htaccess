@@ -36,6 +36,10 @@ RedirectMatch 404 /\.git
   # halaman utama. Tautan yang sudah terlanjur beredar diarahkan ke akar,
   # bukan dibiarkan mati.
   RewriteRule ^portal\.html$ / [R=301,L]
+
+  # Materi pindah ke folder per semester. Tautan PDF lama yang sudah
+  # terlanjur dibagikan mahasiswa diarahkan ke lokasi barunya.
+  RewriteRule ^assets/materi/(?!\d)([a-z-]+)/(.+\.pdf)$ /assets/materi/124/$1/$2 [R=301,L]
   RewriteRule ^en/proses-terbit\.html$ /en/proses-review.html#menunggu-terbit [R=301,L]
 </IfModule>
 

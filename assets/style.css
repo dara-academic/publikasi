@@ -1609,3 +1609,36 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
   .ak-bar .nav { order: 2; }
 }
 @media print { .cari { display: none; } }
+
+/* ------------------------------------------------------------------
+   Halaman materi per pertemuan. Kartunya memuat sampul, fakta singkat
+   berkas, dan tombol unduh, supaya keputusan mengunduh bisa diambil
+   sebelum berkasnya disentuh.
+   ------------------------------------------------------------------ */
+.mt-kartu {
+  display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap;
+  margin: 26px 0 24px; padding: 22px; background: var(--bg);
+  border: 1px solid var(--line); border-radius: 14px;
+}
+.mt-sampul {
+  flex-shrink: 0; width: min(320px, 100%); height: auto; border-radius: 8px;
+  box-shadow: 0 8px 22px rgba(28, 52, 80, 0.16);
+}
+.mt-isi { flex: 1 1 260px; display: flex; flex-direction: column; gap: 18px; }
+.mt-meta { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.mt-meta li { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; font-size: 15px; }
+.mt-meta span {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--ink-muted); padding-top: 2px;
+}
+.mt-isi .btn { align-self: flex-start; }
+
+.mt-navigasi { display: flex; justify-content: space-between; gap: 12px; margin-top: 34px; }
+.mt-arah {
+  font-size: 14px; font-weight: 600; color: var(--accent-dark); text-decoration: none;
+  padding: 9px 16px; border: 1px solid var(--line); border-radius: 99px;
+}
+.mt-arah:hover { border-color: var(--accent); background: var(--pastel-blue); }
+.mt-kanan { margin-left: auto; }
+.kicker a { color: inherit; text-decoration: none; }
+.kicker a:hover { text-decoration: underline; }
