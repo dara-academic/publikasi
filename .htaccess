@@ -42,15 +42,27 @@ RedirectMatch 404 /\.git
 </IfModule>
 
 # Masa simpan di peramban
+# Halaman HTML tidak boleh disimpan browser tanpa dicek ulang. Sebelumnya
+# disimpan satu jam, sehingga setiap pembaruan baru terlihat oleh pengunjung
+# lama sampai satu jam kemudian, dan itu berkali-kali membuat perubahan yang
+# sudah naik dikira belum naik. Berkas gambar, CSS, dan PDF tetap disimpan lama
+# karena nama rujukannya sudah dibubuhi sidik isi, jadi berkas yang berubah
+# otomatis punya alamat baru dan tidak mungkin tertukar dengan versi lama.
 <IfModule mod_expires.c>
   ExpiresActive On
-  ExpiresByType text/html "access plus 1 hour"
+  ExpiresByType text/html "access plus 0 seconds"
   ExpiresByType text/css "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
   ExpiresByType image/jpeg "access plus 1 year"
   ExpiresByType image/png "access plus 1 year"
   ExpiresByType image/svg+xml "access plus 1 year"
   ExpiresByType application/pdf "access plus 1 month"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
 </IfModule>
 
 # Pengamanan dasar
