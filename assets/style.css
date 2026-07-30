@@ -1481,3 +1481,44 @@ body.ak .hero, body.ak .hero-tipis { background: var(--bg); }
 }
 /* Buku yang tahun terbitnya belum tercatat, ditandai apa adanya, bukan ditebak. */
 .ak-thn-kosong { color: var(--ink-muted); background: var(--pastel-gray); }
+
+/* ------------------------------------------------------------------
+   Penyesuaian isi halaman lama ke dalam kolom kanan kerangka bersama.
+
+   Halaman yang ditulis sebelum kerangka ini ada masih memakai pembungkus
+   .container, .hero, dan .section dari tata letak sebelumnya. Di dalam
+   kolom kanan pembungkus itu tidak diperlukan lagi. Dinetralkan lewat
+   gaya, bukan dengan membongkar HTML tiap halaman, supaya tidak ada
+   kalimat yang berisiko hilang.
+   ------------------------------------------------------------------ */
+.ak-utama .container { max-width: none; margin: 0; padding: 0; }
+.ak-utama .hero, .ak-utama .hero-tipis, .ak-utama .mk-hero {
+  padding: 0; border: 0; background: none; min-height: 0;
+}
+.ak-utama .hero::before, .ak-utama .hero::after { display: none; }
+.ak-utama .section, .ak-utama .section.alt {
+  padding: 0; background: none; border: 0;
+}
+.ak-utama .section + .section { margin-top: 4px; }
+.ak-utama .glos-wrap, .ak-utama .paper-wrap { max-width: none; }
+
+/* Judul dan paragraf pembuka disamakan dengan halaman modul */
+.ak-utama .hero h1, .ak-utama .paper-head h1 {
+  font-family: var(--sans); font-size: clamp(30px, 4.4vw, 42px); font-weight: 700;
+  letter-spacing: -0.024em; line-height: 1.2; margin-bottom: 14px;
+}
+.ak-utama .hero p.lead, .ak-utama p.lead {
+  font-size: 19px; line-height: 1.45; color: var(--ink); max-width: none;
+}
+.ak-utama .section-head h2 {
+  font-family: var(--sans); font-size: 24px; font-weight: 700; letter-spacing: -0.016em;
+}
+.ak-utama .section-head { margin-top: 42px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+
+/* Potret bulat di hero lama dihapus, karena potret sudah ada di kolom kiri
+   dan menampilkannya dua kali di satu layar hanya membuat halaman ramai. */
+.ak-utama .hero-flex { display: block; }
+.ak-utama .hero-profile { display: none; }
+
+.ak-utama .paper-head { padding: 0 0 22px; }
+.ak-utama .backlink-row { padding: 26px 0 0; }
