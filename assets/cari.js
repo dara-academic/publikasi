@@ -125,3 +125,22 @@
   }, { passive: true });
   gambar();
 })();
+
+/* Pengirim catatan kunjungan.
+
+   Memakai gambar satu piksel, bukan permintaan jaringan biasa, supaya tidak
+   terhalang penyekat iklan yang lazim dan tidak menunda pemuatan halaman.
+   Tidak ada kuki, tidak ada penyimpanan di peramban, dan tidak ada data yang
+   pergi ke pihak ketiga. */
+(function () {
+  if (location.hostname === 'localhost' || location.protocol === 'file:') return;
+  try {
+    var akar = document.querySelector('.cari-input');
+    var naik = akar ? akar.getAttribute('data-naik') || '' : '';
+    var g = new Image(1, 1);
+    g.src = naik + 'catat.php?h=' + encodeURIComponent(location.pathname)
+          + '&r=' + encodeURIComponent(document.referrer || '')
+          + '&w=' + window.innerWidth
+          + '&_=' + Math.random().toString(36).slice(2);
+  } catch (e) { /* pencatatan tidak boleh mengganggu halaman */ }
+})();

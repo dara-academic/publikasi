@@ -1,0 +1,3 @@
+Isi folder ini adalah catatan kunjungan harian dalam bentuk TSV.
+Tidak boleh diunggah ke git dan tidak boleh dibuka untuk umum.
+Ditutup lewat .htaccess pada dua lapis: RedirectMatch dan FilesMatch.

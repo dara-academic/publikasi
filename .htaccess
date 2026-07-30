@@ -13,10 +13,16 @@ ErrorDocument 404 /404.html
   <FilesMatch "^(README\.md|\.gitignore|\.gitattributes|\.nojekyll|.*\.py|.*\.zip|.*\.log)$">
     Require all denied
   </FilesMatch>
+
+  # Berkas catatan kunjungan tidak boleh dibuka siapa pun lewat peramban
+  <FilesMatch "\.tsv$">
+    Require all denied
+  </FilesMatch>
 </IfModule>
 
 # Seluruh isi folder .git tidak boleh terbaca dari luar
 RedirectMatch 404 /\.git
+RedirectMatch 404 ^/data/
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
