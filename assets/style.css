@@ -263,6 +263,11 @@ body {
 
 /* Cards */
 .card-grid { display: grid; gap: 22px; }
+/* Dua lajur khusus untuk kartu yang isinya hanya teks dan tombol, seperti di
+   halaman Template siap pakai. Kartu yang memuat sampul tetap satu lajur,
+   karena gambar dan teksnya berdampingan dan butuh lebar penuh. */
+.card-grid.dua { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: start; }
+.card-grid.dua .card-flex { display: block; }
 .card {
   background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
   padding: 28px 30px; display: block; text-decoration: none; color: var(--ink);
