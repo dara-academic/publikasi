@@ -37,7 +37,10 @@ body {
   line-height: 1.75;
 }
 
-.container { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+/* Lebarnya disamakan persis dengan .ak-bar-isi dan .ak-halaman, supaya isi
+   halaman Bedah Publikasi segaris dengan bilah navigasi di atasnya. Selisih
+   dua puluh piksel saja sudah membuat halamannya terasa situs yang berbeda. */
+.container { max-width: 964px; margin: 0 auto; padding: 0 26px; }
 
 /* Header */
 .site-header {
