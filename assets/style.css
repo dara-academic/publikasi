@@ -1876,3 +1876,52 @@ body.ak .ak-utama .mk-ubin p { max-width: none; }
   box-shadow: 0 8px 22px rgba(28, 52, 80, 0.16); }
 .ws-isi { flex: 1 1 220px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
 .ws-isi p { font-size: 15px; line-height: 1.6; margin: 0; }
+
+/* ------------------------------------------------------------------
+   Halaman Riset yang dikerjakan. Kartunya memakai lencana tahun besar
+   di kiri sebagai jangkar, karena riset dibaca menurut urutan waktu.
+   ------------------------------------------------------------------ */
+.rs-rak { display: grid; gap: 14px; margin: 30px 0 8px; }
+.rs-kartu {
+  display: flex; gap: 20px; align-items: flex-start; padding: 20px 22px;
+  background: var(--bg); border: 1px solid var(--line);
+  border-left: 4px solid var(--modul); border-radius: 13px;
+  text-decoration: none; color: var(--ink);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+.rs-kartu:hover {
+  transform: translateY(-3px); border-color: var(--modul);
+  box-shadow: 0 14px 32px rgba(28, 52, 80, 0.13);
+}
+.rs-thn {
+  flex-shrink: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.02em;
+  color: var(--modul); padding-top: 2px; min-width: 52px;
+}
+.rs-isi { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.rs-label { font-size: 12.5px; font-weight: 600; color: var(--ink-muted); }
+.rs-terbit {
+  display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 99px;
+  font-size: 11.5px; font-weight: 700; color: #1d5b34; background: var(--pastel-mint);
+}
+.rs-isi b { font-size: 16.5px; font-weight: 700; line-height: 1.4; }
+.rs-ket { font-size: 14px; line-height: 1.65; color: var(--ink-soft); }
+.rs-lanjut { font-size: 13.5px; font-weight: 600; color: var(--modul); margin-top: 3px; }
+
+/* Ajakan riset bersama. Diberi ruang dan warna sendiri karena inilah satu
+   satunya tindakan yang diminta dari pembaca di halaman ini. */
+.rs-ajak {
+  margin: 40px 0 8px; padding: 28px 30px; border-radius: 14px;
+  background: var(--modul-tipis); border: 1px solid transparent;
+}
+.rs-ajak b { display: block; font-size: 20px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 10px; }
+.rs-ajak p { font-size: 15px; line-height: 1.7; margin-bottom: 12px; }
+.rs-ajak-cara { color: var(--ink-soft); }
+.rs-ajak .btn { margin-top: 4px; }
+.rs-ajak-lain { display: block; margin-top: 14px; font-size: 13.5px; color: var(--ink-soft); }
+.rs-ajak-lain a { color: var(--modul); }
+
+@media (max-width: 560px) {
+  .rs-kartu { flex-direction: column; gap: 10px; }
+  .rs-thn { font-size: 19px; }
+  .rs-ajak { padding: 22px 20px; }
+}
