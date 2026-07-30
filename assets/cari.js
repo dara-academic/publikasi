@@ -105,3 +105,23 @@
     if (!bungkus.contains(e.target)) panel.hidden = true;
   });
 })();
+
+/* Batang kemajuan baca, hanya dipasang di halaman yang memang panjang.
+   Di halaman pendek batang seperti ini tidak memberi tahu apa pun dan hanya
+   menambah gerakan yang mengganggu. */
+(function () {
+  if (document.documentElement.scrollHeight < window.innerHeight * 3) return;
+  var batang = document.createElement('div');
+  batang.className = 'baca-maju';
+  document.body.appendChild(batang);
+  var tunggu = false;
+  function gambar() {
+    var tinggi = document.documentElement.scrollHeight - window.innerHeight;
+    batang.style.width = (tinggi > 0 ? (window.scrollY / tinggi) * 100 : 0) + '%';
+    tunggu = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!tunggu) { tunggu = true; requestAnimationFrame(gambar); }
+  }, { passive: true });
+  gambar();
+})();

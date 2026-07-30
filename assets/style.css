@@ -1709,3 +1709,39 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
   content: ""; position: absolute; left: 0; top: 9px;
   width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
 }
+
+/* ------------------------------------------------------------------
+   Warna identitas per modul.
+
+   Sebelumnya kelima modul memakai navy yang sama, sehingga tidak ada
+   petunjuk visual sedang berada di bagian apa. Tiap modul kini punya
+   satu rona sendiri, dipakai tipis pada kicker, garis bawah judul
+   bagian, dan penanda menu aktif. Semuanya dipilih gelap dan teredam
+   supaya tetap satu keluarga dengan navy induknya, dan nisbah
+   kontrasnya terhadap latar putih tetap di atas ambang keterbacaan.
+   ------------------------------------------------------------------ */
+:root { --modul: var(--accent-dark); --modul-tipis: var(--pastel-blue); }
+body[data-grup="mengajar"]        { --modul: #1d6270; --modul-tipis: #d5eef2; }
+body[data-grup="bedah-publikasi"] { --modul: #2c5580; --modul-tipis: #d7ebff; }
+body[data-grup="penelitian"]      { --modul: #574083; --modul-tipis: #e7e0f5; }
+body[data-grup="kolaborasi"]      { --modul: #2b6446; --modul-tipis: #dcf0e4; }
+body[data-grup="profil"]          { --modul: #7a4a2a; --modul-tipis: #f6e6da; }
+
+.kicker, .hero .kicker, .ak-utama .kicker { color: var(--modul); }
+.ak-utama h2 { border-bottom-color: color-mix(in srgb, var(--modul) 28%, var(--line)); }
+.ak-utama .section-head { border-bottom-color: color-mix(in srgb, var(--modul) 28%, var(--line)); }
+.ak-bar .nav > a.active, .ak-bar .nav-group.active > .nav-btn {
+  color: var(--modul); background: var(--modul-tipis);
+}
+.ak-pintu { border-left-color: var(--modul); }
+.tp-daftar li, .ak-tema li { border-left-color: var(--modul-tipis); }
+.mt-topik li::before { background: var(--modul); }
+.tl-ada .tl-no { background: var(--modul-tipis); color: var(--modul); }
+
+/* Batang kemajuan baca. Halaman terpanjang di situs ini sepuluh ribu piksel,
+   dan tanpa penanda posisi pembaca kehilangan jejak sudah sampai mana. */
+.baca-maju {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0;
+  background: var(--modul); z-index: 60; transition: width 0.08s linear;
+}
+@media print { .baca-maju { display: none; } }
