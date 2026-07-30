@@ -1488,12 +1488,15 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
   letter-spacing: -0.024em; line-height: 1.2; margin-bottom: 14px;
 }
 .ak-utama .hero p.lead, .ak-utama p.lead {
-  font-size: 19px; line-height: 1.45; color: var(--ink); max-width: none;
+  font-size: 19px; line-height: 1.55; color: var(--ink); max-width: none;
+  margin-bottom: 18px;
 }
+.ak-utama .hero { margin-bottom: 28px; }
 .ak-utama .section-head h2 {
   font-family: var(--sans); font-size: 24px; font-weight: 700; letter-spacing: -0.016em;
+  margin: 0; padding-bottom: 0; border-bottom: 0;
 }
-.ak-utama .section-head { margin-top: 42px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.ak-utama .section-head { margin-top: 52px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 
 /* Potret bulat di hero lama dihapus, karena potret sudah ada di kolom kiri
    dan menampilkannya dua kali di satu layar hanya membuat halaman ramai. */
