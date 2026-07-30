@@ -11,3 +11,4 @@ desktop.ini
 # berkas kerja lokal, tidak ikut ke server
 .claude/
 *.bak.jpg
+*.bak.css

@@ -1049,3 +1049,89 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
   .mb-kunci { border: 0; }
   .glos-chips, .glos-lanjut { display: none; }
 }
+
+/* ============================================================
+   Portal: beranda utama dan bagian mata kuliah
+   ============================================================ */
+
+/* Daftar ringkas mata kuliah di beranda */
+.pk-mk-grid {
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+.pk-mk {
+  display: flex; flex-direction: column; gap: 4px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px 18px; text-decoration: none; color: var(--ink);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.pk-mk:hover { border-color: var(--accent); transform: translateY(-2px); }
+.pk-mk-nama { font-family: var(--serif); font-size: 17px; font-weight: 600; line-height: 1.35; }
+.pk-mk-meta { font-size: 13px; color: var(--ink-muted); }
+
+/* Kartu mata kuliah di halaman indeks */
+.pk-grid {
+  display: grid; gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+.pk-kartu {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 24px 26px; text-decoration: none; color: var(--ink);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.pk-kartu:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 26px rgba(28, 52, 80, 0.09); }
+.pk-kartu h3 { font-family: var(--serif); font-size: 20px; font-weight: 600; line-height: 1.3; margin-bottom: 6px; }
+.pk-kode { font-size: 12px; letter-spacing: 0.04em; color: var(--ink-muted); margin-bottom: 12px; }
+.pk-desk { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 14px; }
+.pk-status { font-size: 13px; color: var(--ink-soft); padding-top: 12px; border-top: 1px solid var(--line); }
+.pk-status b { color: var(--accent-dark); font-size: 15px; }
+
+/* Tautan cepat ke bagian Bedah Publikasi */
+.pk-tautan { display: flex; flex-wrap: wrap; gap: 10px; }
+.pk-tautan a {
+  font-size: 14px; text-decoration: none; color: var(--accent-dark);
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 99px; padding: 8px 16px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.pk-tautan a:hover { border-color: var(--accent); background: var(--pastel-blue); }
+
+/* Bagian yang belum dibuka */
+.pk-segera {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.pk-segera > div {
+  background: var(--surface); border: 1px dashed var(--line);
+  border-radius: 12px; padding: 18px 20px;
+}
+.pk-segera b { display: block; font-family: var(--serif); font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+.pk-segera span { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+
+/* Daftar enam belas pertemuan */
+.pk-temu-list { list-style: none; padding: 0; margin: 0 0 26px; }
+.pk-temu {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 14px 0; border-bottom: 1px solid var(--line);
+}
+.pk-temu:last-child { border-bottom: none; }
+.pk-temu > div { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.pk-temu b { font-weight: 600; font-size: 15px; line-height: 1.5; }
+.pk-no {
+  flex-shrink: 0; width: 42px; text-align: center;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.03em;
+  color: var(--accent-dark); background: var(--pastel-blue);
+  border-radius: 6px; padding: 4px 0;
+}
+.pk-ujian .pk-no { color: #7a5c1f; background: var(--pastel-butter); }
+.pk-ujian b { color: var(--ink-soft); }
+.pk-ada, .pk-belum {
+  font-size: 12px; border-radius: 99px; padding: 3px 10px; white-space: nowrap;
+}
+.pk-ada { color: #1f5c33; background: var(--pastel-mint); }
+.pk-belum { color: var(--ink-muted); background: var(--pastel-gray); }
+
+@media (max-width: 560px) {
+  .pk-temu { gap: 12px; }
+  .pk-no { width: 36px; }
+}
