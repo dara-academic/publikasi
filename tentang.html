@@ -33,7 +33,7 @@
 <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet"></noscript>
 <link rel="alternate" hreflang="en" href="en/tentang.html">
 <link rel="alternate" hreflang="x-default" href="./tentang.html">
-<link rel="stylesheet" href="assets/style.css?v=9c778ed4">
+<link rel="stylesheet" href="assets/style.css?v=d26ab837">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://despinurdara.id/"},{"@type":"ListItem","position":2,"name":"Profil Penulis","item":"https://despinurdara.id/tentang.html"}]}</script>
 </head>
 <body class="ak">
@@ -85,6 +85,12 @@
         </div>
         <a href="tentang.html" class="active">Profil</a>
     </nav>
+    <div class="cari">
+      <label class="sr-only" for="cari">Cari isi situs</label>
+      <input class="cari-input" id="cari" type="search" autocomplete="off"
+             placeholder="Cari materi, paper, istilah" data-naik="">
+      <div class="cari-hasil" hidden></div>
+    </div>
   </div>
 </header>
 
@@ -92,9 +98,9 @@
 <main class="ak-utama" id="konten">
   <section class="hero">
     <div class="container">
-      <p class="kicker">Tentang halaman ini</p>
-      <h1>Mengapa etalase ini dibuat</h1>
-      <p class="lead">Banyak peneliti muda gagal bukan karena idenya lemah, tetapi karena tidak pernah melihat seperti apa proses publikasi yang sebenarnya. Proses itulah yang dibuka di sini.</p>
+      <p class="kicker">Profil</p>
+      <h1>Dr. Despinur Dara, S.T., M.M.</h1>
+      <p class="lead">Dosen tetap Fakultas Ekonomi Universitas Negeri Jakarta, dengan lebih dari dua puluh tahun pengalaman di bidang manajemen sumber daya manusia sebagai akademisi sekaligus praktisi.</p>
     </div>
   </section>
 
@@ -113,7 +119,16 @@
         <p>Dr. Despinur Dara, S.T., M.M. adalah akademisi sekaligus praktisi yang telah mengabdikan lebih dari 20 tahun kariernya di bidang manajemen sumber daya manusia. Sebagai dosen tetap di Fakultas Ekonomi Universitas Negeri Jakarta, beliau dikenal memiliki keahlian mendalam dalam manajemen SDM strategis, pelatihan dan pengembangan, serta talent management.</p>
         <p>Kredibilitasnya diperkuat sertifikasi profesional Certified Professional in Human Capital Management dan Certified Human Capital Business Partner. Dr. Dara menekankan pendekatan inovatif pada integrasi teknologi digital dan metode design thinking dalam pembelajaran serta pengelolaan SDM, menjadikannya sosok yang menjembatani teori dengan praktik.</p>
         <p>Sebagai peneliti aktif, Dr. Dara memberi perhatian besar pada isu transformasi digital dalam dunia kerja dan organisasi. Artikel-artikelnya terbit di jurnal bereputasi internasional terindeks Scopus dengan tema strategis seperti job crafting, employee well-being, job satisfaction, dan teknologi dalam well-being. Melalui karya dan dedikasinya, beliau berkomitmen mendukung terwujudnya SDM masa depan yang adaptif, kreatif, dan kompeten menghadapi era kerja digital yang terus berkembang.</p>
-        <p>Untuk berdiskusi lebih lanjut: email <a href="mailto:dara@unj.ac.id" style="color: var(--accent-dark);">dara@unj.ac.id</a>, <a href="https://www.scopus.com/authid/detail.uri?authorId=57219945924" target="_blank" rel="noopener" style="color: var(--accent-dark);">Scopus ID 57219945924</a>, atau <a href="https://orcid.org/0000-0001-7291-4643" target="_blank" rel="noopener" style="color: var(--accent-dark);">ORCID 0000-0001-7291-4643</a>.</p>
+        <div class="kontak-blok">
+          <h3>Menghubungi</h3>
+          <p>Surel adalah jalur yang paling diperhatikan, terutama untuk pertanyaan mahasiswa bimbingan, ajakan kolaborasi riset, dan permintaan pelatihan dari instansi. Sebutkan nama, asal institusi, dan pokok persoalannya sejak pesan pertama supaya jawabannya bisa langsung ke inti.</p>
+          <ul class="kontak-daftar">
+            <li><span>Surel</span><a href="mailto:dara@unj.ac.id">dara@unj.ac.id</a></li>
+            <li><span>Institusi</span>Fakultas Ekonomi, Universitas Negeri Jakarta</li>
+            <li><span>ORCID</span><a href="https://orcid.org/0000-0001-7291-4643" target="_blank" rel="noopener">0000-0001-7291-4643</a></li>
+            <li><span>Scopus</span><a href="https://www.scopus.com/authid/detail.uri?authorId=57219945924" target="_blank" rel="noopener">Author ID 57219945924</a></li>
+          </ul>
+        </div>
 
         <h2>Tentang etalase ini</h2>
         <p>Setiap paper di etalase ini dibedah dengan struktur yang sama: latar belakang, research gap, problem statement, novelty, landasan teori, metode, temuan, kontribusi, lalu bagian yang paling jarang dibuka orang, yaitu perjalanan review beserta catatan reviewer per ronde dan cara menjawabnya.</p>
@@ -185,33 +200,6 @@ document.querySelectorAll('.backlink').forEach(function (a) {
   });
 });
 </script>
-<div class="kontak-apung" aria-label="Hubungi penulis">
-  <a class="ka ka-wa" href="https://wa.me/6281917562333?text=Halo%20Bu%20Dara%2C%20saya%20membaca%20situs%20despinurdara.id.%0A%0ANama%3A%0AInstitusi%3A%0APertanyaan%3A%0A" target="_blank" rel="noopener" aria-label="Tanya lewat WhatsApp" data-tip="Tanya lewat WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.465 3.488"/></svg></a>
-  <a class="ka ka-mail" href="mailto:dara@unj.ac.id?subject=Pertanyaan%20seputar%20publikasi&body=Halo%20Bu%20Dara%2C%20saya%20membaca%20situs%20despinurdara.id.%0A%0ANama%3A%0AInstitusi%3A%0APosisi%3A%0APertanyaan%3A%0A" aria-label="Kirim email" data-tip="Kirim email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 6.5 9 6.5 9-6.5"/></svg></a>
-</div>
-<script>
-(function () {
-  var tombol = document.querySelector('.ka-mail');
-  if (!tombol) return;
-  var alamat = 'dara@unj.ac.id';
-  var pesan = document.documentElement.lang === 'en'
-    ? alamat + ' copied. If no mail app opens, just paste it.'
-    : alamat + ' tersalin. Kalau aplikasi email tidak terbuka, tinggal tempel saja.';
-  tombol.addEventListener('click', function () {
-    if (!navigator.clipboard) return;
-    navigator.clipboard.writeText(alamat).then(function () {
-      var t = document.createElement('div');
-      t.className = 'ka-toast';
-      t.textContent = pesan;
-      document.body.appendChild(t);
-      requestAnimationFrame(function () { t.classList.add('tampil'); });
-      setTimeout(function () {
-        t.classList.remove('tampil');
-        setTimeout(function () { t.remove(); }, 300);
-      }, 3600);
-    }).catch(function () {});
-  });
-})();
-</script>
+<script src="assets/cari.js" defer></script>
 </body>
 </html>
