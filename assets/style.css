@@ -1059,14 +1059,6 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 /* Kartu mata kuliah di halaman indeks */
 
 /* Tautan cepat ke bagian Bedah Publikasi */
-.pk-tautan { display: flex; flex-wrap: wrap; gap: 10px; }
-.pk-tautan a {
-  font-size: 14px; text-decoration: none; color: var(--accent-dark);
-  background: var(--surface); border: 1px solid var(--line);
-  border-radius: 99px; padding: 8px 16px;
-  transition: border-color 0.15s ease, background 0.15s ease;
-}
-.pk-tautan a:hover { border-color: var(--accent); background: var(--pastel-blue); }
 
 /* Bagian yang belum dibuka */
 .pk-segera {
@@ -1081,28 +1073,10 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 .pk-segera span { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
 
 /* Daftar enam belas pertemuan */
-.pk-temu-list { list-style: none; padding: 0; margin: 0 0 26px; }
-.pk-temu {
-  display: flex; gap: 16px; align-items: flex-start;
-  padding: 14px 0; border-bottom: 1px solid var(--line);
-}
-.pk-temu:last-child { border-bottom: none; }
-.pk-temu > div { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.pk-temu b { font-weight: 600; font-size: 15px; line-height: 1.5; }
-.pk-no {
-  flex-shrink: 0; width: 42px; text-align: center;
-  font-size: 12px; font-weight: 600; letter-spacing: 0.03em;
-  color: var(--accent-dark); background: var(--pastel-blue);
-  border-radius: 6px; padding: 4px 0;
-}
-.pk-ujian .pk-no { color: #7a5c1f; background: var(--pastel-butter); }
-.pk-ujian b { color: var(--ink-soft); }
 .pk-belum { color: var(--ink-muted); background: var(--pastel-gray); }
 
 @media (max-width: 560px) {
-  .pk-temu { gap: 12px; }
-  .pk-no { width: 36px; }
-}
+    }
 
 /* Halaman Bimbingan */
 .bm-grid {
@@ -1261,4 +1235,80 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 
 @media (max-width: 560px) {
   .mk-rak { gap: 16px; grid-template-columns: 1fr; }
+}
+
+/* Penyaring semester di rak mata kuliah */
+.mk-saring {
+  display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
+  margin-bottom: 26px; padding-bottom: 18px; border-bottom: 1px solid var(--line);
+}
+.mk-saring-label { font-size: 13px; font-weight: 600; color: var(--ink-muted); margin-right: 2px; }
+.mk-chip {
+  font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  color: var(--ink-soft); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 99px; padding: 7px 17px;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.mk-chip:hover { border-color: var(--accent); }
+.mk-chip.aktif { color: var(--accent-dark); background: var(--pastel-blue); border-color: transparent; }
+.mk-saring-hasil { margin-left: auto; font-size: 13px; color: var(--ink-muted); }
+.mk-ubin[hidden] { display: none; }
+
+@media (max-width: 560px) {
+  .mk-saring-hasil { margin-left: 0; width: 100%; }
+}
+
+/* ============================================================
+   Timeline pertemuan, dengan garis menurun dan sampul materi
+   ============================================================ */
+.tl { list-style: none; padding: 0; margin: 0 0 30px; position: relative; }
+
+/* garis yang mengalir dari pertemuan pertama sampai terakhir */
+.tl::before {
+  content: ""; position: absolute; top: 18px; bottom: 18px; left: 21px;
+  width: 2px; background: linear-gradient(180deg,
+    var(--pastel-blue) 0%, var(--line) 55%, var(--line) 100%);
+}
+
+.tl-butir {
+  position: relative; display: flex; gap: 18px; align-items: flex-start;
+  padding: 0 0 26px 60px;
+}
+.tl-butir:last-child { padding-bottom: 0; }
+
+/* simpul bernomor yang duduk di atas garis */
+.tl-no {
+  position: absolute; left: 0; top: 0; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  font-size: 12.5px; font-weight: 700; letter-spacing: 0.02em;
+  color: var(--ink-muted); background: var(--surface);
+  border: 2px solid var(--line);
+}
+.tl-ada .tl-no { color: var(--accent-dark); background: var(--pastel-blue); border-color: transparent; }
+.tl-ujian .tl-no { color: #7a5c1f; background: var(--pastel-butter); border-color: transparent; }
+
+/* sampul materi di depan tiap pertemuan */
+.tl-sampul {
+  flex-shrink: 0; display: block; width: 160px; border-radius: 10px;
+  overflow: hidden; line-height: 0; background: var(--pastel-gray);
+  box-shadow: 0 6px 18px rgba(28, 52, 80, 0.13);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.tl-sampul img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.tl-sampul:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(28, 52, 80, 0.2); }
+
+.tl-teks { flex: 1; min-width: 0; padding-top: 2px; }
+.tl-teks b {
+  display: block; font-family: var(--serif); font-size: 17px;
+  font-weight: 600; line-height: 1.4; margin-bottom: 10px;
+}
+.tl-ujian .tl-teks b { color: var(--ink-soft); }
+.tl-butir .pk-unduh { margin-top: 2px; }
+
+@media (max-width: 620px) {
+  .tl::before { left: 17px; }
+  .tl-butir { flex-direction: column; gap: 12px; padding-left: 48px; padding-bottom: 22px; }
+  .tl-no { width: 36px; height: 36px; font-size: 11.5px; }
+  .tl-sampul { width: 100%; max-width: 280px; }
 }
