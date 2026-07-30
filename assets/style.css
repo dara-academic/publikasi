@@ -1171,3 +1171,107 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 }
 .pk-unduh:hover { background: #c9efd3; }
 .pk-unduh span { font-weight: 400; font-size: 12px; opacity: 0.85; }
+
+/* ============================================================
+   Beranda portal sebagai etalase pengetahuan
+   ============================================================ */
+
+/* Bagian dengan ruang bernapas lebih longgar dari halaman biasa */
+.et-bagian { padding: 76px 0; }
+.et-terang { background: var(--surface); border-block: 1px solid var(--line); }
+.et-kepala { max-width: 640px; margin-bottom: 38px; }
+.et-kepala h2 {
+  font-family: var(--serif); font-size: clamp(26px, 3.4vw, 34px);
+  font-weight: 600; line-height: 1.2; margin-bottom: 12px;
+}
+.et-kepala p { font-size: 16px; color: var(--ink-soft); line-height: 1.7; }
+.et-lanjut {
+  display: inline-block; margin-top: 14px; font-size: 14px; font-weight: 600;
+  color: var(--accent-dark); text-decoration: none;
+}
+.et-lanjut:hover { text-decoration: underline; }
+
+/* Hero */
+.et-hero {
+  padding: 82px 0 76px;
+  background: linear-gradient(180deg, rgba(215,235,255,0.34) 0%, rgba(253,252,250,0) 100%);
+}
+.et-hero-isi {
+  display: grid; gap: 48px; align-items: center;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+}
+.et-hero h1 {
+  font-family: var(--serif); font-size: clamp(32px, 5vw, 50px);
+  font-weight: 600; line-height: 1.16; margin-bottom: 20px; max-width: 15ch;
+}
+.et-hero .lead { font-size: 17px; line-height: 1.75; max-width: 56ch; margin-bottom: 28px; }
+.et-potret { text-align: center; }
+.et-potret img {
+  width: 208px; height: 208px; border-radius: 50%; object-fit: cover;
+  border: 7px solid var(--surface); box-shadow: 0 18px 44px rgba(28,58,94,0.16);
+  margin-bottom: 16px;
+}
+.et-potret figcaption a {
+  display: inline-block; font-family: var(--serif); font-size: 19px; font-weight: 600;
+  color: #1c3a5e; text-decoration: none;
+  border-bottom: 1px solid rgba(28,58,94,0.3); padding-bottom: 2px; margin-bottom: 8px;
+}
+.et-potret figcaption span { display: block; font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
+
+/* Rak mata kuliah */
+.et-mk-rak {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(238px, 1fr));
+}
+.et-mk {
+  position: relative; display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 22px 22px 20px 30px; text-decoration: none; color: var(--ink);
+  overflow: hidden; transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.et-mk::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 9px; }
+.et-biru::before { background: var(--pastel-blue); }
+.et-mint::before { background: var(--pastel-mint); }
+.et-butter::before { background: var(--pastel-butter); }
+.et-rose::before { background: var(--pastel-rose); }
+.et-mk:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(28,52,80,0.11); }
+.et-mk-jml {
+  font-family: var(--serif); font-size: 34px; font-weight: 600;
+  line-height: 1; color: var(--accent-dark); margin-bottom: 10px;
+}
+.et-mk-nama { font-family: var(--serif); font-size: 17px; font-weight: 600; line-height: 1.35; margin-bottom: 6px; }
+.et-mk-sks { font-size: 12.5px; color: var(--ink-muted); }
+
+/* Rak sampul */
+.et-rak {
+  display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-end;
+}
+.et-sampul {
+  display: block; width: 132px; border-radius: 6px; overflow: hidden;
+  box-shadow: 0 8px 22px rgba(28,52,80,0.13);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.et-sampul img { display: block; width: 100%; height: auto; }
+.et-sampul:hover { transform: translateY(-6px); box-shadow: 0 16px 34px rgba(28,52,80,0.2); }
+.et-rak-buku .et-sampul { width: 146px; }
+
+/* Dua pintu besar */
+.et-dua { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.et-pintu {
+  display: block; background: var(--bg); border: 1px solid var(--line);
+  border-radius: 16px; padding: 32px 34px; text-decoration: none; color: var(--ink);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.et-pintu:hover { border-color: var(--accent); transform: translateY(-3px); }
+.et-pintu h3 { font-family: var(--serif); font-size: 23px; font-weight: 600; margin-bottom: 12px; }
+.et-pintu p { font-size: 15px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 16px; }
+.et-pintu-aksi { font-size: 14px; font-weight: 600; color: var(--accent-dark); }
+
+@media (max-width: 860px) {
+  .et-hero-isi { grid-template-columns: 1fr; gap: 34px; }
+  .et-potret { justify-self: start; text-align: left; }
+  .et-bagian { padding: 54px 0; }
+  .et-hero { padding: 54px 0 48px; }
+  .et-sampul { width: 108px; }
+  .et-rak-buku .et-sampul { width: 118px; }
+}
