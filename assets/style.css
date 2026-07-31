@@ -1845,7 +1845,6 @@ body.ak .ak-utama .mk-ubin p { max-width: none; }
   content: ""; position: absolute; left: 0; top: 9px;
   width: 6px; height: 6px; border-radius: 50%; background: var(--modul);
 }
-.lp-ringkas { display: block; margin-top: 6px; font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); }
 
 /* ------------------------------------------------------------------
    Workshop. Ubinnya memakai sampul lanskap karena materi pelatihan
@@ -1900,8 +1899,8 @@ body.ak .ak-utama .mk-ubin p { max-width: none; }
 .rs-isi { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
 .rs-label { font-size: 12.5px; font-weight: 600; color: var(--ink-muted); }
 .rs-terbit {
-  display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 99px;
-  font-size: 11.5px; font-weight: 700; color: #1d5b34; background: var(--pastel-mint);
+  display: inline-block; margin-left: 8px; padding: 2px 9px; border-radius: 99px;
+  font-size: 12.5px; font-weight: 700; color: #1d5b34; background: var(--pastel-mint);
 }
 .rs-isi b { font-size: 16.5px; font-weight: 700; line-height: 1.4; }
 .rs-ket { font-size: 14px; line-height: 1.65; color: var(--ink-soft); }
@@ -1910,7 +1909,7 @@ body.ak .ak-utama .mk-ubin p { max-width: none; }
 /* Ajakan riset bersama. Diberi ruang dan warna sendiri karena inilah satu
    satunya tindakan yang diminta dari pembaca di halaman ini. */
 .rs-ajak {
-  margin: 40px 0 8px; padding: 28px 30px; border-radius: 14px;
+  margin: 40px 0 0; padding: 28px 30px; border-radius: 14px;
   background: var(--modul-tipis); border: 1px solid transparent;
 }
 .rs-ajak b { display: block; font-size: 20px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 10px; }
@@ -1924,4 +1923,11 @@ body.ak .ak-utama .mk-ubin p { max-width: none; }
   .rs-kartu { flex-direction: column; gap: 10px; }
   .rs-thn { font-size: 19px; }
   .rs-ajak { padding: 22px 20px; }
+}
+
+/* Tautan kolom identitas diberi ruang tekan di layar sentuh. Tingginya semula
+   26 piksel, tepat di bawah ambang nyaman untuk jempol. */
+@media (max-width: 620px) {
+  .ak-tautan li { gap: 12px; }
+  .ak-tautan a { display: inline-block; padding-block: 3px; }
 }
