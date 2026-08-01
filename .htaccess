@@ -46,7 +46,31 @@ RedirectMatch 404 ^/data/
   # Materi pindah ke folder per semester. Tautan PDF lama yang sudah
   # terlanjur dibagikan mahasiswa diarahkan ke lokasi barunya.
   RewriteRule ^assets/materi/(?!\d)([a-z-]+)/(.+\.pdf)$ /assets/materi/124/$1/$2 [R=301,L]
-  RewriteRule ^en/proses-terbit\.html$ /en/proses-review.html#menunggu-terbit [R=301,L]
+
+  # Versi Inggris dihentikan. Situs ini ditujukan untuk mahasiswa dan dosen di
+  # Indonesia, jadi cermin berbahasa Inggris hanya menambah beban rawat dan
+  # ruang server tanpa pembaca. Alamat lamanya diarahkan ke padanan Indonesia.
+  RewriteRule ^en/scopus/(.+)$ /scopus/$1 [R=301,L]
+  RewriteRule ^en/sinta/(.+)$ /sinta/$1 [R=301,L]
+  RewriteRule ^en/buku/?$ /buku/ [R=301,L]
+  RewriteRule ^en/index\.html$ /bedah-publikasi.html [R=301,L]
+  RewriteRule ^en/tentang\.html$ /tentang.html [R=301,L]
+  RewriteRule ^en/glosarium\.html$ /glosarium.html [R=301,L]
+  RewriteRule ^en/kolaborasi\.html$ /kolaborasi.html [R=301,L]
+  RewriteRule ^en/lesson-learned\.html$ /lesson-learned.html [R=301,L]
+  RewriteRule ^en/menulis-per-bagian\.html$ /menulis-per-bagian.html [R=301,L]
+  RewriteRule ^en/mulai-dari-sini\.html$ /mulai-dari-sini.html [R=301,L]
+  RewriteRule ^en/panduan-jurnal\.html$ /panduan-jurnal.html [R=301,L]
+  RewriteRule ^en/proses-review\.html$ /proses-review.html [R=301,L]
+  RewriteRule ^en/tanya-jawab\.html$ /tanya-jawab.html [R=301,L]
+  RewriteRule ^en/tips\.html$ /tips.html [R=301,L]
+  RewriteRule ^en/?$ / [R=301,L]
+  RewriteRule ^en/(.*)$ / [R=301,L]
+
+  # Materi semester 123 dilepas dari situs. Halamannya diarahkan ke rak mata
+  # kuliah, bukan dibiarkan mati, karena tautannya mungkin sudah dibagikan.
+  RewriteRule ^mata-kuliah/(msdm-s1|msdm-s2|pemberhentian-pensiun-sdm)(/.*)?$ /mata-kuliah/ [R=301,L]
+  RewriteRule ^assets/materi/123/.*$ /mata-kuliah/ [R=301,L]
 </IfModule>
 
 # Pemampatan

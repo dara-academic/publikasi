@@ -1,13 +1,25 @@
 User-agent: *
 Allow: /
 
+# Versi Inggris dihentikan pada Juli 2026. Alamat lamanya dialihkan permanen
+# ke padanan Indonesia lewat htaccess, jadi perayap tidak perlu menyusurinya.
+Disallow: /en/
+
+# Bukan untuk pembaca: catatan kunjungan dan halaman laporannya.
+Disallow: /data/
+Disallow: /laporan.php
+Disallow: /catat.php
+
 User-agent: Googlebot
 Allow: /
+Disallow: /en/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /en/
 
 User-agent: GPTBot
 Allow: /
+Disallow: /en/
 
 Sitemap: https://despinurdara.id/sitemap.xml

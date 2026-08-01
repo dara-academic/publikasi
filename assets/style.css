@@ -41,22 +41,6 @@ body {
    dua puluh piksel saja sudah membuat halamannya terasa situs yang berbeda. */
 .container { max-width: 964px; margin: 0 auto; padding: 0 26px; }
 
-/* Header */
-.site-header {
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
-  position: sticky; top: 0; z-index: 50;
-}
-.site-header .container {
-  display: flex; align-items: center; justify-content: space-between;
-  padding-top: 14px; padding-bottom: 14px; gap: 16px; flex-wrap: wrap;
-}
-.brand {
-  font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--ink);
-  text-decoration: none; display: inline-flex; align-items: center; gap: 7px;
-}
-.brand-ico { width: 27px; height: 27px; flex-shrink: 0; display: block; }
-.brand .brand-txt span { color: var(--accent); }
 .hero-profile .peran span { color: #4a5a6d; }
 
 /* Navigasi */
@@ -104,14 +88,6 @@ body {
   .nav-menu a { padding: 10px 12px; border-radius: 10px; }
 }
 
-/* Pemilih bahasa */
-.lang-switch { display: inline-flex; align-items: center; gap: 2px; margin-left: 10px; }
-.lang-switch a {
-  font-size: 13px; font-weight: 700; letter-spacing: 0.03em;
-  padding: 5px 9px; border-radius: 7px; color: var(--ink-muted); text-decoration: none;
-}
-.lang-switch a:hover { background: rgba(44, 85, 128, 0.08); color: var(--accent-dark); }
-.lang-switch a.on { background: var(--accent-dark); color: #fff; }
 
 /* Tautan kembali */
 .backlink-row { padding: 34px 0 8px; }
@@ -123,8 +99,7 @@ body {
 .backlink:hover { border-color: var(--accent); color: var(--accent-dark); }
 .backlink svg { width: 15px; height: 15px; flex-shrink: 0; }
 @media (max-width: 920px) {
-  .lang-switch { margin: 8px 0 0 12px; }
-}
+  }
 
 /* Hero */
 .hero {
@@ -480,16 +455,7 @@ details.reviewer .content { padding: 0 18px 16px; font-size: 14px; color: var(--
   .container { max-width: 100%; padding: 0; }
 
   /* sembunyikan elemen antarmuka */
-  .site-header, .nav, .nav-toggle, .lang-switch, .site-footer,
-  .backlink-row, .aksi-row, .toc, .cta-row, .statbar,
-  .flow, .value-grid, .sitasi-tab { display: none !important; }
-
-  /* hero jadi kepala dokumen yang ringkas */
-  .hero {
-    background: none !important; padding: 0 0 10pt !important;
-    border-bottom: 1pt solid #999; margin-bottom: 12pt;
-  }
-  .hero::before { display: none !important; }
+    .hero::before { display: none !important; }
   .hero-profile, .hero .kicker { display: none !important; }
   .hero h1 { font-size: 19pt !important; color: #000 !important; margin-bottom: 6pt; }
   .hero .lead { font-size: 11pt; color: #333; }
@@ -820,12 +786,6 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 }
 
 /* Penanda menu Mulai dari Sini */
-.nav .nav-mulai { color: #1f5c3a; }
-.nav .nav-mulai::before {
-  content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-  background: #2f7d4f; margin-right: 7px; vertical-align: 1px;
-}
-.nav .nav-mulai.active { color: #1f5c3a; }
 
 /* Rapatkan hero di layar ponsel supaya konten cepat terlihat */
 @media (max-width: 760px) {
@@ -1231,8 +1191,7 @@ body.ak { background: var(--surface); }
 .ak-bar .nav > a.active, .ak-bar .nav-group.active > .nav-btn {
   color: var(--accent-dark); font-weight: 600; background: rgba(44, 85, 128, 0.13);
 }
-.ak-bar .lang-switch { margin-left: 8px; }
-/* Menu Bedah Publikasi isinya sepuluh butir. Dua lajur membuatnya terbaca
+.ak-bar /* Menu Bedah Publikasi isinya sepuluh butir. Dua lajur membuatnya terbaca
    sekali pandang, bukan menjulur panjang sampai keluar layar. */
 .ak-bar .nav-group.open .nav-menu.lebar {
   display: grid; grid-template-columns: 1fr 1fr; gap: 0 4px; min-width: 396px;
@@ -1684,17 +1643,6 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
 .tl-teks .pk-unduh { margin-top: 12px; }
 
 /* Daftar topik di halaman materi */
-.mt-topik { margin: 22px 0 0; }
-.mt-topik b { display: block; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
-.mt-topik ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 7px; }
-.mt-topik li {
-  padding-left: 15px; position: relative; font-size: 15px;
-  line-height: 1.55; color: var(--ink-soft);
-}
-.mt-topik li::before {
-  content: ""; position: absolute; left: 0; top: 9px;
-  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-}
 
 /* ------------------------------------------------------------------
    Warna identitas per modul.
@@ -1721,7 +1669,6 @@ body[data-grup="profil"]          { --modul: #7a4a2a; --modul-tipis: #f6e6da; }
 }
 .ak-pintu { border-left-color: var(--modul); }
 .tp-daftar li, .ak-tema li { border-left-color: var(--modul-tipis); }
-.mt-topik li::before { background: var(--modul); }
 .tl-ada .tl-no { background: var(--modul-tipis); color: var(--modul); }
 
 /* Batang kemajuan baca. Halaman terpanjang di situs ini sepuluh ribu piksel,
@@ -1733,17 +1680,6 @@ body[data-grup="profil"]          { --modul: #7a4a2a; --modul-tipis: #f6e6da; }
 @media print { .baca-maju { display: none; } }
 
 /* Berkas pendukung mata kuliah: rencana pembelajaran dan rubrik penilaian */
-.mk-dukung { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }
-.mk-dukung li {
-  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
-  background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
-}
-.mk-dukung a { font-size: 15px; font-weight: 600; color: var(--modul); text-decoration: none; }
-.mk-dukung a:hover { text-decoration: underline; }
-.mk-dukung span {
-  margin-left: auto; font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em;
-  color: #57616e; background: var(--pastel-gray); padding: 3px 9px; border-radius: 5px;
-}
 
 /* Rujukan buku mata kuliah yang materinya belum dibuka. Disebut lengkap
    dengan ISBN supaya bisa ditelusuri sendiri, dan tidak diunggah karena
@@ -1762,9 +1698,7 @@ body[data-grup="profil"]          { --modul: #7a4a2a; --modul-tipis: #f6e6da; }
   .ak-utama a:not(.btn):not(.mk-ubin):not(.tl-sampul):not(.ak-pintu) {
     padding-block: 3px;
   }
-  .tp-daftar a, .ak-mkl a, .mk-dukung a,
-  .kabar a, .ak-pub-jdl { display: inline-block; min-height: 24px; }
-  .ak-utama a:not([class]), .prose a, .card a:not(.card) {
+  .tp-daftar a, .ak-mkl a,   .ak-utama a:not([class]), .prose a, .card a:not(.card) {
     padding-block: 4px;
   }
 }
