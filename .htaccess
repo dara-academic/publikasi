@@ -50,7 +50,9 @@ RedirectMatch 404 ^/data/
   # Versi Inggris dihentikan. Situs ini ditujukan untuk mahasiswa dan dosen di
   # Indonesia, jadi cermin berbahasa Inggris hanya menambah beban rawat dan
   # ruang server tanpa pembaca. Alamat lamanya diarahkan ke padanan Indonesia.
+  RewriteRule ^en/scopus/?$ /scopus/ [R=301,L]
   RewriteRule ^en/scopus/(.+)$ /scopus/$1 [R=301,L]
+  RewriteRule ^en/sinta/?$ /sinta/ [R=301,L]
   RewriteRule ^en/sinta/(.+)$ /sinta/$1 [R=301,L]
   RewriteRule ^en/buku/?$ /buku/ [R=301,L]
   RewriteRule ^en/index\.html$ /bedah-publikasi.html [R=301,L]
@@ -64,12 +66,12 @@ RedirectMatch 404 ^/data/
   RewriteRule ^en/proses-review\.html$ /proses-review.html [R=301,L]
   RewriteRule ^en/tanya-jawab\.html$ /tanya-jawab.html [R=301,L]
   RewriteRule ^en/tips\.html$ /tips.html [R=301,L]
-  RewriteRule ^en/?$ / [R=301,L]
+  RewriteRule ^en/?$ /bedah-publikasi.html [R=301,L]
   RewriteRule ^en/(.*)$ / [R=301,L]
 
   # Materi semester 123 dilepas dari situs. Halamannya diarahkan ke rak mata
   # kuliah, bukan dibiarkan mati, karena tautannya mungkin sudah dibagikan.
-  RewriteRule ^mata-kuliah/(msdm-s1|msdm-s2|pemberhentian-pensiun-sdm)(/.*)?$ /mata-kuliah/ [R=301,L]
+  RewriteRule ^mata-kuliah/(msdm-s1|msdm-s2|pemberhentian-pensiun-sdm)(\.html|/.*)?$ /mata-kuliah/ [R=301,L]
   RewriteRule ^assets/materi/123/.*$ /mata-kuliah/ [R=301,L]
 </IfModule>
 

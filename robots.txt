@@ -1,25 +1,24 @@
+# Perayap diizinkan menyusuri seluruh situs.
+#
+# Catatan tentang /en/: versi Inggris dihentikan pada Juli 2026 dan seluruh
+# alamatnya dialihkan permanen ke padanan Indonesia lewat .htaccess. Folder itu
+# sengaja TIDAK dilarang di sini. Alamat yang dilarang tidak pernah dirayapi,
+# dan alamat yang tidak dirayapi tidak pernah memperlihatkan pengalihannya,
+# sehingga halaman Inggris lama justru membeku di indeks alih-alih berpindah.
+# Larangan baru boleh dipasang setelah alamat lama benar-benar hilang dari
+# hasil pencarian, kira-kira setelah tiga bulan.
+#
+# Hanya satu kelompok aturan yang ditulis, memakai tanda bintang. Menuliskan
+# kelompok terpisah untuk Googlebot membuat perayap itu memakai kelompoknya
+# sendiri saja dan mengabaikan seluruh isi kelompok bintang, sehingga larangan
+# di bawah ini malah tidak berlaku baginya.
+
 User-agent: *
 Allow: /
-
-# Versi Inggris dihentikan pada Juli 2026. Alamat lamanya dialihkan permanen
-# ke padanan Indonesia lewat htaccess, jadi perayap tidak perlu menyusurinya.
-Disallow: /en/
 
 # Bukan untuk pembaca: catatan kunjungan dan halaman laporannya.
 Disallow: /data/
 Disallow: /laporan.php
 Disallow: /catat.php
-
-User-agent: Googlebot
-Allow: /
-Disallow: /en/
-
-User-agent: Bingbot
-Allow: /
-Disallow: /en/
-
-User-agent: GPTBot
-Allow: /
-Disallow: /en/
 
 Sitemap: https://despinurdara.id/sitemap.xml
