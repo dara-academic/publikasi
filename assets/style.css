@@ -1904,6 +1904,16 @@ body.ak .ak-utama li {
   overflow-wrap: break-word;
 }
 
+/* text-align-last ikut diwariskan ke elemen di dalamnya, dan itu sempat
+   merusak chip tanggal di blok Baru. Isinya cuma satu baris, sehingga baris
+   itu sekaligus baris terakhir, lalu warisan rata kiri menang atas rata tengah
+   yang sudah dipasang pada chipnya sendiri. Warisan itu dihentikan di anak
+   pertama. Nilai auto membuat baris terakhir kembali mengikuti perataan
+   elemennya masing-masing, jadi aturan ini menjaga semua elemen rata tengah
+   atau rata kanan yang ada sekarang maupun yang ditambahkan nanti. */
+body.ak .ak-utama p > *,
+body.ak .ak-utama li > * { text-align-last: auto; }
+
 /* Dikecualikan: kolom yang terlalu sempit untuk diratakan. Di bawah kira-kira
    460 piksel, perataan berhenti merapikan dan mulai membuat sungai putih yang
    menarik mata turun ke bawah alih-alih menyusuri baris. */
