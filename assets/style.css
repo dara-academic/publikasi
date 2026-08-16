@@ -105,7 +105,7 @@ body {
 .hero {
   position: relative; padding: 84px 0 68px; border-bottom: 1px solid var(--line);
   background-color: var(--pastel-blue);
-  background-image: url('hero-akademik.jpg?v=ebd08f8b');
+  background-image: url(hero-akademik.jpg?v=ebd08f8b);
   background-size: cover; background-position: center; background-repeat: no-repeat;
 }
 .hero::before {
@@ -433,11 +433,19 @@ details.reviewer .content { padding: 0 18px 16px; font-size: 14px; color: var(--
   white-space: pre-wrap; word-break: break-word; margin: 0;
 }
 
-@media (max-width: 760px) {
+/* Daftar isi paper melipat menjadi baris mendatar begitu kolom bacanya mulai
+   sempit. Ambangnya 860 piksel, bukan 760, karena daftar isi selebar 220 piksel
+   ditambah jarak 40 piksel memakan porsi yang makin besar seiring layar
+   mengecil: pada 768 piksel badan papernya tinggal 389 piksel, terlalu sempit
+   untuk dibaca nyaman apalagi untuk diratakan kiri-kanan. */
+@media (max-width: 860px) {
   .paper-body { grid-template-columns: 1fr; gap: 8px; }
   .toc { position: static; display: flex; flex-wrap: wrap; gap: 4px 14px; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
   .toc a { border-left: none; padding: 2px 0; }
   .toc p.toc-title { width: 100%; }
+}
+
+@media (max-width: 760px) {
   .hero { padding: 40px 0 28px; }
 }
 
@@ -834,7 +842,7 @@ table.banding .contoh { font-size: 13px; color: var(--ink-muted); display: block
 .band-buku {
   position: relative;
   background-color: #f7f4ed;
-  background-image: url('latar-buku.jpg?v=4f3e2708');
+  background-image: url(latar-buku.jpg?v=4f3e2708);
   background-size: cover;
   background-position: center;
   isolation: isolate;
@@ -1864,4 +1872,81 @@ body.ak .ak-utama .mk-ubin p { max-width: none; }
 @media (max-width: 620px) {
   .ak-tautan li { gap: 12px; }
   .ak-tautan a { display: inline-block; padding-block: 3px; }
+}
+
+/* ============================================================
+   Perataan kiri-kanan
+   ============================================================
+   Halaman paper dilebarkan lebih dulu. Kolom bacanya tadinya hanya 368 piksel,
+   sekitar 46 huruf per baris, karena daftar isi selebar 220 piksel memakan
+   sepertiga kolom yang memang sudah sempit. Halaman itu punya bilah samping
+   persis seperti beranda, jadi wajar ia memakai lebar bingkai yang sama, dan
+   badan papernya naik ke sekitar 600 piksel atau kira-kira 75 huruf per baris.
+   Tanpa pelebaran ini perataan kiri-kanan justru merusak, karena semakin
+   sempit kolomnya semakin lebar lubang yang harus dibuat di antara kata. */
+.ak-halaman:has(.paper-body) { max-width: 964px; }
+
+/* Perataan dipasang pada teks mengalir di kolom baca utama.
+   text-align-last menahan baris terakhir tetap rata kiri. Ini bukan hiasan:
+   tanpanya baris penutup yang cuma berisi dua kata ikut direntangkan selebar
+   kolom. Efek sampingnya menguntungkan, karena paragraf satu baris seluruhnya
+   adalah baris terakhir, sehingga judul pendek dan keterangan singkat otomatis
+   tidak ikut teregang.
+   Pemenggalan suku kata dinyalakan supaya kata panjang boleh dipotong daripada
+   memaksa spasi melebar. Halaman sudah menyatakan lang="id" sehingga peramban
+   yang punya kamus Indonesia akan memakainya, dan yang tidak punya sekadar
+   mengabaikannya tanpa merusak apa pun. */
+body.ak .ak-utama p,
+body.ak .ak-utama li {
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+/* Dikecualikan: kolom yang terlalu sempit untuk diratakan. Di bawah kira-kira
+   460 piksel, perataan berhenti merapikan dan mulai membuat sungai putih yang
+   menarik mata turun ke bawah alih-alih menyusuri baris. */
+body.ak .ak-utama .glos-item p,
+body.ak .ak-utama .glos-tool p,
+body.ak .ak-utama .toc p,
+body.ak .ak-utama .toc li,
+body.ak .ak-utama .book-body p,
+body.ak .ak-utama .head-grid p,
+body.ak .ak-utama details.reviewer .content p,
+body.ak .ak-utama .mk-ubin p,
+body.ak .ak-utama .ak-pintu p,
+body.ak .ak-utama .statbar p,
+body.ak .ak-utama table p,
+body.ak .ak-utama table li,
+body.ak .ak-utama figcaption,
+body.ak .ak-utama .tanda-item p,
+body.ak .ak-utama .bm-kartu p,
+body.ak .ak-utama .langkah-item p,
+body.ak .ak-utama .value p,
+body.ak .ak-utama .flow-step p,
+body.ak .ak-utama .card-flex p,
+body.ak .ak-utama .ws-isi p {
+  text-align: left;
+  hyphens: manual;
+}
+
+/* Di layar sempit seluruh perataan dilepas. Ponsel hanya memuat sekitar empat
+   puluh huruf per baris, dan pada lebar itu perataan selalu kalah rapi
+   dibanding rata kiri biasa. */
+@media (max-width: 700px) {
+  body.ak .ak-utama p,
+  body.ak .ak-utama li { text-align: left; hyphens: manual; }
+}
+
+/* Kalimat tujuan situs berdiri sebagai paragrafnya sendiri, bukan menyambung
+   di ekor paragraf pembuka. Digabung, keduanya menjadi enam baris pada ukuran
+   20 piksel dan terbaca sebagai tembok, sehingga kalimat yang justru paling
+   ingin diingat orang tenggelam di bagian bawah blok. */
+/* Kekhususan sengaja dinaikkan lewat body.ak agar menang atas .ak-utama > p
+   yang sudah menetapkan ukuran 16 piksel untuk paragraf biasa. */
+body.ak .ak-utama .ak-misi {
+  font-size: 17px; line-height: 1.65; color: var(--ink);
+  border-left: 3px solid var(--modul, var(--accent));
+  padding-left: 16px; margin: 0 0 26px;
 }
