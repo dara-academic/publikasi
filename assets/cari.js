@@ -144,3 +144,29 @@
           + '&_=' + Math.random().toString(36).slice(2);
   } catch (e) { /* pencatatan tidak boleh mengganggu halaman */ }
 })();
+
+/* ------------------------------------------------------------------
+   Tombol kembali ke atas. Dibuat dari sini, bukan ditulis di markup,
+   supaya 98 halaman tidak perlu disunting satu per satu. Muncul hanya
+   setelah pembaca melewati kira-kira dua layar, karena di halaman
+   pendek ia cuma jadi hiasan yang menghalangi sudut baca.
+   ------------------------------------------------------------------ */
+(function () {
+  var b = document.createElement('button');
+  b.className = 'ke-atas';
+  b.setAttribute('aria-label', 'Kembali ke atas');
+  b.innerHTML = '↑';
+  document.body.appendChild(b);
+  b.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  var tunda = false;
+  window.addEventListener('scroll', function () {
+    if (tunda) return;
+    tunda = true;
+    requestAnimationFrame(function () {
+      b.classList.toggle('tampil', window.scrollY > window.innerHeight * 2);
+      tunda = false;
+    });
+  }, { passive: true });
+})();

@@ -89,15 +89,10 @@ body {
 }
 
 
-/* Tautan kembali */
-.backlink-row { padding: 34px 0 8px; }
-.backlink {
   display: inline-flex; align-items: center; gap: 7px; font-size: 14px;
   color: var(--ink-soft); text-decoration: none; background: var(--surface);
   padding: 7px 15px 7px 11px; border: 1px solid var(--line); border-radius: 999px;
 }
-.backlink:hover { border-color: var(--accent); color: var(--accent-dark); }
-.backlink svg { width: 15px; height: 15px; flex-shrink: 0; }
 @media (max-width: 920px) {
   }
 
@@ -1466,9 +1461,7 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
 .ak-utama .hero-profile { display: none; }
 
 .ak-utama .paper-head { padding: 0 0 22px; }
-.ak-utama .backlink-row { padding: 26px 0 0; }
-.glos-tutup + .backlink { margin-top: 26px; }
-
+.ak-utama .glos-tutup + 
 /* Pita berlatar gambar dari tata letak lama dinetralkan di dalam kolom kanan.
    Latar bergambar itu dirancang untuk pita selebar layar. Begitu dipaksa masuk
    ke kolom 678 piksel, gambarnya jadi terpotong dan tulisannya justru sulit
@@ -2209,3 +2202,40 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
   border-color: color-mix(in srgb, var(--modul-tipis, var(--pastel-blue)) 75%, #fff);
 }
 .ak-angka span { color: color-mix(in srgb, var(--modul, var(--accent-dark)) 72%, #3a4654); }
+
+/* Daftar mata kuliah beranda: dua kolom di layar lebar. Tujuh kartu selebar
+   kolom penuh yang bertumpuk adalah pemakan tinggi beranda terbesar. */
+@media (min-width: 900px) {
+  .ak-mkl { grid-template-columns: 1fr 1fr; gap: 12px 18px; }
+}
+
+/* Kotak Di halaman ini: daftar lompat untuk halaman panduan panjang */
+.isi-hal {
+  border: 1px solid var(--line); border-radius: 12px;
+  background: color-mix(in srgb, var(--modul-tipis, var(--pastel-blue)) 30%, #fff);
+  padding: 16px 20px 14px; margin: 26px 0 6px;
+}
+.isi-hal-judul {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-muted); margin: 0 0 8px;
+}
+.isi-hal ul { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 28px; }
+.isi-hal li { margin: 0 0 6px; break-inside: avoid; }
+.isi-hal a { font-size: 14px; color: var(--modul, var(--accent-dark)); text-decoration: none; }
+.isi-hal a:hover { text-decoration: underline; }
+@media (max-width: 640px) { .isi-hal ul { columns: 1; } }
+
+/* Tombol kembali ke atas: muncul setelah pembaca melewati dua layar,
+   dibuat dari skrip supaya tidak perlu menyunting markup semua halaman */
+.ke-atas {
+  position: fixed; right: 22px; bottom: 22px; z-index: 50;
+  width: 44px; height: 44px; border-radius: 999px; border: 0; cursor: pointer;
+  background: var(--tinta-bar, #16222e); color: #e7edf3;
+  font-size: 19px; line-height: 44px; text-align: center;
+  box-shadow: 0 4px 16px rgba(20, 35, 50, 0.25);
+  opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+.ke-atas.tampil { opacity: 1; visibility: visible; transform: none; }
+.ke-atas:hover { background: #223447; }
+@media print { .ke-atas { display: none; } }
