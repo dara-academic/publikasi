@@ -2188,3 +2188,12 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
 .ak-halaman:has(.rs-kartu),
 .ak-halaman:has(.ws-kartu),
 .ak-halaman:has(.book) { max-width: 1000px; }
+
+/* Ikon kaki halaman: garis tipis warna teksnya, menyala penuh saat disentuh */
+.kaki-peta li a { display: inline-flex; align-items: center; gap: 9px; }
+.kaki-ikon {
+  width: 15px; height: 15px; flex-shrink: 0;
+  fill: none; stroke: currentColor; stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round; opacity: 0.7;
+}
+.kaki-peta a:hover .kaki-ikon { opacity: 1; }
