@@ -2197,3 +2197,15 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
   stroke-linecap: round; stroke-linejoin: round; opacity: 0.7;
 }
 .kaki-peta a:hover .kaki-ikon { opacity: 1; }
+
+/* Kotak angka diberi rona lembut warna modul halamannya. Sengaja satu warna
+   untuk semua kotak dalam satu halaman, bukan warna-warni per kotak: empat
+   warna berjejer terbaca sebagai infografis mainan, sedangkan satu rona yang
+   mengikuti modul membuat kotaknya hidup sekaligus bercerita tentang
+   tempatnya. Rona dicampur putih supaya lebih pelan dari warna pastel
+   penanda; peramban tua yang tidak paham color-mix cukup memakai latar lama. */
+.ak-angka > div {
+  background: color-mix(in srgb, var(--modul-tipis, var(--pastel-blue)) 45%, #fff);
+  border-color: color-mix(in srgb, var(--modul-tipis, var(--pastel-blue)) 75%, #fff);
+}
+.ak-angka span { color: color-mix(in srgb, var(--modul, var(--accent-dark)) 72%, #3a4654); }
