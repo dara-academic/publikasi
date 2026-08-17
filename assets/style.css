@@ -2066,3 +2066,85 @@ body.ak .ak-utama .ak-sumber-tautan { font-size: 14px; margin: 14px 0 0; }
 .kabar-lipat[open] summary::before { content: "\2212  "; }
 .kabar-lipat summary:hover { color: var(--modul, var(--accent-dark)); }
 .kabar-lipat .kabar { margin-top: 10px; }
+
+
+/* ============================================================
+   TRANSFORMASI TAMPILAN: portal akademik
+   Lapisan ini sengaja berada paling akhir supaya menang kaskade.
+   Mencabutnya utuh mengembalikan tampilan lama.
+   ============================================================ */
+:root { --tinta-bar: #16222e; --bayang-kartu: 0 1px 2px rgba(20,35,50,0.05), 0 4px 18px rgba(20,35,50,0.07); }
+
+/* ---- 1. bingkai gelap: bilah atas ---- */
+.ak-bar { background: var(--tinta-bar); border-bottom: 1px solid #0e161f; }
+.ak-nama { color: #f3f6f9; }
+.ak-nama:hover { color: #fff; }
+.ak-bar .nav > a, .ak-bar .nav-btn { color: #c6d2dd; }
+.ak-bar .nav > a:hover, .ak-bar .nav-btn:hover { background: rgba(255,255,255,0.10); color: #fff; }
+.ak-bar .nav > a.active, .ak-bar .nav-group.active > .nav-btn {
+  color: #fff; background: rgba(255,255,255,0.14);
+}
+.nav-toggle span { background: #e7edf3; }
+@media (max-width: 920px) {
+  .ak-bar .nav-btn { color: #8fa1b3; }
+  .ak-bar .nav-menu a { color: #d6dfe8; }
+  .ak-bar .nav-menu a:hover { background: rgba(255,255,255,0.10); color: #fff; }
+  .ak-bar .nav-menu a.active { background: rgba(255,255,255,0.14); color: #fff; }
+}
+
+/* ---- 1b. bingkai gelap: kaki halaman ---- */
+.site-footer { background: var(--tinta-bar); border-top: 0; color: #9db0c0; margin-top: 56px; padding: 8px 0 26px; }
+.site-footer a { color: #d6dfe8; font-weight: 600; }
+.site-footer a:hover { color: #fff; }
+.kaki-peta { border-bottom: 1px solid rgba(255,255,255,0.12); }
+.kaki-peta h4 { color: #7e93a6; }
+.kaki-peta a { color: #c6d2dd; }
+.kaki-peta a:hover { color: #fff; }
+.kaki-tgl { color: #7e93a6; }
+
+/* ---- 2. judul serif ---- */
+/* Kekhususan dinaikkan lewat body.ak karena aturan lama menetapkan sans
+   dengan selektor berlapis; tanpa ini judulnya tetap Inter. */
+body.ak h1, body.ak .ak-utama h1, body.ak .ak-utama .hero h1,
+body.ak .ak-utama .paper-head h1, body.ak .ak-utama h2, body.ak .section-head h2 {
+  font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em;
+}
+/* Label kecil tetap sans: ia penunjuk arah, bukan judul. */
+body.ak .lanjut h2, body.ak .kaki-peta h4, body.ak .toc p.toc-title { font-family: var(--sans); }
+
+/* Tanda tangan modul: garis pendek di bawah judul halaman */
+.ak-utama .hero h1::after, .ak-utama > h1::after, .ak-utama .paper-head h1::after {
+  content: ""; display: block; width: 46px; height: 4px; border-radius: 999px;
+  background: var(--modul, var(--accent-dark)); margin-top: 16px;
+}
+
+/* ---- 3. kedalaman kartu ---- */
+.card, .mt-kartu, .book, .bm-kartu, .rs-kartu, .ws-kartu, .ak-sumber, .glos-item {
+  border-color: #edf0f3; box-shadow: var(--bayang-kartu); background: #fff;
+}
+.mk-ubin, .ak-pintu {
+  border-color: #edf0f3; box-shadow: var(--bayang-kartu); background: #fff;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.mk-ubin:hover, .ak-pintu:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 4px rgba(20,35,50,0.06), 0 12px 30px rgba(20,35,50,0.12);
+}
+@media (prefers-reduced-motion: reduce) {
+  .mk-ubin, .ak-pintu { transition: none; }
+  .mk-ubin:hover, .ak-pintu:hover { transform: none; }
+}
+
+/* ---- 4. tanda tangan modul pada detail ---- */
+.ak-angka b { font-family: var(--serif); color: var(--modul, var(--accent-dark)); }
+body.ak .ak-utama p > a:not(.btn):not(.pk-unduh) {
+  color: var(--modul, var(--accent-dark));
+  text-decoration: underline; text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--modul, var(--accent-dark)) 40%, transparent);
+}
+body.ak .ak-utama p > a:not(.btn):not(.pk-unduh):hover { text-decoration-color: var(--modul, var(--accent-dark)); }
+:focus-visible { outline: 2px solid var(--modul, var(--accent-dark)); outline-offset: 2px; }
+::selection { background: var(--modul-tipis, var(--pastel-blue)); }
+
+/* Potret beranda diberi bingkai halus supaya berdiri dari latarnya */
+.ak-potret img { box-shadow: 0 0 0 4px #fff, var(--bayang-kartu); }
