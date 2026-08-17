@@ -2148,3 +2148,43 @@ body.ak .ak-utama p > a:not(.btn):not(.pk-unduh):hover { text-decoration-color: 
 
 /* Potret beranda diberi bingkai halus supaya berdiri dari latarnya */
 .ak-potret img { box-shadow: 0 0 0 4px #fff, var(--bayang-kartu); }
+
+/* ============================================================
+   SISTEM DUA LEBAR: bingkai lebar, baca sempit
+   ============================================================
+   Lebar baca paragraf tetap 42em, sekitar 75 huruf per baris, karena baris
+   yang lebih panjang membuat mata tersesat saat turun baris; itu aturan
+   penerbitan, bukan selera. Yang tadinya keliru adalah bingkainya ikut
+   dikunci 964 piksel, sehingga layar lebar terasa kosong kiri-kanan.
+   Sekarang bilah, beranda, rak kartu, dan kaki halaman memakai bingkai
+   1216 piksel, sedangkan halaman baca naik secukupnya. Grid kartu memakai
+   auto-fill, jadi kolom-kolomnya bertambah sendiri mengikuti lebar baru. */
+:root { --lebar-bingkai: 1216px; }
+
+.ak-bar-isi { max-width: var(--lebar-bingkai); }
+.site-footer .container { max-width: var(--lebar-bingkai); }
+
+/* Beranda: bilah samping diberi ruang lebih, kolom utama melebar.
+   Susunan kolomnya dikurung media query, karena aturan ini berada paling
+   akhir di berkas dan tanpa kurungan ia menang juga atas aturan ponsel
+   yang menumpuk kolom menjadi satu; beranda pernah luber gara-gara itu. */
+.ak-wadah { max-width: var(--lebar-bingkai); }
+@media (min-width: 921px) {
+  .ak-wadah { grid-template-columns: 240px minmax(0, 1fr); gap: 36px; }
+}
+
+/* Halaman rak dan koleksi: kartu boleh memakai lebar penuh */
+body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
+.ak-halaman:has(.mk-rak),
+.ak-halaman:has(.glos-item) { max-width: var(--lebar-bingkai); }
+
+/* Halaman baca: naik secukupnya, tidak sampai merusak ukuran baris.
+   Halaman paper ikut naik karena membawa daftar isi di sisinya. */
+.ak-halaman { max-width: 820px; }
+.ak-halaman:has(.paper-body) { max-width: 1000px; }
+
+/* Halaman koleksi bergambar: laporan riset, workshop, dan rak buku
+   diberi bingkai menengah supaya kartunya bernapas. */
+.ak-halaman:has(.rs-kartu),
+.ak-halaman:has(.ws-kartu),
+.ak-halaman:has(.book) { max-width: 1000px; }
