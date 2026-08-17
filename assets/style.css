@@ -1959,3 +1959,23 @@ body.ak .ak-utama .ak-misi {
   border-left: 3px solid var(--modul, var(--accent));
   padding-left: 16px; margin: 0 0 26px;
 }
+
+
+/* Dua sumber sitasi ditampilkan berdampingan, masing-masing dalam kotaknya
+   sendiri. Kotaknya perlu, bukan hiasan: tanpa pembatas yang jelas, pembaca
+   melihat dua indeks-h berbeda berderet dan menyangka salah satunya keliru.
+   Keterangan cakupan diletakkan sebelum angkanya, supaya alasan perbedaannya
+   terbaca lebih dulu daripada perbedaannya sendiri. */
+.ak-sumber {
+  border: 1px solid var(--line); border-radius: 12px;
+  padding: 18px 20px 16px; margin: 22px 0 0;
+}
+.ak-sumber h3 {
+  font-family: var(--sans); font-size: 15px; font-weight: 700;
+  letter-spacing: 0.01em; color: var(--modul, var(--accent-dark)); margin: 0 0 6px;
+}
+body.ak .ak-utama .ak-sumber-ket {
+  font-size: 14px; line-height: 1.6; color: var(--ink-soft); margin: 0;
+}
+.ak-sumber .ak-angka { margin: 14px 0 0; }
+body.ak .ak-utama .ak-sumber-tautan { font-size: 14px; margin: 14px 0 0; }
