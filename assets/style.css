@@ -2675,3 +2675,8 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
 .alur-titik + .alur-titik::before { height: 1.5px; }
 .alur-titik i { width: 12px; height: 12px; }
 .prog-pil.status-tunggu { background: #fbfbfa; }
+
+/* Atribut hidden harus selalu menang. Tanpa ini, elemen yang gaya
+   display-nya dinyatakan eksplisit (kartu flex, ubin grid) menolak
+   disembunyikan penyaring, sehingga saringan terlihat tidak bekerja. */
+[hidden] { display: none !important; }
