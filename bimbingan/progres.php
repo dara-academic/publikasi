@@ -148,12 +148,6 @@ function inisial(string $nama): string {
       <span id="mon-halaman"></span>
       <button type="button" id="mon-maju">Berikutnya &rarr;</button>
     </nav>
-          </span>
-        </li>
-<?php endforeach; ?>
-      </ul>
-    </section>
-<?php endforeach; ?>
 
     <div class="prog-ajak">
       <div>
