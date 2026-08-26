@@ -2415,7 +2415,7 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
   color: #fff; line-height: 1.1;
 }
 .prog-band-angka span { font-size: 13px; color: #9fb4c0; }
-.admin-menyala b { color: #ffd479; }
+.admin-menyala b { color: var(--unj-emas); }
 
 /* Alur tahapan: pipa bertingkat judul -> sempro -> lulus */
 .prog-alur {
@@ -2465,14 +2465,14 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
 
 /* Pita panel admin: gelap dengan lencana kuning supaya beda dari halaman biasa */
 .admin-band {
-  background: linear-gradient(130deg, #101820 10%, #23445a 100%);
-  color: #e9f1f5; padding: 44px 0 38px; border-bottom: 3px solid #ffd479;
+  background: linear-gradient(130deg, #041e1f 10%, #01474a 100%);
+  color: #e9f1f5; padding: 44px 0 38px; border-bottom: 3px solid var(--unj-emas);
 }
 .admin-band-isi { max-width: var(--lebar-bingkai, 1216px); margin: 0 auto; padding: 0 26px; }
 .admin-lencana {
   display: inline-block; font-size: 12px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase;
-  background: #ffd479; color: #3a2c07; border-radius: 999px;
+  background: var(--unj-emas); color: #013638; border-radius: 999px;
   padding: 4px 14px; margin: 0 0 14px;
 }
 
@@ -2499,3 +2499,49 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
   .sorot-progres { transition: none; }
   .sorot-progres:hover { transform: none; }
 }
+
+/* ============================================================
+   IDENTITAS UNJ: emas, hijau, dan api
+   ============================================================
+   Diambil dari lambang almamater: emas #ffd21e, hijau tua #04624c,
+   api merah #e1251b. Hijau menjadi aksen dasar menggantikan biru,
+   emas menjadi bingkai dan sorotan, merah dipakai sangat hemat
+   sebagai titik atensi. Warna per modul lain tidak diganggu supaya
+   penanda kelompok tetap hidup. */
+:root {
+  --unj-emas: #ffdd00;
+  --unj-emas-lembut: #fdf6c3;
+  --unj-hijau: #006569;
+  --unj-hijau-tua: #013638;
+  --unj-merah: #cf1e2e;
+  --accent: #0b7d81;
+  --accent-dark: var(--unj-hijau);
+}
+body[data-grup="mengajar"] { --modul: var(--unj-hijau); --modul-tipis: #d2ecec; }
+body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj-emas-lembut); }
+
+/* Bingkai emas pada gelapnya bilah dan kaki: tanda tangan almamater */
+.ak-bar { border-bottom: 3px solid var(--unj-emas); }
+.site-footer { border-top: 3px solid var(--unj-emas); }
+
+/* Pita papan progres ikut hijau almamater, kicker menyala emas */
+.prog-band { background: linear-gradient(130deg, #012f31 12%, var(--unj-hijau) 100%); }
+.prog-band-kicker { color: var(--unj-emas); }
+.prog-band-angka span { color: #b5d8d9; }
+.prog-band-lead { color: #cfe7e8; }
+
+/* Sorotan beranda: kartu emas dengan teks hijau tua, persis logonya.
+   Lencana dibalik, hijau berhuruf emas. Merah api hanya di panahnya. */
+.sorot-progres {
+  background: linear-gradient(130deg, #eecd00 8%, var(--unj-emas) 90%);
+  color: var(--unj-hijau-tua);
+}
+.sorot-progres:hover { box-shadow: 0 12px 30px rgba(200, 173, 0, 0.45); }
+.sorot-lencana { background: var(--unj-hijau); color: var(--unj-emas); }
+.sorot-progres b { color: var(--unj-hijau-tua); }
+.sorot-ket { color: #1d5254; }
+.sorot-panah { color: var(--unj-merah); }
+
+/* Sentuhan kecil yang menjalar ke seluruh situs */
+::selection { background: var(--unj-emas-lembut); }
+.ke-atas { border: 2px solid var(--unj-emas); line-height: 40px; }

@@ -3,7 +3,7 @@
    Pendaftaran mahasiswa bimbingan.
 
    Alur bisnisnya: mahasiswa mengisi formulir ini, namanya langsung
-   muncul di papan progres dengan status belum diverifikasi dan warna
+   muncul di papan monitoring dengan status belum diverifikasi dan warna
    abu, lalu admin memutuskan di panel kelola. Disetujui berarti masuk
    daftar bimbingan resmi dan dibuatkan akun; ditolak berarti hilang.
 
@@ -95,10 +95,10 @@ $csrf = htmlspecialchars(token_csrf(), ENT_QUOTES);
     <p class="kicker">Pendaftaran terkirim</p>
     <h1>Menunggu verifikasi</h1>
     <p class="masuk-keterangan">Nama Anda sudah masuk antrean dan tampil di
-      papan progres dengan status belum diverifikasi. Setelah Dr. Dara
+      papan monitoring dengan status belum diverifikasi. Setelah Dr. Dara
       memverifikasi, status Anda berubah dan kode akses area bimbingan
       dikirim ke surel yang Anda daftarkan.</p>
-    <p class="masuk-kaki"><a href="progres.php">&larr; Lihat papan progres</a></p>
+    <p class="masuk-kaki"><a href="progres.php">&larr; Lihat papan monitoring</a></p>
 <?php else: ?>
     <p class="kicker">Mahasiswa bimbingan baru</p>
     <h1>Daftar bimbingan</h1>
@@ -133,7 +133,7 @@ $csrf = htmlspecialchars(token_csrf(), ENT_QUOTES);
       tidak ditampilkan di mana pun.</p>
 <?php endif; ?>
   </section>
-  <p class="masuk-pulang"><a href="progres.php">&larr; Kembali ke papan progres</a></p>
+  <p class="masuk-pulang"><a href="progres.php">&larr; Kembali ke papan monitoring</a></p>
 </main>
 </body>
 </html>

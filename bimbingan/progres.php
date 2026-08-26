@@ -1,6 +1,6 @@
 <?php
 /* ------------------------------------------------------------------
-   Papan Progres Bimbingan. Fitur unggulan portal, terbuka penuh.
+   Monitoring Pelaksanaan Bimbingan Tugas Akhir Mahasiswa. Fitur unggulan portal, terbuka penuh.
 
    Statusnya open data yang sudah dikonfirmasi Dr. Dara dan kampus:
    nama mahasiswa dan tahap kemajuannya boleh tampil terbuka. Catatan
@@ -49,8 +49,8 @@ function inisial(string $nama): string {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Papan Progres Bimbingan Dr. Despinur Dara</title>
-<meta name="description" content="Papan progres <?= $total ?> mahasiswa bimbingan Dr. Despinur Dara dari skripsi sampai disertasi: <?= $n['lulus'] ?> lulus, diperbarui langsung dari rekap bimbingan.">
+<title>Monitoring Pelaksanaan Bimbingan Tugas Akhir Mahasiswa, Dr. Despinur Dara</title>
+<meta name="description" content="Monitoring pelaksanaan bimbingan tugas akhir <?= $total ?> mahasiswa Dr. Despinur Dara dari skripsi sampai disertasi: <?= $n['lulus'] ?> lulus, diperbarui langsung dari rekap bimbingan.">
 <link rel="canonical" href="https://despinurdara.id/bimbingan/progres.php">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/style.css?v=<?= filemtime(__DIR__ . '/../assets/style.css') ?>">
@@ -69,8 +69,8 @@ function inisial(string $nama): string {
 
 <div class="prog-band">
   <div class="prog-band-isi">
-    <p class="prog-band-kicker">Papan progres bimbingan</p>
-    <h1>Setiap perjalanan tercatat di sini</h1>
+    <p class="prog-band-kicker">Monitoring bimbingan</p>
+    <h1>Monitoring Pelaksanaan Bimbingan Tugas Akhir Mahasiswa</h1>
     <p class="prog-band-lead">Dari topik pertama sampai lulus, progres seluruh
     mahasiswa bimbingan Dr. Dara terbuka sebagai data publik dan diperbarui
     langsung dari rekap.</p>
@@ -87,7 +87,7 @@ function inisial(string $nama): string {
 
 <div class="ak-halaman">
 <main class="ak-utama" id="konten">
-  <nav class="remah" aria-label="Jejak lokasi"><a href="../index.html">Beranda</a><span class="remah-pisah">&rsaquo;</span><a href="index.html">Bimbingan karya ilmiah</a><span class="remah-pisah">&rsaquo;</span><span class="remah-kini">Papan progres</span></nav>
+  <nav class="remah" aria-label="Jejak lokasi"><a href="../index.html">Beranda</a><span class="remah-pisah">&rsaquo;</span><a href="index.html">Bimbingan karya ilmiah</a><span class="remah-pisah">&rsaquo;</span><span class="remah-kini">Monitoring bimbingan</span></nav>
 
   <div class="container">
 <?php if (!$daftar): ?>
@@ -141,7 +141,7 @@ function inisial(string $nama): string {
     <div class="prog-ajak">
       <div>
         <b>Mahasiswa bimbingan baru?</b>
-        <p>Daftarkan diri Anda; nama Anda tampil di papan ini begitu terkirim,
+        <p>Daftarkan diri Anda; nama Anda tampil di papan monitoring begitu terkirim,
         berstatus menunggu sampai diverifikasi Dr. Dara.</p>
       </div>
       <div class="prog-ajak-tombol">

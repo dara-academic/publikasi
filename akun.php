@@ -137,7 +137,7 @@ $n_lulus_b = count(array_filter($rekap_b, fn($m) => $m['tahap'] === 'lulus'));
     <p class="admin-lencana">Panel admin</p>
     <h1>Pusat kendali bimbingan</h1>
     <p class="admin-band-lead">Verifikasi pendaftar, kelola akun, dan pantau
-    papan dari satu tempat, <?= htmlspecialchars($pengguna['nama'], ENT_QUOTES) ?>.</p>
+    monitoring bimbingan dari satu tempat, <?= htmlspecialchars($pengguna['nama'], ENT_QUOTES) ?>.</p>
     <div class="prog-band-angka">
       <div class="<?= $antre ? 'admin-menyala' : '' ?>"><b><?= count($antre) ?></b><span>menunggu verifikasi</span></div>
       <div><b><?= count($daftar_pengguna) ?></b><span>akun terdaftar</span></div>
@@ -212,7 +212,7 @@ $n_lulus_b = count(array_filter($rekap_b, fn($m) => $m['tahap'] === 'lulus'));
 
     <h2>Akses menu</h2>
     <p>Yang terbuka publik: seluruh situs termasuk
-      <a href="bimbingan/progres.php">papan progres</a> (nama dan tahap saja).
+      <a href="bimbingan/progres.php">Monitoring Pelaksanaan Bimbingan Tugas Akhir Mahasiswa</a> (nama dan tahap saja).
       Yang menuntut masuk: <a href="bimbingan/rekap.php">rincian bimbingan</a>
       berikut catatan per mahasiswa, dan panel ini khusus admin. Menu berkunci
       baru tinggal dibuat sebagai halaman PHP yang memanggil penjaga sesi yang
