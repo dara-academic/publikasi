@@ -1709,7 +1709,10 @@ body[data-grup="profil"]          { --modul: #7a4a2a; --modul-tipis: #f6e6da; }
    588 piksel, sehingga keduanya sama-sama jatuh di sekitar 84 huruf per baris.
    Kekhususannya sengaja dinaikkan lewat body.ak agar menang atas aturan
    pelepas batas yang dipasang saat meratakan tepi kanan. */
-body.ak .ak-utama p { max-width: 42em; }
+/* Batas lebar baca dilepas atas permintaan pemilik: paragraf mengisi
+   penuh kolomnya. Bersama perataan kiri-kanan, tepi kanan teks kini lurus
+   sejajar garis judul dan tidak ada lagi ruang kosong di sisi kanan. */
+body.ak .ak-utama p { max-width: none; }
 body.ak .ak-utama .statbar p,
 body.ak .ak-utama .mt-kartu p,
 body.ak .ak-utama .kontak-blok p,
@@ -2545,3 +2548,30 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
 /* Sentuhan kecil yang menjalar ke seluruh situs */
 ::selection { background: var(--unj-emas-lembut); }
 .ke-atas { border: 2px solid var(--unj-emas); line-height: 40px; }
+
+/* Bilah atas dan kaki halaman memakai hijau lambang itu sendiri, bukan
+   tinta gelap. Seluruh warna teks di atasnya ditala ulang ke keluarga
+   hijau muda supaya kontrasnya tetap di atas ambang nyaman. */
+.ak-bar { background: var(--unj-hijau); }
+.ak-bar .nav > a, .ak-bar .nav-btn { color: #d8eeee; }
+.ak-bar .nav > a:hover, .ak-bar .nav-btn:hover { background: rgba(255,255,255,0.14); color: #fff; }
+.ak-bar .nav > a.active, .ak-bar .nav-group.active > .nav-btn { background: rgba(255,255,255,0.20); color: #fff; }
+.nav-toggle span { background: #eaf6f6; }
+@media (max-width: 920px) {
+  .ak-bar .nav-btn { color: #9fcfd0; }
+  .ak-bar .nav-menu a { color: #d8eeee; }
+}
+.rekap-siapa { color: #cfe9ea; }
+.rekap-siapa b { color: #fff; }
+.rekap-siapa a { color: #eaf6f6; }
+
+.site-footer { background: var(--unj-hijau); color: #cfe7e8; }
+.site-footer a { color: #eaf6f6; }
+.site-footer a:hover { color: #fff; }
+.kaki-peta { border-bottom-color: rgba(255,255,255,0.18); }
+.kaki-peta h4 { color: #a8d3d4; }
+.kaki-peta a { color: #d8eeee; }
+.kaki-peta a:hover { color: #fff; }
+.kaki-tgl { color: #a8d3d4; }
+.ke-atas { background: var(--unj-hijau); }
+.ke-atas:hover { background: #01777c; }
