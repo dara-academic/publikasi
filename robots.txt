@@ -20,5 +20,8 @@ Allow: /
 Disallow: /data/
 Disallow: /laporan.php
 Disallow: /catat.php
+Disallow: /masuk.php
+Disallow: /keluar.php
+Disallow: /bimbingan/rekap.php
 
 Sitemap: https://despinurdara.id/sitemap.xml
