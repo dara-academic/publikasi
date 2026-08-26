@@ -12,8 +12,8 @@
 require __DIR__ . '/sesi.php';
 mulai_sesi();
 
-if (pengguna_sekarang() !== null) {
-    header('Location: /bimbingan/rekap.php');
+if (($p = pengguna_sekarang()) !== null) {
+    header('Location: ' . ($p['peran'] === 'admin' ? '/akun.php' : '/bimbingan/rekap.php'));
     exit;
 }
 
@@ -70,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'peran'       => $cocok['peran'],
                 'wajib_ganti' => !empty($cocok['wajib_ganti']),
             ];
-            header('Location: ' . (!empty($cocok['wajib_ganti'])
-                ? '/ganti-sandi.php' : '/bimbingan/rekap.php'));
+            header('Location: ' . (!empty($cocok['wajib_ganti']) ? '/ganti-sandi.php'
+                : ($cocok['peran'] === 'admin' ? '/akun.php' : '/bimbingan/rekap.php')));
             exit;
         }
         catat_gagal($ip);

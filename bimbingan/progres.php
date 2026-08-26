@@ -1,16 +1,17 @@
 <?php
 /* ------------------------------------------------------------------
-   Papan progres bimbingan. Terbuka untuk publik.
+   Papan Progres Bimbingan. Fitur unggulan portal, terbuka penuh.
 
-   Sesuai ketentuan yang disepakati Dr. Dara: nama dan tahap kemajuan
-   boleh tampil terbuka, sedangkan catatan bimbingan dan rinciannya
-   tetap di balik pintu masuk. Pendaftar yang belum diverifikasi ikut
-   tampil dengan warna abu dan label menunggu, supaya mahasiswa yang
-   baru mendaftar langsung melihat dirinya di papan.
+   Statusnya open data yang sudah dikonfirmasi Dr. Dara dan kampus:
+   nama mahasiswa dan tahap kemajuannya boleh tampil terbuka. Catatan
+   bimbingan per orang tetap di balik pintu masuk.
 
-   Halaman ini dinamis, dibaca langsung dari berkas data di server,
-   supaya pendaftar baru dan hasil verifikasi admin muncul seketika
-   tanpa menunggu situs dibangun ulang.
+   Desainnya dibuat sebagai papan hidup: pita gelap-teal dengan angka
+   besar, alur tahapan sebagai pipa bertingkat, kartu mahasiswa dengan
+   inisial berwarna tahapnya, pencarian nama seketika, dan pendaftar
+   baru yang belum diverifikasi ikut tampil abu-abu. Halaman ini
+   dinamis, membaca berkas data server langsung, supaya pendaftaran
+   dan hasil verifikasi muncul seketika.
    ------------------------------------------------------------------ */
 require __DIR__ . '/../sesi.php';
 
@@ -20,7 +21,6 @@ $LABEL = ['lulus' => 'Lulus', 'sempro' => 'Sempro', 'judul' => 'Tahap judul',
 $b = __DIR__ . '/../data/bimbingan.json';
 $data = is_file($b) ? json_decode((string) file_get_contents($b), true) : null;
 $daftar = $data['mahasiswa'] ?? [];
-
 $antre = is_file(__DIR__ . '/../data/pendaftaran.json')
     ? (json_decode((string) file_get_contents(__DIR__ . '/../data/pendaftaran.json'), true) ?: [])
     : [];
@@ -34,12 +34,18 @@ foreach ($antre as $a) {
     $kelompok[$a['kelompok']][] = ['nama' => $a['nama'], 'status' => 'tunggu'];
 }
 
+$hit = fn($t) => count(array_filter($daftar, fn($m) => $m['tahap'] === $t));
 $total = count($daftar);
-$n_lulus = count(array_filter($daftar, fn($m) => $m['tahap'] === 'lulus'));
-$n_sempro = count(array_filter($daftar, fn($m) => $m['tahap'] === 'sempro'));
-$n_tunggu = count($antre);
+$n = ['judul' => $hit('judul'), 'sempro' => $hit('sempro'),
+      'lulus' => $hit('lulus'), 'belum' => $hit('belum'), 'tunggu' => count($antre)];
 
 function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
+function inisial(string $nama): string {
+    $k = preg_split('/\s+/', trim($nama));
+    $a = mb_substr($k[0], 0, 1);
+    $b = count($k) > 1 ? mb_substr($k[1], 0, 1) : '';
+    return mb_strtoupper($a . $b);
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -47,7 +53,7 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Papan Progres Bimbingan Dr. Despinur Dara</title>
-<meta name="description" content="Progres <?= $total ?> mahasiswa bimbingan Dr. Despinur Dara dari skripsi sampai disertasi, diperbarui langsung dari rekap bimbingan.">
+<meta name="description" content="Papan progres <?= $total ?> mahasiswa bimbingan Dr. Despinur Dara dari skripsi sampai disertasi: <?= $n['lulus'] ?> lulus, diperbarui langsung dari rekap bimbingan.">
 <link rel="canonical" href="https://despinurdara.id/bimbingan/progres.php">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/style.css?v=<?= filemtime(__DIR__ . '/../assets/style.css') ?>">
@@ -59,51 +65,76 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
   <div class="ak-bar-isi">
     <a class="ak-nama" href="../index.html">Despinur Dara</a>
     <span class="rekap-siapa"><a href="index.html">Bimbingan</a>
+      &middot; <a href="daftar.php">Daftar</a>
       &middot; <a href="../masuk.php">Masuk</a></span>
   </div>
 </header>
+
+<div class="prog-band">
+  <div class="prog-band-isi">
+    <p class="prog-band-kicker">Papan progres bimbingan</p>
+    <h1>Setiap perjalanan tercatat di sini</h1>
+    <p class="prog-band-lead">Dari topik pertama sampai lulus, progres seluruh
+    mahasiswa bimbingan Dr. Dara terbuka sebagai data publik dan diperbarui
+    langsung dari rekap.</p>
+<?php if ($daftar): ?>
+    <div class="prog-band-angka">
+      <div><b><?= $total ?></b><span>mahasiswa</span></div>
+      <div><b><?= $n['lulus'] ?></b><span>lulus</span></div>
+      <div><b><?= $n['sempro'] ?></b><span>sampai sempro</span></div>
+      <div><b>3</b><span>jenjang, S1 sampai S3</span></div>
+    </div>
+<?php endif; ?>
+  </div>
+</div>
+
 <div class="ak-halaman">
 <main class="ak-utama" id="konten">
   <nav class="remah" aria-label="Jejak lokasi"><a href="../index.html">Beranda</a><span class="remah-pisah">&rsaquo;</span><a href="index.html">Bimbingan karya ilmiah</a><span class="remah-pisah">&rsaquo;</span><span class="remah-kini">Papan progres</span></nav>
-
-  <section class="hero hero-tipis">
-    <div class="container">
-      <p class="kicker">Papan progres</p>
-      <h1>Progres bimbingan</h1>
-      <p class="lead">Perjalanan setiap mahasiswa bimbingan dari topik sampai
-      lulus, diperbarui langsung dari rekap. Rincian dan catatan bimbingan
-      hanya terbuka setelah masuk.</p>
-    </div>
-  </section>
 
   <div class="container">
 <?php if (!$daftar): ?>
     <p class="masuk-galat">Data bimbingan belum terunggah di server.</p>
 <?php else: ?>
-    <div class="ak-angka">
-      <div><b><?= $total ?></b><span>mahasiswa bimbingan</span></div>
-      <div><b><?= $n_lulus ?></b><span>lulus</span></div>
-      <div><b><?= $n_sempro ?></b><span>sampai sempro</span></div>
-      <div><b><?= $n_tunggu ?></b><span>menunggu verifikasi</span></div>
+
+    <div class="prog-alur" role="img"
+         aria-label="Alur bimbingan: <?= $n['judul'] ?> di tahap judul, <?= $n['sempro'] ?> sampai sempro, <?= $n['lulus'] ?> lulus, <?= $n['belum'] ?> belum berjalan, <?= $n['tunggu'] ?> menunggu verifikasi">
+      <div class="prog-alur-tahap t-judul"><b><?= $n['judul'] ?></b><span>Tahap judul</span></div>
+      <span class="prog-alur-panah" aria-hidden="true">&rsaquo;</span>
+      <div class="prog-alur-tahap t-sempro"><b><?= $n['sempro'] ?></b><span>Sempro</span></div>
+      <span class="prog-alur-panah" aria-hidden="true">&rsaquo;</span>
+      <div class="prog-alur-tahap t-lulus"><b><?= $n['lulus'] ?></b><span>Lulus</span></div>
+      <div class="prog-alur-samping">
+        <span><b><?= $n['belum'] ?></b> belum berjalan</span>
+        <span><b><?= $n['tunggu'] ?></b> menunggu verifikasi</span>
+      </div>
     </div>
 
-    <nav class="mk-saring" aria-label="Saring menurut status">
-      <span class="mk-saring-label">Status</span>
-      <button class="mk-chip aktif" data-saring="semua" aria-pressed="true">Semua</button>
+    <div class="prog-kendali">
+      <label class="sr-only" for="prog-cari">Cari nama mahasiswa</label>
+      <input class="prog-cari" id="prog-cari" type="search"
+             placeholder="Cari nama mahasiswa" autocomplete="off">
+      <nav class="mk-saring" aria-label="Saring menurut status">
+        <button class="mk-chip aktif" data-saring="semua" aria-pressed="true">Semua</button>
 <?php foreach ($LABEL as $k => $t): ?>
-      <button class="mk-chip" data-saring="<?= $k ?>" aria-pressed="false"><?= $t ?></button>
+        <button class="mk-chip" data-saring="<?= $k ?>" aria-pressed="false"><?= $t ?></button>
 <?php endforeach; ?>
+      </nav>
       <span class="mk-saring-hasil" role="status"></span>
-    </nav>
+    </div>
 
 <?php foreach ($kelompok as $nama_k => $anggota): ?>
     <section class="prog-kelompok">
       <h2><?= e($nama_k) ?> <span class="rekap-jumlah"><?= count($anggota) ?> mahasiswa</span></h2>
       <ul class="prog-rak">
 <?php foreach ($anggota as $m): ?>
-        <li class="prog-pil status-<?= e($m['status']) ?>" data-status="<?= e($m['status']) ?>">
-          <span class="prog-nama"><?= e($m['nama']) ?></span>
-          <span class="prog-status"><?= e($LABEL[$m['status']]) ?></span>
+        <li class="prog-pil status-<?= e($m['status']) ?>" data-status="<?= e($m['status']) ?>"
+            data-nama="<?= e(mb_strtolower($m['nama'])) ?>">
+          <span class="prog-avatar" aria-hidden="true"><?= e(inisial($m['nama'])) ?></span>
+          <span class="prog-teks">
+            <span class="prog-nama"><?= e($m['nama']) ?></span>
+            <span class="prog-status"><?= e($LABEL[$m['status']]) ?></span>
+          </span>
         </li>
 <?php endforeach; ?>
       </ul>
@@ -114,7 +145,7 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
       <div>
         <b>Mahasiswa bimbingan baru?</b>
         <p>Daftarkan diri Anda; nama Anda tampil di papan ini begitu terkirim,
-        dan kode akses dikirim setelah diverifikasi Dr. Dara.</p>
+        berstatus menunggu sampai diverifikasi Dr. Dara.</p>
       </div>
       <div class="prog-ajak-tombol">
         <a class="btn primary" href="daftar.php">Daftar bimbingan</a>
@@ -122,8 +153,8 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
       </div>
     </div>
     <p class="bim-catatan">Rekap diperbarui <?= e($data['diperbarui'] ?? '-') ?>.
-    Nama dan tahap tampil sesuai ketentuan program studi; catatan bimbingan
-    per mahasiswa hanya terbuka bagi yang bersangkutan dan dosen.</p>
+    Nama dan tahap adalah data terbuka yang sudah dikonfirmasi program studi;
+    catatan bimbingan per mahasiswa hanya terbuka bagi yang bersangkutan dan dosen.</p>
 <?php endif; ?>
   </div>
 </main>
@@ -133,10 +164,14 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
   var chip = document.querySelectorAll('.mk-chip');
   var pil = document.querySelectorAll('.prog-pil');
   var hasil = document.querySelector('.mk-saring-hasil');
-  function saring(nilai) {
+  var cari = document.getElementById('prog-cari');
+  var status = 'semua';
+  function saring() {
+    var q = (cari.value || '').toLowerCase().trim();
     var tampil = 0;
     pil.forEach(function (p) {
-      var cocok = nilai === 'semua' || p.dataset.status === nilai;
+      var cocok = (status === 'semua' || p.dataset.status === status)
+        && (!q || p.dataset.nama.indexOf(q) !== -1);
       p.hidden = !cocok;
       if (cocok) tampil++;
     });
@@ -147,13 +182,15 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
   }
   chip.forEach(function (b) {
     b.addEventListener('click', function () {
+      status = b.dataset.saring;
       chip.forEach(function (x) {
         x.classList.toggle('aktif', x === b);
         x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
       });
-      saring(b.dataset.saring);
+      saring();
     });
   });
+  cari.addEventListener('input', saring);
 })();
 </script>
 </body>

@@ -143,16 +143,27 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
       &middot; <a href="keluar.php">Keluar</a></span>
   </div>
 </header>
+<?php
+$rekap_b = is_file(B_BIMBINGAN)
+    ? (json_decode((string) file_get_contents(B_BIMBINGAN), true)['mahasiswa'] ?? []) : [];
+$n_lulus_b = count(array_filter($rekap_b, fn($m) => $m['tahap'] === 'lulus'));
+?>
+<div class="admin-band">
+  <div class="admin-band-isi">
+    <p class="admin-lencana">Panel admin</p>
+    <h1>Pusat kendali bimbingan</h1>
+    <p class="admin-band-lead">Verifikasi pendaftar, kelola akun, dan pantau
+    papan dari satu tempat, <?= htmlspecialchars($pengguna['nama'], ENT_QUOTES) ?>.</p>
+    <div class="prog-band-angka">
+      <div class="<?= $antre ? 'admin-menyala' : '' ?>"><b><?= count($antre) ?></b><span>menunggu verifikasi</span></div>
+      <div><b><?= count($daftar_pengguna) ?></b><span>akun terdaftar</span></div>
+      <div><b><?= count($rekap_b) ?></b><span>mahasiswa di rekap</span></div>
+      <div><b><?= $n_lulus_b ?></b><span>lulus</span></div>
+    </div>
+  </div>
+</div>
 <div class="ak-halaman">
 <main class="ak-utama" id="konten">
-  <section class="hero hero-tipis">
-    <div class="container">
-      <p class="kicker">Panel admin</p>
-      <h1>Kelola akun dan verifikasi</h1>
-      <p class="lead"><?= count($daftar_pengguna) ?> akun terdaftar,
-        <?= count($antre) ?> pendaftar menunggu verifikasi.</p>
-    </div>
-  </section>
   <div class="container">
 <?php if ($pesan): ?>
     <p class="akun-pesan" role="status"><?= e($pesan) ?></p>

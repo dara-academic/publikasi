@@ -2391,3 +2391,111 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
 .akun-form { display: flex; gap: 10px; flex-wrap: wrap; margin: 6px 0 10px; }
 .akun-form .masuk-input { width: auto; flex: 1 1 180px; }
 .akun-form .akun-tombol-tambah { width: auto; margin: 0; flex: 0 0 auto; padding: 10px 22px; }
+
+/* ============================================================
+   Fitur unggulan: pita papan progres, alur tahapan, panel admin
+   ============================================================ */
+.prog-band {
+  background: linear-gradient(130deg, var(--tinta-bar, #16222e) 20%, #1d6270 100%);
+  color: #e9f1f5; padding: 52px 0 44px;
+}
+.prog-band-isi { max-width: var(--lebar-bingkai, 1216px); margin: 0 auto; padding: 0 26px; }
+.prog-band-kicker {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #9fd4de; margin: 0 0 10px;
+}
+.prog-band h1, .admin-band h1 {
+  font-family: var(--serif); font-weight: 600; color: #fff;
+  font-size: clamp(28px, 3.6vw, 40px); letter-spacing: -0.01em; margin: 0 0 12px;
+}
+.prog-band-lead, .admin-band-lead { font-size: 16px; line-height: 1.6; color: #c3d4dc; max-width: 620px; margin: 0; }
+.prog-band-angka { display: flex; flex-wrap: wrap; gap: 34px 54px; margin-top: 30px; }
+.prog-band-angka b {
+  display: block; font-family: var(--serif); font-size: 40px; font-weight: 600;
+  color: #fff; line-height: 1.1;
+}
+.prog-band-angka span { font-size: 13px; color: #9fb4c0; }
+.admin-menyala b { color: #ffd479; }
+
+/* Alur tahapan: pipa bertingkat judul -> sempro -> lulus */
+.prog-alur {
+  display: flex; align-items: stretch; gap: 12px; flex-wrap: wrap;
+  margin: 30px 0 8px;
+}
+.prog-alur-tahap {
+  flex: 1 1 130px; background: #fff; border: 1px solid #edf0f3; border-radius: 12px;
+  box-shadow: var(--bayang-kartu); padding: 14px 18px; border-top: 4px solid var(--line);
+}
+.prog-alur-tahap b { display: block; font-family: var(--serif); font-size: 30px; color: var(--ink); }
+.prog-alur-tahap span { font-size: 13px; color: var(--ink-soft); }
+.prog-alur-tahap.t-judul  { border-top-color: color-mix(in srgb, var(--modul) 28%, #fff); }
+.prog-alur-tahap.t-sempro { border-top-color: color-mix(in srgb, var(--modul) 55%, #fff); }
+.prog-alur-tahap.t-lulus  { border-top-color: var(--modul); }
+.prog-alur-tahap.t-lulus b { color: var(--modul); }
+.prog-alur-panah { align-self: center; font-size: 26px; color: var(--ink-muted); }
+.prog-alur-samping {
+  flex: 1 1 100%; display: flex; gap: 22px; font-size: 13px; color: var(--ink-muted);
+}
+.prog-alur-samping b { color: var(--ink-soft); }
+
+/* Kendali papan: cari plus saring dalam satu baris */
+.prog-kendali { display: flex; align-items: center; gap: 14px 18px; flex-wrap: wrap; margin: 24px 0 4px; }
+.prog-cari {
+  font: inherit; font-size: 14px; color: var(--ink);
+  padding: 9px 16px; border: 1px solid var(--line); border-radius: 999px;
+  background: #fff; width: 240px; box-shadow: var(--bayang-kartu);
+}
+.prog-cari:focus { outline: none; border-color: var(--modul);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--modul) 18%, transparent); }
+.prog-kendali .mk-saring { margin: 0; }
+
+/* Kartu mahasiswa dengan inisial */
+.prog-avatar {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+  background: color-mix(in srgb, var(--modul) 14%, #fff);
+  color: var(--modul, var(--accent-dark));
+}
+.prog-pil { align-items: center; justify-content: flex-start; }
+.prog-teks { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.prog-nama { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.status-lulus .prog-avatar { background: var(--modul); color: #fff; }
+.status-tunggu .prog-avatar { background: #e3e6e9; color: var(--ink-muted); }
+
+/* Pita panel admin: gelap dengan lencana kuning supaya beda dari halaman biasa */
+.admin-band {
+  background: linear-gradient(130deg, #101820 10%, #23445a 100%);
+  color: #e9f1f5; padding: 44px 0 38px; border-bottom: 3px solid #ffd479;
+}
+.admin-band-isi { max-width: var(--lebar-bingkai, 1216px); margin: 0 auto; padding: 0 26px; }
+.admin-lencana {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: #ffd479; color: #3a2c07; border-radius: 999px;
+  padding: 4px 14px; margin: 0 0 14px;
+}
+
+/* Sorotan fitur unggulan di beranda */
+.sorot-progres {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  margin: 14px 0 6px; padding: 22px 26px; text-decoration: none;
+  background: linear-gradient(130deg, var(--tinta-bar, #16222e) 15%, #1d6270 100%);
+  border-radius: 12px; color: #e9f1f5;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.sorot-progres:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(20, 35, 50, 0.25); }
+.sorot-isi { min-width: 0; }
+.sorot-lencana {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.16); color: #cfe7ec;
+  border-radius: 999px; padding: 3px 11px; margin-bottom: 8px;
+}
+.sorot-progres b { display: block; font-family: var(--serif); font-size: 22px; color: #fff; margin-bottom: 6px; }
+.sorot-ket { font-size: 14px; line-height: 1.6; color: #b9cdd6; display: block; max-width: 640px; }
+.sorot-panah { font-size: 30px; color: #9fd4de; flex-shrink: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .sorot-progres { transition: none; }
+  .sorot-progres:hover { transform: none; }
+}

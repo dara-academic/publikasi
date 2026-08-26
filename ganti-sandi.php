@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
         if ($sah) {
-            header('Location: /bimbingan/rekap.php');
+            header('Location: ' . ($pengguna['peran'] === 'admin' ? '/akun.php' : '/bimbingan/rekap.php'));
             exit;
         }
         $galat = 'Kata sandi lama tidak cocok.';
