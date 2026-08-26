@@ -2652,3 +2652,26 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
   .prog-pil { animation: none; transition: none; }
   .prog-pil:hover { transform: none; }
 }
+
+/* ============================================================
+   Penjernihan kartu monitoring, dari masukan pemilik
+   ============================================================
+   Bingkai kiri tebal warisan desain pil lama dibuang: statusnya sudah
+   diceritakan stepper dan label, garis tebal hanya menambah ramai.
+   Chip saring yang aktif kembali berteks putih; saat warna modul
+   diikat, warna teksnya tertinggal sehingga tulisan Semua tenggelam
+   di chip hijau. Kartu diberi napas: kolom lebih lebar, jarak lebih
+   longgar, dan garis stepper lebih tipis. */
+.mk-chip.aktif { color: #fff; }
+.prog-pil,
+.prog-pil.status-lulus, .prog-pil.status-sempro,
+.prog-pil.status-judul, .prog-pil.status-belum, .prog-pil.status-tunggu {
+  border: 1px solid #e8ecef; border-left: 1px solid #e8ecef;
+}
+.prog-rak { grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+.prog-pil { padding: 16px 18px 14px; gap: 14px; }
+.prog-nama { font-size: 15px; }
+.prog-status { font-size: 12.5px; }
+.alur-titik + .alur-titik::before { height: 1.5px; }
+.alur-titik i { width: 12px; height: 12px; }
+.prog-pil.status-tunggu { background: #fbfbfa; }
