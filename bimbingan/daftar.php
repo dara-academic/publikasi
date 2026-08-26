@@ -15,7 +15,6 @@
 require __DIR__ . '/../sesi.php';
 mulai_sesi();
 
-const BERKAS_DAFTAR = __DIR__ . '/../data/pendaftaran.json';
 $KELOMPOK = [
     'Skripsi Angkatan 2023 (Kelas Kerja Sama BKN)',
     'Skripsi Angkatan 2024',
@@ -49,30 +48,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $galat = 'Alamat surel tidak sah.';
     } else {
         $sudah = [];
-        $b = __DIR__ . '/../data/bimbingan.json';
-        if (is_file($b)) {
-            foreach ((json_decode((string) file_get_contents($b), true)['mahasiswa'] ?? []) as $m) {
-                $sudah[] = mb_strtolower($m['nama']);
-            }
+        foreach ((muat_bimbingan()['mahasiswa'] ?? []) as $m) {
+            $sudah[] = mb_strtolower($m['nama']);
         }
-        $antre = is_file(BERKAS_DAFTAR)
-            ? (json_decode((string) file_get_contents(BERKAS_DAFTAR), true) ?: [])
-            : [];
+        $antre = muat_antrean();
         foreach ($antre as $a) $sudah[] = mb_strtolower($a['nama']);
         if (in_array(mb_strtolower($nama), $sudah, true)) {
             $galat = 'Nama ini sudah ada di daftar bimbingan atau antrean verifikasi.';
         } elseif (count($antre) >= 200) {
             $galat = 'Antrean pendaftaran penuh. Hubungi dara@unj.ac.id.';
         } else {
-            $antre[] = [
+            tambah_antrean([
                 'nama' => $nama,
                 'kelompok' => $kelompok,
                 'kontak' => $kontak,
                 'waktu' => date('c'),
-            ];
-            file_put_contents(BERKAS_DAFTAR,
-                json_encode($antre, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
-                LOCK_EX);
+            ]);
             catat_gagal('daftar-' . $ip);     /* sekaligus penjatah: 5 kiriman per 15 menit */
             $sukses = true;
         }

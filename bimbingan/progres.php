@@ -18,12 +18,9 @@ require __DIR__ . '/../sesi.php';
 $LABEL = ['lulus' => 'Lulus', 'sempro' => 'Sempro', 'judul' => 'Tahap judul',
           'belum' => 'Belum berjalan', 'tunggu' => 'Menunggu verifikasi'];
 
-$b = __DIR__ . '/../data/bimbingan.json';
-$data = is_file($b) ? json_decode((string) file_get_contents($b), true) : null;
+$data = muat_bimbingan();
 $daftar = $data['mahasiswa'] ?? [];
-$antre = is_file(__DIR__ . '/../data/pendaftaran.json')
-    ? (json_decode((string) file_get_contents(__DIR__ . '/../data/pendaftaran.json'), true) ?: [])
-    : [];
+$antre = muat_antrean();
 
 $kelompok = [];
 foreach ($daftar as $m) {

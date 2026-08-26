@@ -2480,21 +2480,21 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
 .sorot-progres {
   display: flex; align-items: center; justify-content: space-between; gap: 18px;
   margin: 14px 0 6px; padding: 22px 26px; text-decoration: none;
-  background: linear-gradient(130deg, var(--tinta-bar, #16222e) 15%, #1d6270 100%);
-  border-radius: 12px; color: #e9f1f5;
+  background: linear-gradient(130deg, #9a3412 10%, #ea580c 100%);
+  border-radius: 12px; color: #fff7ed;
   transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
-.sorot-progres:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(20, 35, 50, 0.25); }
+.sorot-progres:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(194, 65, 12, 0.35); }
 .sorot-isi { min-width: 0; }
 .sorot-lencana {
   display: inline-block; font-size: 11px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.16); color: #cfe7ec;
+  background: #fff; color: #9a3412;
   border-radius: 999px; padding: 3px 11px; margin-bottom: 8px;
 }
 .sorot-progres b { display: block; font-family: var(--serif); font-size: 22px; color: #fff; margin-bottom: 6px; }
-.sorot-ket { font-size: 14px; line-height: 1.6; color: #b9cdd6; display: block; max-width: 640px; }
-.sorot-panah { font-size: 30px; color: #9fd4de; flex-shrink: 0; }
+.sorot-ket { font-size: 14px; line-height: 1.6; color: #ffedd5; display: block; max-width: 640px; }
+.sorot-panah { font-size: 30px; color: #fff; flex-shrink: 0; }
 @media (prefers-reduced-motion: reduce) {
   .sorot-progres { transition: none; }
   .sorot-progres:hover { transform: none; }

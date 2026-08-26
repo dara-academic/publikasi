@@ -21,14 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($baru !== $ulang) {
         $galat = 'Kata sandi baru dan ulangannya tidak sama.';
     } else {
-        $semua = muat_pengguna();
         $sah = false;
-        foreach ($semua as $i => $p) {
+        foreach (muat_pengguna() as $p) {
             if ($p['email'] === $pengguna['email']) {
                 if (password_verify($lama, $p['sandi'])) {
-                    $semua[$i]['sandi'] = password_hash($baru, PASSWORD_DEFAULT);
-                    $semua[$i]['wajib_ganti'] = false;
-                    simpan_pengguna($semua);
+                    perbarui_pengguna($p['email'], [
+                        'sandi' => password_hash($baru, PASSWORD_DEFAULT),
+                        'wajib_ganti' => false,
+                    ]);
                     $_SESSION['pengguna']['wajib_ganti'] = false;
                     $sah = true;
                 }

@@ -11,10 +11,7 @@ require __DIR__ . '/../sesi.php';
 $pengguna = wajib_masuk_segar();
 $admin = in_array($pengguna['peran'], ['admin', 'dosen'], true);
 
-$sumber = __DIR__ . '/../data/bimbingan.json';
-$data = is_file($sumber)
-    ? json_decode((string) file_get_contents($sumber), true)
-    : null;
+$data = muat_bimbingan();
 $daftar = $data['mahasiswa'] ?? [];
 
 $LABEL = ['lulus' => 'Lulus', 'sempro' => 'Sampai sempro',

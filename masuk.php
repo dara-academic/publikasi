@@ -17,7 +17,7 @@ if (($p = pengguna_sekarang()) !== null) {
     exit;
 }
 
-$mode_setup = !is_file(BERKAS_PENGGUNA) && is_file(BERKAS_SETUP);
+$mode_setup = !ada_pengguna() && is_file(BERKAS_SETUP);
 $galat = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -42,13 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($nama === '') {
             $galat = 'Nama wajib diisi.';
         } else {
-            simpan_pengguna([[
+            tambah_pengguna([
                 'email'  => $email,
                 'nama'   => $nama,
                 'peran'  => 'admin',
                 'sandi'  => password_hash($sandi, PASSWORD_DEFAULT),
-                'dibuat' => date('c'),
-            ]]);
+                'wajib_ganti' => false,
+                'dibuat' => date('Y-m-d'),
+            ]);
             rename(BERKAS_SETUP, BERKAS_SETUP . '.terpakai');
             session_regenerate_id(true);
             $_SESSION['pengguna'] = ['email' => $email, 'nama' => $nama, 'peran' => 'admin'];

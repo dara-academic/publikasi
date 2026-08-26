@@ -18,9 +18,6 @@ if ($pengguna['peran'] !== 'admin') {
     exit;
 }
 
-const B_DAFTAR = __DIR__ . '/data/pendaftaran.json';
-const B_BIMBINGAN = __DIR__ . '/data/bimbingan.json';
-
 function slug_nama(string $nama): string {
     $t = strtolower(trim($nama));
     $t = preg_replace('/[^a-z0-9]+/', '-', $t);
@@ -33,35 +30,25 @@ unset($_SESSION['pesan_akun']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_sah()) {
     $aksi = (string) ($_POST['aksi'] ?? '');
     $semua = muat_pengguna();
-    $antre = is_file(B_DAFTAR)
-        ? (json_decode((string) file_get_contents(B_DAFTAR), true) ?: []) : [];
 
     if ($aksi === 'setujui' || $aksi === 'tolak') {
-        $i = (int) ($_POST['nomor'] ?? -1);
-        if (isset($antre[$i])) {
-            $calon = $antre[$i];
-            array_splice($antre, $i, 1);
-            file_put_contents(B_DAFTAR,
-                json_encode($antre, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
+        $calon = ambil_antrean((int) ($_POST['nomor'] ?? -1));
+        if ($calon !== null) {
             if ($aksi === 'setujui') {
-                $rekap = json_decode((string) file_get_contents(B_BIMBINGAN), true);
-                $rekap['mahasiswa'][] = [
+                tambah_mahasiswa_bimbingan([
                     'nama' => $calon['nama'], 'kelompok' => $calon['kelompok'],
                     'peran' => '-', 'tahap' => 'belum',
                     'keterangan' => 'Terdaftar lewat formulir, diverifikasi ' . date('Y-m-d'),
-                ];
-                file_put_contents(B_BIMBINGAN,
-                    json_encode($rekap, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
+                ]);
                 $u = slug_nama($calon['nama']);
                 foreach ($semua as $p) {
                     if ($p['email'] === $u) { $u .= '2'; break; }
                 }
                 $kode = kode_akses();
-                $semua[] = ['email' => $u, 'nama' => $calon['nama'],
+                tambah_pengguna(['email' => $u, 'nama' => $calon['nama'],
                     'peran' => 'mahasiswa',
                     'sandi' => password_hash($kode, PASSWORD_DEFAULT),
-                    'wajib_ganti' => true, 'dibuat' => date('Y-m-d')];
-                simpan_pengguna($semua);
+                    'wajib_ganti' => true, 'dibuat' => date('Y-m-d')]);
                 $_SESSION['pesan_akun'] = 'DISETUJUI: ' . $calon['nama']
                     . ' | pengguna: ' . $u . ' | kode akses: ' . $kode
                     . ' | kirim ke: ' . $calon['kontak'];
@@ -82,21 +69,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_sah()) {
             $_SESSION['pesan_akun'] = 'Nama pengguna ' . $u . ' sudah dipakai.';
         } else {
             $kode = kode_akses();
-            $semua[] = ['email' => $u, 'nama' => $nama, 'peran' => $peran,
+            tambah_pengguna(['email' => $u, 'nama' => $nama, 'peran' => $peran,
                 'sandi' => password_hash($kode, PASSWORD_DEFAULT),
-                'wajib_ganti' => true, 'dibuat' => date('Y-m-d')];
-            simpan_pengguna($semua);
+                'wajib_ganti' => true, 'dibuat' => date('Y-m-d')]);
             $_SESSION['pesan_akun'] = 'Akun dibuat: ' . $nama
                 . ' | pengguna: ' . $u . ' | kode akses: ' . $kode;
         }
     } elseif ($aksi === 'reset') {
         $u = (string) ($_POST['pengguna'] ?? '');
-        foreach ($semua as $i => $p) {
+        foreach ($semua as $p) {
             if ($p['email'] === $u) {
                 $kode = kode_akses();
-                $semua[$i]['sandi'] = password_hash($kode, PASSWORD_DEFAULT);
-                $semua[$i]['wajib_ganti'] = true;
-                simpan_pengguna($semua);
+                perbarui_pengguna($u, [
+                    'sandi' => password_hash($kode, PASSWORD_DEFAULT),
+                    'wajib_ganti' => true,
+                ]);
                 $_SESSION['pesan_akun'] = 'Kode baru untuk ' . $p['nama'] . ': ' . $kode;
                 break;
             }
@@ -106,8 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_sah()) {
         if ($u === $pengguna['email']) {
             $_SESSION['pesan_akun'] = 'Akun sendiri tidak bisa dihapus.';
         } else {
-            $semua = array_values(array_filter($semua, fn($p) => $p['email'] !== $u));
-            simpan_pengguna($semua);
+            hapus_pengguna($u);
             $_SESSION['pesan_akun'] = 'Akun ' . $u . ' dihapus.';
         }
     }
@@ -116,8 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_sah()) {
 }
 
 $daftar_pengguna = muat_pengguna();
-$antre = is_file(B_DAFTAR)
-    ? (json_decode((string) file_get_contents(B_DAFTAR), true) ?: []) : [];
+$antre = muat_antrean();
 $csrf = htmlspecialchars(token_csrf(), ENT_QUOTES);
 function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
 ?>
@@ -144,8 +129,7 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
   </div>
 </header>
 <?php
-$rekap_b = is_file(B_BIMBINGAN)
-    ? (json_decode((string) file_get_contents(B_BIMBINGAN), true)['mahasiswa'] ?? []) : [];
+$rekap_b = muat_bimbingan()['mahasiswa'] ?? [];
 $n_lulus_b = count(array_filter($rekap_b, fn($m) => $m['tahap'] === 'lulus'));
 ?>
 <div class="admin-band">
@@ -177,7 +161,7 @@ $n_lulus_b = count(array_filter($rekap_b, fn($m) => $m['tahap'] === 'lulus'));
     <div class="rekap-gulir"><table class="rekap-tabel">
       <thead><tr><th>Nama</th><th>Kelompok</th><th>Surel</th><th>Waktu daftar</th><th>Tindakan</th></tr></thead>
       <tbody>
-<?php foreach ($antre as $i => $a): ?>
+<?php foreach ($antre as $a): $i = $a['id']; ?>
         <tr>
           <td><?= e($a['nama']) ?></td>
           <td><?= e($a['kelompok']) ?></td>
