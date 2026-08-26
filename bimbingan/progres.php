@@ -69,16 +69,16 @@ function inisial(string $nama): string {
 
 <div class="prog-band">
   <div class="prog-band-isi">
-    <p class="prog-band-kicker">Monitoring bimbingan</p>
+    <p class="prog-band-kicker">Monitoring bimbingan <span class="langsung"><i></i>Data langsung</span></p>
     <h1>Monitoring Pelaksanaan Bimbingan Tugas Akhir Mahasiswa</h1>
     <p class="prog-band-lead">Dari topik pertama sampai lulus, progres seluruh
     mahasiswa bimbingan Dr. Dara terbuka sebagai data publik dan diperbarui
     langsung dari rekap.</p>
 <?php if ($daftar): ?>
     <div class="prog-band-angka">
-      <div><b><?= $total ?></b><span>mahasiswa</span></div>
-      <div><b><?= $n['lulus'] ?></b><span>lulus</span></div>
-      <div><b><?= $n['sempro'] ?></b><span>sampai sempro</span></div>
+      <div><b class="hitung" data-akhir="<?= $total ?>"><?= $total ?></b><span>mahasiswa</span></div>
+      <div><b class="hitung" data-akhir="<?= $n['lulus'] ?>"><?= $n['lulus'] ?></b><span>lulus</span></div>
+      <div><b class="hitung" data-akhir="<?= $n['sempro'] ?>"><?= $n['sempro'] ?></b><span>sampai sempro</span></div>
       <div><b>3</b><span>jenjang, S1 sampai S3</span></div>
     </div>
 <?php endif; ?>
@@ -124,13 +124,22 @@ function inisial(string $nama): string {
     <section class="prog-kelompok">
       <h2><?= e($nama_k) ?> <span class="rekap-jumlah"><?= count($anggota) ?> mahasiswa</span></h2>
       <ul class="prog-rak">
-<?php foreach ($anggota as $m): ?>
+<?php foreach ($anggota as $m):
+        $maju = ['tunggu' => 0, 'belum' => 1, 'judul' => 2, 'sempro' => 3, 'lulus' => 4][$m['status']];
+?>
         <li class="prog-pil status-<?= e($m['status']) ?>" data-status="<?= e($m['status']) ?>"
             data-nama="<?= e(mb_strtolower($m['nama'])) ?>">
-          <span class="prog-avatar" aria-hidden="true"><?= e(inisial($m['nama'])) ?></span>
-          <span class="prog-teks">
-            <span class="prog-nama"><?= e($m['nama']) ?></span>
-            <span class="prog-status"><?= e($LABEL[$m['status']]) ?></span>
+          <span class="prog-kartu-atas">
+            <span class="prog-avatar" aria-hidden="true"><?= e(inisial($m['nama'])) ?></span>
+            <span class="prog-teks">
+              <span class="prog-nama"><?= e($m['nama']) ?></span>
+              <span class="prog-status"><?= e($LABEL[$m['status']]) ?></span>
+            </span>
+          </span>
+          <span class="alur-mini" role="img" aria-label="Tahap: <?= e($LABEL[$m['status']]) ?>">
+<?php foreach ([1 => 'Daftar', 2 => 'Judul', 3 => 'Sempro', 4 => 'Lulus'] as $tk => $nm): ?>
+            <span class="alur-titik <?= $maju >= $tk ? 'sudah' : '' ?> <?= ($maju === $tk - 1 || ($maju === 0 && $tk === 1)) ? 'kini' : '' ?>"><i></i><em><?= $nm ?></em></span>
+<?php endforeach; ?>
           </span>
         </li>
 <?php endforeach; ?>
@@ -188,6 +197,23 @@ function inisial(string $nama): string {
     });
   });
   cari.addEventListener('input', saring);
+
+  /* Angka pita menghitung naik saat halaman terbuka, dimatikan bagi
+     pengguna yang meminta gerak dikurangi. */
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.hitung').forEach(function (el) {
+      var akhir = parseInt(el.dataset.akhir, 10) || 0;
+      var t0 = null;
+      function tik(t) {
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / 800, 1);
+        el.textContent = Math.round(akhir * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tik);
+      }
+      el.textContent = '0';
+      requestAnimationFrame(tik);
+    });
+  }
 })();
 </script>
 </body>

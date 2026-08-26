@@ -2575,3 +2575,80 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
 .kaki-tgl { color: #a8d3d4; }
 .ke-atas { background: var(--unj-hijau); }
 .ke-atas:hover { background: #01777c; }
+
+/* ============================================================
+   RASA APLIKASI: papan monitoring bergerak, bukan brosur diam
+   ============================================================ */
+
+/* Lencana data langsung dengan denyut, penanda bahwa angkanya hidup */
+.langsung {
+  display: inline-flex; align-items: center; gap: 7px; margin-left: 12px;
+  font-size: 11px; letter-spacing: 0.08em; color: #d9f3e6;
+  background: rgba(255,255,255,0.12); border-radius: 999px; padding: 3px 12px;
+}
+.langsung i {
+  width: 7px; height: 7px; border-radius: 999px; background: #6ee7a8;
+  animation: denyut 1.6s ease-in-out infinite;
+}
+@keyframes denyut {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(110,231,168,0.55); }
+  60% { box-shadow: 0 0 0 7px rgba(110,231,168,0); }
+}
+
+/* Kartu perjalanan: susunan atas identitas, bawah stepper */
+.prog-pil { flex-direction: column; align-items: stretch; gap: 12px; padding: 14px 16px 12px; }
+.prog-kartu-atas { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.prog-pil:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(20,35,50,0.06), 0 12px 28px rgba(20,35,50,0.13); }
+.prog-pil { transition: transform 0.16s ease, box-shadow 0.16s ease; animation: kartu-masuk 0.35s ease both; }
+@keyframes kartu-masuk {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Stepper mini: Daftar -> Judul -> Sempro -> Lulus */
+.alur-mini { display: flex; align-items: flex-start; }
+.alur-titik { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
+.alur-titik i {
+  width: 13px; height: 13px; border-radius: 999px; z-index: 1;
+  background: #e3e7ea; border: 2px solid #d0d6da; box-sizing: border-box;
+}
+.alur-titik em { font-style: normal; font-size: 10px; margin-top: 5px; color: var(--ink-muted); }
+/* garis penghubung antartitik */
+.alur-titik + .alur-titik::before {
+  content: ""; position: absolute; top: 6px; right: 50%; width: 100%; height: 2px;
+  background: #e3e7ea;
+}
+.alur-titik.sudah i { background: var(--modul, var(--accent-dark)); border-color: var(--modul, var(--accent-dark)); }
+.alur-titik.sudah em { color: var(--modul, var(--accent-dark)); font-weight: 600; }
+.alur-titik.sudah + .alur-titik.sudah::before { background: var(--modul, var(--accent-dark)); }
+/* titik berikutnya yang sedang dituju berdenyut halus */
+.alur-titik.kini i {
+  background: #fff; border-color: var(--modul, var(--accent-dark));
+  animation: denyut-kini 1.8s ease-in-out infinite;
+}
+@keyframes denyut-kini {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--modul, var(--accent-dark)) 45%, transparent); }
+  60% { box-shadow: 0 0 0 6px transparent; }
+}
+/* pendaftar belum diverifikasi: titik pertama kuning menunggu */
+.status-tunggu .alur-titik.kini i { border-color: #d9a406; }
+.status-tunggu .alur-titik.kini em { color: #a87e0a; }
+.prog-pil.status-tunggu { box-shadow: none; }
+
+/* Bilah kendali menempel di bawah bilah situs saat digulung, berlatar kaca */
+.prog-kendali {
+  position: sticky; top: 64px; z-index: 30;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  padding: 10px 2px; margin: 18px -2px 4px; border-bottom: 1px solid var(--line);
+}
+
+/* Baris tabel panel admin ikut hidup */
+.rekap-tabel tbody tr { transition: background 0.12s ease; }
+.rekap-tabel tbody tr:hover { background: color-mix(in srgb, var(--modul-tipis, var(--pastel-blue)) 30%, #fff); }
+
+@media (prefers-reduced-motion: reduce) {
+  .langsung i, .alur-titik.kini i { animation: none; }
+  .prog-pil { animation: none; transition: none; }
+  .prog-pil:hover { transform: none; }
+}
