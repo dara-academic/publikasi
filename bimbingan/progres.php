@@ -120,26 +120,34 @@ function inisial(string $nama): string {
       <span class="mk-saring-hasil" role="status"></span>
     </div>
 
+    <div class="rekap-gulir">
+      <table class="rekap-tabel mon-tabel">
+        <thead><tr><th>Mahasiswa</th><th>Kelompok</th><th>Perjalanan</th><th>Status</th></tr></thead>
+        <tbody id="mon-badan">
 <?php foreach ($kelompok as $nama_k => $anggota): ?>
-    <section class="prog-kelompok">
-      <h2><?= e($nama_k) ?> <span class="rekap-jumlah"><?= count($anggota) ?> mahasiswa</span></h2>
-      <ul class="prog-rak">
 <?php foreach ($anggota as $m):
         $maju = ['tunggu' => 0, 'belum' => 1, 'judul' => 2, 'sempro' => 3, 'lulus' => 4][$m['status']];
 ?>
-        <li class="prog-pil status-<?= e($m['status']) ?>" data-status="<?= e($m['status']) ?>"
-            data-nama="<?= e(mb_strtolower($m['nama'])) ?>">
-          <span class="prog-kartu-atas">
-            <span class="prog-avatar" aria-hidden="true"><?= e(inisial($m['nama'])) ?></span>
-            <span class="prog-teks">
-              <span class="prog-nama"><?= e($m['nama']) ?></span>
-              <span class="prog-status"><?= e($LABEL[$m['status']]) ?></span>
-            </span>
-          </span>
-          <span class="alur-mini" role="img" aria-label="Tahap: <?= e($LABEL[$m['status']]) ?>">
-<?php foreach ([1 => 'Daftar', 2 => 'Judul', 3 => 'Sempro', 4 => 'Lulus'] as $tk => $nm): ?>
-            <span class="alur-titik <?= $maju >= $tk ? 'sudah' : '' ?> <?= ($maju === $tk - 1 || ($maju === 0 && $tk === 1)) ? 'kini' : '' ?>"><i></i><em><?= $nm ?></em></span>
+          <tr class="mon-baris" data-status="<?= e($m['status']) ?>" data-nama="<?= e(mb_strtolower($m['nama'])) ?>">
+            <td class="mon-nama"><span class="prog-avatar status-<?= e($m['status']) ?>-a" aria-hidden="true"><?= e(inisial($m['nama'])) ?></span><?= e($m['nama']) ?></td>
+            <td class="mon-kel"><?= e($nama_k) ?></td>
+            <td><span class="alur-mini alur-datar" role="img" aria-label="Tahap: <?= e($LABEL[$m['status']]) ?>">
+<?php foreach ([1, 2, 3, 4] as $tk): ?>
+              <span class="alur-titik <?= $maju >= $tk ? 'sudah' : '' ?> <?= $maju === $tk - 1 ? 'kini' : '' ?>"><i></i></span>
 <?php endforeach; ?>
+            </span></td>
+            <td><span class="rekap-tahap tahap-<?= e($m['status']) ?>"><?= e($LABEL[$m['status']]) ?></span></td>
+          </tr>
+<?php endforeach; ?>
+<?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+    <nav class="mon-pager" aria-label="Halaman daftar mahasiswa">
+      <button type="button" id="mon-mundur">&larr; Sebelumnya</button>
+      <span id="mon-halaman"></span>
+      <button type="button" id="mon-maju">Berikutnya &rarr;</button>
+    </nav>
           </span>
         </li>
 <?php endforeach; ?>
@@ -167,39 +175,49 @@ function inisial(string $nama): string {
 </div>
 <script>
 (function () {
+  var PER = 10;
   var chip = document.querySelectorAll('.mk-chip');
-  var pil = document.querySelectorAll('.prog-pil');
+  var baris = Array.prototype.slice.call(document.querySelectorAll('.mon-baris'));
   var hasil = document.querySelector('.mk-saring-hasil');
   var cari = document.getElementById('prog-cari');
-  var status = 'semua';
-  function saring() {
+  var tHalaman = document.getElementById('mon-halaman');
+  var bMundur = document.getElementById('mon-mundur');
+  var bMaju = document.getElementById('mon-maju');
+  var status = 'semua', hal = 1;
+
+  function terapkan() {
     var q = (cari.value || '').toLowerCase().trim();
-    var tampil = 0;
-    pil.forEach(function (p) {
-      var cocok = (status === 'semua' || p.dataset.status === status)
-        && (!q || p.dataset.nama.indexOf(q) !== -1);
-      p.hidden = !cocok;
-      if (cocok) tampil++;
+    var lolos = baris.filter(function (b) {
+      return (status === 'semua' || b.dataset.status === status)
+          && (!q || b.dataset.nama.indexOf(q) !== -1);
     });
-    document.querySelectorAll('.prog-kelompok').forEach(function (s) {
-      s.hidden = ![].some.call(s.querySelectorAll('.prog-pil'), function (p) { return !p.hidden; });
-    });
-    if (hasil) hasil.textContent = tampil + ' dari ' + pil.length + ' mahasiswa';
+    var total = Math.max(1, Math.ceil(lolos.length / PER));
+    if (hal > total) hal = total;
+    var awal = (hal - 1) * PER;
+    baris.forEach(function (b) { b.hidden = true; });
+    lolos.slice(awal, awal + PER).forEach(function (b) { b.hidden = false; });
+    if (hasil) hasil.textContent = lolos.length
+      ? (awal + 1) + '–' + Math.min(awal + PER, lolos.length) + ' dari ' + lolos.length + ' mahasiswa'
+      : 'Tidak ada yang cocok';
+    tHalaman.textContent = 'Halaman ' + hal + ' dari ' + total;
+    bMundur.disabled = hal <= 1;
+    bMaju.disabled = hal >= total;
   }
   chip.forEach(function (b) {
     b.addEventListener('click', function () {
-      status = b.dataset.saring;
+      status = b.dataset.saring; hal = 1;
       chip.forEach(function (x) {
         x.classList.toggle('aktif', x === b);
         x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
       });
-      saring();
+      terapkan();
     });
   });
-  cari.addEventListener('input', saring);
+  cari.addEventListener('input', function () { hal = 1; terapkan(); });
+  bMundur.addEventListener('click', function () { hal--; terapkan(); });
+  bMaju.addEventListener('click', function () { hal++; terapkan(); });
+  terapkan();
 
-  /* Angka pita menghitung naik saat halaman terbuka, dimatikan bagi
-     pengguna yang meminta gerak dikurangi. */
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('.hitung').forEach(function (el) {
       var akhir = parseInt(el.dataset.akhir, 10) || 0;

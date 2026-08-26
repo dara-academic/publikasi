@@ -2680,3 +2680,26 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
    display-nya dinyatakan eksplisit (kartu flex, ubin grid) menolak
    disembunyikan penyaring, sehingga saringan terlihat tidak bekerja. */
 [hidden] { display: none !important; }
+
+/* Tabel monitoring dengan stepper ringkas dan halaman per sepuluh baris */
+.mon-tabel td { vertical-align: middle; }
+.mon-nama { display: flex; align-items: center; gap: 10px; font-weight: 600; white-space: nowrap; }
+.mon-nama .prog-avatar { width: 30px; height: 30px; font-size: 11.5px; }
+.mon-kel { color: var(--ink-soft); font-size: 13px; }
+.alur-datar { display: inline-flex; align-items: center; width: 120px; }
+.alur-datar .alur-titik i { width: 11px; height: 11px; }
+.alur-datar .alur-titik + .alur-titik::before { top: 5px; }
+.mon-pager {
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  margin: 18px 0 8px; font-size: 14px; color: var(--ink-soft);
+}
+.mon-pager button {
+  font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line);
+  background: #fff; color: var(--ink);
+}
+.mon-pager button:hover:not(:disabled) { border-color: var(--modul); color: var(--modul); }
+.mon-pager button:disabled { opacity: 0.4; cursor: default; }
+.tahap-tunggu { background: #fdf2d0; color: #8a6a08; }
+.status-tunggu-a { background: #eee6c8 !important; color: #8a6a08 !important; }
+@media (max-width: 640px) { .mon-kel, .alur-datar { display: none; } }
