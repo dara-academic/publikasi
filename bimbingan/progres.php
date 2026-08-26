@@ -37,6 +37,11 @@ $n = ['judul' => $hit('judul'), 'sempro' => $hit('sempro'),
       'lulus' => $hit('lulus'), 'belum' => $hit('belum'), 'tunggu' => count($antre)];
 
 function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
+function jenjang(string $kelompok): string {
+    if (mb_stripos($kelompok, 'Disertasi') !== false) return 'disertasi';
+    if (mb_stripos($kelompok, 'Tesis') !== false) return 'tesis';
+    return 'skripsi';
+}
 function inisial(string $nama): string {
     $k = preg_split('/\s+/', trim($nama));
     $a = mb_substr($k[0], 0, 1);
@@ -117,6 +122,13 @@ function inisial(string $nama): string {
         <button class="mk-chip" data-saring="<?= $k ?>" aria-pressed="false"><?= $t ?></button>
 <?php endforeach; ?>
       </nav>
+      <nav class="mk-saring mk-saring-jenjang" aria-label="Saring menurut jenjang">
+        <span class="mk-saring-label">Jenjang</span>
+        <button class="mk-chip aktif" data-jenjang="semua" aria-pressed="true">Semua</button>
+        <button class="mk-chip" data-jenjang="skripsi" aria-pressed="false">Skripsi</button>
+        <button class="mk-chip" data-jenjang="tesis" aria-pressed="false">Tesis</button>
+        <button class="mk-chip" data-jenjang="disertasi" aria-pressed="false">Disertasi</button>
+      </nav>
       <span class="mk-saring-hasil" role="status"></span>
     </div>
 
@@ -128,7 +140,7 @@ function inisial(string $nama): string {
 <?php foreach ($anggota as $m):
         $maju = ['tunggu' => 0, 'belum' => 1, 'judul' => 2, 'sempro' => 3, 'lulus' => 4][$m['status']];
 ?>
-          <tr class="mon-baris" data-status="<?= e($m['status']) ?>" data-nama="<?= e(mb_strtolower($m['nama'])) ?>">
+          <tr class="mon-baris" data-status="<?= e($m['status']) ?>" data-jenjang="<?= jenjang($nama_k) ?>" data-nama="<?= e(mb_strtolower($m['nama'])) ?>">
             <td class="mon-nama"><span class="prog-avatar status-<?= e($m['status']) ?>-a" aria-hidden="true"><?= e(inisial($m['nama'])) ?></span><?= e($m['nama']) ?></td>
             <td class="mon-kel"><?= e($nama_k) ?></td>
             <td><span class="alur-mini alur-datar" role="img" aria-label="Tahap: <?= e($LABEL[$m['status']]) ?>">
@@ -170,19 +182,21 @@ function inisial(string $nama): string {
 <script>
 (function () {
   var PER = 10;
-  var chip = document.querySelectorAll('.mk-chip');
+  var chipStatus = document.querySelectorAll('.mk-saring:not(.mk-saring-jenjang) .mk-chip');
+  var chipJenjang = document.querySelectorAll('.mk-saring-jenjang .mk-chip');
   var baris = Array.prototype.slice.call(document.querySelectorAll('.mon-baris'));
   var hasil = document.querySelector('.mk-saring-hasil');
   var cari = document.getElementById('prog-cari');
   var tHalaman = document.getElementById('mon-halaman');
   var bMundur = document.getElementById('mon-mundur');
   var bMaju = document.getElementById('mon-maju');
-  var status = 'semua', hal = 1;
+  var status = 'semua', jenjang = 'semua', hal = 1;
 
   function terapkan() {
     var q = (cari.value || '').toLowerCase().trim();
     var lolos = baris.filter(function (b) {
       return (status === 'semua' || b.dataset.status === status)
+          && (jenjang === 'semua' || b.dataset.jenjang === jenjang)
           && (!q || b.dataset.nama.indexOf(q) !== -1);
     });
     var total = Math.max(1, Math.ceil(lolos.length / PER));
@@ -197,16 +211,20 @@ function inisial(string $nama): string {
     bMundur.disabled = hal <= 1;
     bMaju.disabled = hal >= total;
   }
-  chip.forEach(function (b) {
-    b.addEventListener('click', function () {
-      status = b.dataset.saring; hal = 1;
-      chip.forEach(function (x) {
-        x.classList.toggle('aktif', x === b);
-        x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+  function pasangChip(grup, saatKlik) {
+    grup.forEach(function (b) {
+      b.addEventListener('click', function () {
+        saatKlik(b); hal = 1;
+        grup.forEach(function (x) {
+          x.classList.toggle('aktif', x === b);
+          x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+        });
+        terapkan();
       });
-      terapkan();
     });
-  });
+  }
+  pasangChip(chipStatus, function (b) { status = b.dataset.saring; });
+  pasangChip(chipJenjang, function (b) { jenjang = b.dataset.jenjang; });
   cari.addEventListener('input', function () { hal = 1; terapkan(); });
   bMundur.addEventListener('click', function () { hal--; terapkan(); });
   bMaju.addEventListener('click', function () { hal++; terapkan(); });
