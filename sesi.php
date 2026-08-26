@@ -87,3 +87,24 @@ function catat_gagal(string $kunci): void {
     $data[$kunci][] = time();
     file_put_contents(BERKAS_GAGAL, json_encode($data), LOCK_EX);
 }
+
+/* Kode akses acak untuk akun baru dan reset sandi. Huruf yang mudah
+   tertukar (l, 1, o, 0, i) sengaja tidak dipakai karena kode ini akan
+   dibacakan dan diketik ulang orang. */
+function kode_akses(int $n = 10): string {
+    $a = 'abcdefghjkmnpqrstuvwxyz23456789';
+    $s = '';
+    for ($i = 0; $i < $n; $i++) $s .= $a[random_int(0, strlen($a) - 1)];
+    return $s;
+}
+
+/* Halaman berkunci memanggil ini alih-alih wajib_masuk bila pengguna yang
+   masih memakai sandi bawaan harus dipaksa menggantinya lebih dulu. */
+function wajib_masuk_segar(): array {
+    $p = wajib_masuk();
+    if (!empty($p['wajib_ganti'])) {
+        header('Location: /ganti-sandi.php');
+        exit;
+    }
+    return $p;
+}

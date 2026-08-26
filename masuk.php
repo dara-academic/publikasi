@@ -65,11 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($cocok !== null && password_verify($sandi, $cocok['sandi'])) {
             session_regenerate_id(true);
             $_SESSION['pengguna'] = [
-                'email' => $cocok['email'],
-                'nama'  => $cocok['nama'],
-                'peran' => $cocok['peran'],
+                'email'       => $cocok['email'],
+                'nama'        => $cocok['nama'],
+                'peran'       => $cocok['peran'],
+                'wajib_ganti' => !empty($cocok['wajib_ganti']),
             ];
-            header('Location: /bimbingan/rekap.php');
+            header('Location: ' . (!empty($cocok['wajib_ganti'])
+                ? '/ganti-sandi.php' : '/bimbingan/rekap.php'));
             exit;
         }
         catat_gagal($ip);
@@ -122,8 +124,8 @@ $csrf = htmlspecialchars(token_csrf(), ENT_QUOTES);
       <input class="masuk-input" id="nama" name="nama" type="text"
              autocomplete="name" required>
       <?php endif; ?>
-      <label class="masuk-label" for="email">Alamat surel</label>
-      <input class="masuk-input" id="email" name="email" type="email"
+      <label class="masuk-label" for="email"><?= $mode_setup ? 'Alamat surel' : 'Surel atau nama pengguna' ?></label>
+      <input class="masuk-input" id="email" name="email" type="text"
              autocomplete="username" required autofocus>
       <label class="masuk-label" for="sandi">Kata sandi</label>
       <div class="masuk-sandi">

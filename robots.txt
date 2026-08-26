@@ -23,5 +23,7 @@ Disallow: /catat.php
 Disallow: /masuk.php
 Disallow: /keluar.php
 Disallow: /bimbingan/rekap.php
+Disallow: /ganti-sandi.php
+Disallow: /akun.php
 
 Sitemap: https://despinurdara.id/sitemap.xml

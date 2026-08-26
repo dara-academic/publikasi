@@ -8,7 +8,7 @@
    memakai nama pada akun.
    ------------------------------------------------------------------ */
 require __DIR__ . '/../sesi.php';
-$pengguna = wajib_masuk();
+$pengguna = wajib_masuk_segar();
 $admin = in_array($pengguna['peran'], ['admin', 'dosen'], true);
 
 $sumber = __DIR__ . '/../data/bimbingan.json';
@@ -51,6 +51,8 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
   <div class="ak-bar-isi">
     <a class="ak-nama" href="../index.html">Despinur Dara</a>
     <span class="rekap-siapa">Masuk sebagai <b><?= e($pengguna['nama']) ?></b>
+      <?php if ($admin): ?>&middot; <a href="../akun.php">Kelola akun</a><?php endif; ?>
+      &middot; <a href="../ganti-sandi.php">Ganti sandi</a>
       &middot; <a href="../keluar.php">Keluar</a></span>
   </div>
 </header>
