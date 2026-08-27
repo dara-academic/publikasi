@@ -2707,3 +2707,38 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
 /* Baris chip jenjang, label kecil di depannya */
 .mk-saring-jenjang { margin-top: 8px; }
 .mk-saring-label { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); margin-right: 6px; align-self: center; }
+
+/* ============================================================
+   Tombol Masuk di header, plus poles bilah
+   ============================================================ */
+.ak-bar .nav > a.nav-masuk {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-left: 10px; padding: 7px 16px 7px 13px;
+  background: var(--unj-emas); color: #013638;
+  border-radius: 999px; font-weight: 700; letter-spacing: 0.01em;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
+}
+.ak-bar .nav > a.nav-masuk:hover {
+  background: #ffe64d; color: #013638;
+  transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,221,0,0.4);
+}
+.nav-masuk-ikon {
+  width: 15px; height: 15px; fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+/* Di layar sempit, tombol Masuk melebar penuh di dalam menu geser */
+@media (max-width: 920px) {
+  .ak-bar .nav > a.nav-masuk {
+    margin: 8px 12px 4px; justify-content: center; padding: 11px 16px;
+  }
+}
+
+/* Poles bilah: garis emas lebih halus dengan bayangan lembut, nama situs
+   diberi denyut warna emas saat disentuh */
+.ak-bar {
+  border-bottom-width: 2px;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.12);
+}
+.ak-nama { transition: color 0.15s ease; }
+.ak-nama:hover { color: var(--unj-emas); }
