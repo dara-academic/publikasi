@@ -2742,3 +2742,23 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
 }
 .ak-nama { transition: color 0.15s ease; }
 .ak-nama:hover { color: var(--unj-emas); }
+
+/* Blok ajakan daftar di bawah form masuk, dipisah garis halus */
+.masuk-daftar {
+  margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line);
+  text-align: center;
+}
+.masuk-daftar p { font-size: 14px; color: var(--ink-soft); margin: 0 0 12px; }
+.masuk-daftar-tombol {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 100%; padding: 11px 16px; box-sizing: border-box;
+  font-size: 15px; font-weight: 700; text-decoration: none;
+  color: var(--modul, var(--accent-dark));
+  background: color-mix(in srgb, var(--modul-tipis, var(--pastel-blue)) 45%, #fff);
+  border: 1.5px solid color-mix(in srgb, var(--modul, var(--accent-dark)) 30%, transparent);
+  border-radius: 999px; transition: background 0.14s ease, border-color 0.14s ease;
+}
+.masuk-daftar-tombol:hover {
+  background: color-mix(in srgb, var(--modul-tipis, var(--pastel-blue)) 70%, #fff);
+  border-color: var(--modul, var(--accent-dark));
+}

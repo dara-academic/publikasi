@@ -108,7 +108,7 @@ $csrf = htmlspecialchars(token_csrf(), ENT_QUOTES);
     <p class="masuk-keterangan">
       <?= $mode_setup
           ? 'Berkas pengguna belum ada di server. Masukkan kode setup yang Anda unggah untuk membuat akun admin pertama.'
-          : 'Rincian bimbingan hanya terbuka untuk mahasiswa bimbingan dan dosen. Akses diberikan langsung oleh Dr. Dara.' ?>
+          : 'Rincian bimbingan hanya terbuka untuk mahasiswa bimbingan dan dosen.' ?>
     </p>
 
     <?php if ($galat): ?>
@@ -141,11 +141,15 @@ $csrf = htmlspecialchars(token_csrf(), ENT_QUOTES);
       </button>
     </form>
 
-    <p class="masuk-kaki">
-      <?= $mode_setup
-          ? 'Kode setup hanya berlaku sekali. Sesudah akun admin dibuat, formulir ini tidak akan muncul lagi.'
-          : 'Belum punya akses? Hubungi <a href="mailto:dara@unj.ac.id">dara@unj.ac.id</a> dengan menyebutkan nama dan angkatan.' ?>
-    </p>
+<?php if (!$mode_setup): ?>
+    <div class="masuk-daftar">
+      <p>Mahasiswa bimbingan baru dan belum punya akun?</p>
+      <a class="masuk-daftar-tombol" href="bimbingan/daftar.php">Daftar sebagai mahasiswa</a>
+    </div>
+<?php else: ?>
+    <p class="masuk-kaki">Kode setup hanya berlaku sekali. Sesudah akun admin
+      dibuat, formulir ini tidak akan muncul lagi.</p>
+<?php endif; ?>
   </section>
   <p class="masuk-pulang"><a href="bimbingan/index.html">&larr; Kembali ke halaman Bimbingan</a></p>
 </main>
