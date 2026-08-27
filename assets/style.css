@@ -2762,3 +2762,81 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
   background: color-mix(in srgb, var(--modul-tipis, var(--pastel-blue)) 70%, #fff);
   border-color: var(--modul, var(--accent-dark));
 }
+
+/* ============================================================
+   POLES HALAMAN MASUK & DAFTAR: latar bergradasi, kartu berkelas
+   ============================================================ */
+
+/* Panggung bergradasi hijau lambang, dengan dua lingkaran cahaya lembut
+   dan pola titik samar supaya tidak terasa datar. */
+body.halaman-masuk {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255,221,0,0.10), transparent 42%),
+    radial-gradient(circle at 84% 80%, rgba(255,255,255,0.08), transparent 45%),
+    linear-gradient(150deg, #013638 0%, var(--unj-hijau, #006569) 55%, #0a7d81 100%);
+}
+.masuk-panggung { position: relative; }
+.masuk-panggung::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Kartu putih terangkat lebih tegas, dengan pita emas tipis di puncaknya. */
+.masuk-kartu {
+  position: relative; z-index: 1; max-width: 430px;
+  border: 0; border-radius: 18px; padding: 34px 34px 28px;
+  box-shadow: 0 24px 60px rgba(1,30,32,0.35), 0 2px 8px rgba(1,30,32,0.15);
+  overflow: hidden;
+}
+.masuk-kartu::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  background: linear-gradient(90deg, var(--unj-hijau, #006569), var(--unj-emas, #ffdd00));
+}
+
+/* Lencana gembok bundar di atas judul, penanda area terkunci. */
+.masuk-kartu .kicker {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-top: 6px; margin-bottom: 4px;
+}
+.masuk-kartu .kicker::before {
+  content: ""; width: 20px; height: 20px; flex-shrink: 0;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='11' width='14' height='10' rx='2'/%3E%3Cpath d='M8 11V7.5a4 4 0 0 1 8 0V11'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='11' width='14' height='10' rx='2'/%3E%3Cpath d='M8 11V7.5a4 4 0 0 1 8 0V11'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.masuk-kartu h1 { font-size: 30px; }
+
+/* Input lebih lega, latar sedikit abu supaya bidang isian jelas. */
+.masuk-input {
+  padding: 12px 15px; border-radius: 10px; font-size: 15px;
+  background: #f7f9fa; border: 1.5px solid #e3e8ea;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.masuk-input:focus { background: #fff; }
+
+/* Tombol utama bergradasi hijau dengan kilau halus saat disentuh. */
+.masuk-tombol {
+  padding: 13px 16px; font-size: 15.5px; letter-spacing: 0.01em;
+  background: linear-gradient(135deg, var(--unj-hijau, #006569), #0a7d81);
+  box-shadow: 0 6px 18px rgba(0,101,105,0.32);
+  transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+}
+.masuk-tombol:hover {
+  filter: brightness(1.06); transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(0,101,105,0.42);
+}
+
+/* Tombol daftar: garis tegas dengan latar hijau tipis, jadi terbaca
+   sebagai jalur kedua yang setara pentingnya, bukan tautan biasa. */
+.masuk-daftar-tombol {
+  padding: 12px 16px; font-size: 15px;
+  border-width: 1.5px;
+}
+
+/* Tautan pulang dan intip diberi warna terang di atas latar gelap. */
+.masuk-pulang a { color: rgba(255,255,255,0.85); }
+.masuk-pulang a:hover { color: #fff; }
+
+/* Bilah header di halaman auth tetap hijau; disamakan dengan panggung. */
+.halaman-masuk .ak-bar { box-shadow: none; }
