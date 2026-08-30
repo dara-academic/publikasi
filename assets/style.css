@@ -3380,3 +3380,19 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 .hal-tautan span { display: inline-block; transition: transform 0.16s ease; }
 .hal-tautan:hover span { transform: translateX(4px); }
 .kursus-rak { grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); }
+
+/* Tema riset: grid dua kolom tanpa kotak */
+.tema-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 30px; }
+.tema-kartu { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.tema-kartu b { font-family: var(--display, var(--sans)); font-weight: 800; font-size: 16.5px; color: var(--ink); }
+.tema-kartu span { font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
+@media (max-width: 600px) { .tema-grid { grid-template-columns: 1fr; gap: 18px; } }
+
+/* Badge tambahan untuk etalase publikasi */
+.k-q3 { background: #64748b; color: #fff; }
+.k-sinta { background: #7c5cc4; color: #fff; }
+:root[data-theme="dark"] .k-q3 { background: #8595a8; }
+:root[data-theme="dark"] .k-sinta { background: #9878e0; }
+
+/* Nota penekanan di hero (mis. poin APC), tanpa kotak */
+.hal-nota { font-size: 15px; line-height: 1.55; color: var(--modul, var(--accent-dark)); font-weight: 600; margin: -6px 0 20px; max-width: 46em; }
