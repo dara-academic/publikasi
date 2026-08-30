@@ -202,3 +202,32 @@
     sasaran.forEach(function (el) { el.classList.add('tampil'); });
   }, 1200);
 })();
+
+/* ------------------------------------------------------------------
+   Pengalih tema terang/gelap. Pilihan disimpan di localStorage supaya
+   bertahan antarhalaman dan antar kunjungan. Untuk mencegah kedip putih
+   saat mode gelap, penerapan awal sebaiknya sedini mungkin; di sini
+   dijalankan begitu skrip termuat, dan tombol memutar ikonnya.
+   ------------------------------------------------------------------ */
+(function () {
+  var akar = document.documentElement;
+  function pasang(tema) {
+    if (tema === 'dark') akar.setAttribute('data-theme', 'dark');
+    else akar.removeAttribute('data-theme');
+    document.querySelectorAll('[data-tema-tombol]').forEach(function (b) {
+      b.textContent = tema === 'dark' ? '☀️' : '🌙';
+      b.setAttribute('aria-pressed', tema === 'dark' ? 'true' : 'false');
+    });
+  }
+  var tersimpan;
+  try { tersimpan = localStorage.getItem('tema'); } catch (e) {}
+  pasang(tersimpan === 'dark' ? 'dark' : 'terang');
+  document.querySelectorAll('[data-tema-tombol]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var gelap = akar.getAttribute('data-theme') === 'dark';
+      var baru = gelap ? 'terang' : 'dark';
+      pasang(baru);
+      try { localStorage.setItem('tema', baru); } catch (e) {}
+    });
+  });
+})();

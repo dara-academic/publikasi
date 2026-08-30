@@ -1,6 +1,9 @@
 :root {
   --bg: #fdfcfa;
   --surface: #ffffff;
+  --kartu: #ffffff;      /* latar kartu, membalik di mode gelap */
+  --campur: #ffffff;     /* basis campuran warna, jadi gelap di mode gelap */
+  --tinta-bar: #16222e;
   --ink: #2b3440;
   --ink-soft: #5a6675;
   --ink-muted: #66717f;
@@ -2113,10 +2116,10 @@ body.ak .lanjut h2, body.ak .kaki-peta h4, body.ak .toc p.toc-title { font-famil
 
 /* ---- 3. kedalaman kartu ---- */
 .card, .mt-kartu, .book, .bm-kartu, .rs-kartu, .ws-kartu, .ak-sumber, .glos-item {
-  border-color: #edf0f3; box-shadow: var(--bayang-kartu); background: #fff;
+  border-color: #edf0f3; box-shadow: var(--bayang-kartu); background: var(--kartu);
 }
 .mk-ubin, .ak-pintu {
-  border-color: #edf0f3; box-shadow: var(--bayang-kartu); background: #fff;
+  border-color: #edf0f3; box-shadow: var(--bayang-kartu); background: var(--kartu);
   transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
 .mk-ubin:hover, .ak-pintu:hover {
@@ -2270,7 +2273,7 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
   align-items: center; justify-content: center; padding: 46px 20px 40px;
 }
 .masuk-kartu {
-  width: 100%; max-width: 420px; background: #fff;
+  width: 100%; max-width: 420px; background: var(--kartu);
   border: 1px solid #edf0f3; border-radius: 12px;
   box-shadow: var(--bayang-kartu, 0 4px 18px rgba(20,35,50,0.07));
   padding: 30px 30px 24px;
@@ -2344,7 +2347,7 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
 }
 .prog-pil {
   display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
-  background: #fff; border: 1px solid #edf0f3; border-radius: 12px;
+  background: var(--kartu); border: 1px solid #edf0f3; border-radius: 12px;
   border-left: 4px solid var(--modul, var(--accent-dark));
   padding: 10px 14px; box-shadow: var(--bayang-kartu);
 }
@@ -2385,7 +2388,7 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
 .akun-tombol {
   font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
   padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line);
-  background: #fff; color: var(--ink-soft);
+  background: var(--kartu); color: var(--ink-soft);
 }
 .akun-tombol:hover { border-color: var(--modul); color: var(--modul); }
 .akun-tombol.setuju { background: var(--modul, var(--accent-dark)); border-color: var(--modul, var(--accent-dark)); color: #fff; }
@@ -2426,7 +2429,7 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
   margin: 30px 0 8px;
 }
 .prog-alur-tahap {
-  flex: 1 1 130px; background: #fff; border: 1px solid #edf0f3; border-radius: 12px;
+  flex: 1 1 130px; background: var(--kartu); border: 1px solid #edf0f3; border-radius: 12px;
   box-shadow: var(--bayang-kartu); padding: 14px 18px; border-top: 4px solid var(--line);
 }
 .prog-alur-tahap b { display: block; font-family: var(--serif); font-size: 30px; color: var(--ink); }
@@ -2446,7 +2449,7 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
 .prog-cari {
   font: inherit; font-size: 14px; color: var(--ink);
   padding: 9px 16px; border: 1px solid var(--line); border-radius: 999px;
-  background: #fff; width: 240px; box-shadow: var(--bayang-kartu);
+  background: var(--kartu); width: 240px; box-shadow: var(--bayang-kartu);
 }
 .prog-cari:focus { outline: none; border-color: var(--modul);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--modul) 18%, transparent); }
@@ -2492,7 +2495,7 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
 .sorot-lencana {
   display: inline-block; font-size: 11px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase;
-  background: #fff; color: #9a3412;
+  background: var(--kartu); color: #9a3412;
   border-radius: 999px; padding: 3px 11px; margin-bottom: 8px;
 }
 .sorot-progres b { display: block; font-family: var(--serif); font-size: 22px; color: #fff; margin-bottom: 6px; }
@@ -2623,7 +2626,7 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
 .alur-titik.sudah + .alur-titik.sudah::before { background: var(--modul, var(--accent-dark)); }
 /* titik berikutnya yang sedang dituju berdenyut halus */
 .alur-titik.kini i {
-  background: #fff; border-color: var(--modul, var(--accent-dark));
+  background: var(--kartu); border-color: var(--modul, var(--accent-dark));
   animation: denyut-kini 1.8s ease-in-out infinite;
 }
 @keyframes denyut-kini {
@@ -2696,7 +2699,7 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
 .mon-pager button {
   font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
   padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line);
-  background: #fff; color: var(--ink);
+  background: var(--kartu); color: var(--ink);
 }
 .mon-pager button:hover:not(:disabled) { border-color: var(--modul); color: var(--modul); }
 .mon-pager button:disabled { opacity: 0.4; cursor: default; }
@@ -2813,7 +2816,7 @@ body.halaman-masuk {
   background: #f7f9fa; border: 1.5px solid #e3e8ea;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
-.masuk-input:focus { background: #fff; }
+.masuk-input:focus { background: var(--kartu); }
 
 /* Tombol utama bergradasi hijau dengan kilau halus saat disentuh. */
 .masuk-tombol {
@@ -2906,3 +2909,149 @@ body.halaman-masuk {
 /* --- Kartu materi (mkl) dan kabar ikut terangkat saat disentuh --- */
 .ak-mkl a { transition: transform 0.14s ease, box-shadow 0.14s ease; }
 .ak-mkl a:hover { transform: translateX(3px); }
+
+/* ============================================================
+   TIPOGRAFI BERENERGI — judul tebal modern, bukan formal kaku
+   ============================================================
+   Judul pindah dari serif akademik ke Plus Jakarta Sans, huruf buatan
+   Jakarta yang modern dan ramah. Bobotnya dinaikkan, ukurannya diperbesar,
+   spasinya dirapatkan supaya terbaca tegas dan penuh energi. Badan teks
+   tetap Inter demi keterbacaan paragraf panjang. */
+:root { --display: "Plus Jakarta Sans", "Inter", system-ui, sans-serif; }
+
+body.ak h1,
+body.ak .ak-utama h1,
+body.ak .ak-utama .hero h1,
+body.ak .ak-utama .paper-head h1,
+body.ak .ak-utama h2,
+body.ak .section-head h2,
+.prog-band h1, .admin-band h1,
+.masuk-kartu h1, .ak-pintu b, .sorot-progres b,
+.prog-alur-tahap b, .ak-angka b, .prog-band-angka b {
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Judul beranda dibesarkan dan diberi gradient hijau-emas yang berani. */
+body.ak .ak-utama > h1, .ak-intro + * ~ h1 {
+  font-size: clamp(32px, 5vw, 46px); line-height: 1.08;
+}
+.ak-utama h1.gradasi, .prog-band h1, .admin-band h1 { letter-spacing: -0.025em; }
+
+/* Nama situs di bilah ikut font display, lebih berkarakter. */
+.ak-nama { font-family: var(--display); font-weight: 800; font-size: 20px; letter-spacing: -0.01em; }
+
+/* Judul bagian h2 sedikit lebih besar dan lebih rapat. */
+body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
+
+/* Kicker jadi label kapital berwarna modul, gaya modern. */
+.kicker, .prog-band-kicker, .admin-lencana {
+  font-family: var(--display); font-weight: 700;
+}
+
+/* Paragraf pembuka lebih besar dan lebih hidup, bukan blok abu datar. */
+.ak-intro { font-size: 21px !important; line-height: 1.45 !important; color: var(--ink) !important; font-weight: 500; }
+.hero p.lead, .ak-utama p.lead { font-weight: 500; }
+
+/* Angka besar makin tebal untuk kesan statistik yang berdenyut. */
+.ak-angka b, .prog-band-angka b, .prog-alur-tahap b { font-weight: 800; letter-spacing: -0.02em; }
+
+/* ============================================================
+   MODE GELAP — tema malam untuk yang matanya lelah cahaya terang
+   ============================================================
+   Dibangun di atas token inti: cukup mendefinisikan ulang nilainya di
+   bawah [data-theme="dark"], seluruh situs ikut berganti. Latar kartu
+   lewat --kartu, garis lewat --line, tinta teks lewat --ink. Warna
+   modul dibuat lebih terang di latar gelap supaya tetap menyala. */
+:root[data-theme="dark"] {
+  --bg: #0f141a;
+  --surface: #161c24;
+  --kartu: #1a222c;
+  --campur: #1a222c;
+  --ink: #e7ecf1;
+  --ink-soft: #aab4c0;
+  --ink-muted: #8390a0;
+  --line: #2a333f;
+  --accent: #5b9bd8;
+  --accent-dark: #7db4e8;
+  --pastel-gray: #1a222c;
+  --bayang-kartu: 0 1px 2px rgba(0,0,0,0.3), 0 6px 20px rgba(0,0,0,0.35);
+}
+/* Warna modul versi terang untuk latar gelap */
+:root[data-theme="dark"] body[data-grup="mengajar"],
+:root[data-theme="dark"] body[data-grup="beranda"]      { --modul: #3fb59a; --modul-tipis: #14312c; }
+:root[data-theme="dark"] body[data-grup="bedah-publikasi"] { --modul: #5b9bd8; --modul-tipis: #14283c; }
+:root[data-theme="dark"] body[data-grup="penelitian"]    { --modul: #a98fe0; --modul-tipis: #241d38; }
+:root[data-theme="dark"] body[data-grup="kolaborasi"]    { --modul: #4fc27f; --modul-tipis: #12301f; }
+:root[data-theme="dark"] body[data-grup="profil"]        { --modul: #d69a63; --modul-tipis: #331f0f; }
+
+/* Kartu pintu di mode gelap: gradasi dari surface ke tint modul gelap */
+:root[data-theme="dark"] .ak-pintu {
+  background: linear-gradient(160deg, var(--kartu) 60%, var(--modul-tipis));
+  border-color: color-mix(in srgb, var(--modul) 30%, var(--kartu));
+}
+:root[data-theme="dark"] .ak-pintu-ikon { background: #222c38; }
+
+/* Ikon kartu materi & sampul: beri sedikit peredup supaya tak silau */
+:root[data-theme="dark"] img:not([src*=".svg"]) { filter: brightness(0.92); }
+
+/* Input di mode gelap */
+:root[data-theme="dark"] .masuk-input { background: #10161d; border-color: #2a333f; }
+:root[data-theme="dark"] .masuk-input:focus { background: #161c24; }
+:root[data-theme="dark"] .prog-cari { background: #10161d; }
+
+/* Tombol pengalih tema di bilah */
+.tema-tombol {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; margin-left: 8px; flex-shrink: 0;
+  background: rgba(255,255,255,0.10); border: 0; border-radius: 999px;
+  cursor: pointer; color: #fff; font-size: 17px; line-height: 1;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.tema-tombol:hover { background: rgba(255,255,255,0.20); transform: rotate(15deg); }
+@media (max-width: 920px) { .tema-tombol { margin: 8px 0 4px auto; } }
+
+/* Halaman auth di mode gelap: latar tetap gradasi hijau gelap (sudah cocok) */
+:root[data-theme="dark"] .masuk-kartu { background: var(--kartu); }
+
+/* --- Mode gelap: pil dan panel bertint, gaya tint-transparan + teks cerah --- */
+:root[data-theme="dark"] {
+  --pastel-blue: #14283c; --pastel-mint: #12301f;
+  --pastel-butter: #322a0a; --pastel-rose: #331a24; --pastel-gray: #222c38;
+}
+:root[data-theme="dark"] .glos-chip {
+  background: rgba(91,155,216,0.16); color: #8fc0ef; border-color: rgba(91,155,216,0.3);
+}
+:root[data-theme="dark"] .glos-chip:hover { background: rgba(91,155,216,0.28); }
+:root[data-theme="dark"] .badge.q1,
+:root[data-theme="dark"] .badge.q2,
+:root[data-theme="dark"] .badge.q3,
+:root[data-theme="dark"] .badge.kutip { background: rgba(91,155,216,0.18); color: #8fc0ef; }
+:root[data-theme="dark"] .badge.sinta,
+:root[data-theme="dark"] .badge.status-terbit { background: rgba(79,194,127,0.18); color: #6fd79b; }
+:root[data-theme="dark"] .badge.status-revisi { background: rgba(214,180,60,0.2); color: #e2c56a; }
+:root[data-theme="dark"] .badge.status-proses,
+:root[data-theme="dark"] .badge.jenis { background: rgba(255,255,255,0.09); color: #aab4c0; }
+:root[data-theme="dark"] .badge.baru { background: rgba(216,120,150,0.2); color: #e79ab0; }
+
+/* Pil statistik di atas foto: latar gelap transparan */
+:root[data-theme="dark"] .statbar {
+  background: rgba(20,26,34,0.6); border-color: rgba(255,255,255,0.12);
+}
+:root[data-theme="dark"] .statbar .s { color: var(--ink-soft); border-right-color: rgba(255,255,255,0.12); }
+:root[data-theme="dark"] .statbar b { color: var(--modul, #5b9bd8); }
+
+/* Pita band (mis. di Tips) jadi gelap */
+:root[data-theme="dark"] .band { background: #12181f; }
+
+/* Batang kemajuan bimbingan & elemen lajur abu di mode gelap */
+:root[data-theme="dark"] .bim-batang { background: #222c38; }
+:root[data-theme="dark"] .bim-legenda i { background: #222c38; }
+:root[data-theme="dark"] .prog-alur-tahap { background: var(--kartu); }
+:root[data-theme="dark"] .prog-alur-tahap i,
+:root[data-theme="dark"] .alur-titik i { background: #2a333f; border-color: #3a4653; }
+:root[data-theme="dark"] .alur-titik + .alur-titik::before { background: #2a333f; }
+:root[data-theme="dark"] .mk-chip { background: var(--kartu); border-color: var(--line); color: var(--ink-soft); }
+:root[data-theme="dark"] .rekap-tabel th { border-bottom-color: var(--line); }
+:root[data-theme="dark"] .mon-tabel td, :root[data-theme="dark"] .rekap-tabel td { border-bottom-color: var(--line); }
