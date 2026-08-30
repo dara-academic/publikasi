@@ -59,7 +59,7 @@ $csrf = htmlspecialchars(token_csrf(), ENT_QUOTES);
 <body class="ak halaman-masuk" data-grup="mengajar">
 <header class="ak-bar">
   <div class="ak-bar-isi">
-    <a class="ak-nama" href="index.html">Despinur Dara</a>
+    <a class="ak-nama" href="index.html">Belajar Bersama Dara</a>
     <span class="rekap-siapa"><b><?= htmlspecialchars($pengguna['nama'], ENT_QUOTES) ?></b>
       &middot; <a href="keluar.php">Keluar</a></span>
   </div>

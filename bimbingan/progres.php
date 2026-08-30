@@ -65,7 +65,7 @@ function inisial(string $nama): string {
 <body class="ak" data-grup="mengajar">
 <header class="ak-bar">
   <div class="ak-bar-isi">
-    <a class="ak-nama" href="../index.html">Despinur Dara</a>
+    <a class="ak-nama" href="../index.html">Belajar Bersama Dara</a>
     <span class="rekap-siapa"><a href="index.html">Bimbingan</a>
       &middot; <a href="daftar.php">Daftar</a>
       &middot; <a href="../masuk.php">Masuk</a></span>
