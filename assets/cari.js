@@ -231,3 +231,29 @@
     });
   });
 })();
+
+/* ------------------------------------------------------------------
+   Angka menghitung naik. Elemen .hitung dengan data-akhir memanjat dari
+   nol saat masuk layar, sekali saja. Dimatikan bila gerak dikurangi.
+   ------------------------------------------------------------------ */
+(function () {
+  var angka = document.querySelectorAll('.hitung');
+  if (!angka.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+    return; /* biarkan angka akhir apa adanya */
+  }
+  function jalan(el) {
+    var akhir = parseInt(el.dataset.akhir, 10) || 0, t0 = null;
+    function tik(t) {
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / 900, 1);
+      el.textContent = Math.round(akhir * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(tik);
+    }
+    el.textContent = '0'; requestAnimationFrame(tik);
+  }
+  var io = new IntersectionObserver(function (masuk) {
+    masuk.forEach(function (e) { if (e.isIntersecting) { jalan(e.target); io.unobserve(e.target); } });
+  }, { threshold: 0.4 });
+  angka.forEach(function (el) { io.observe(el); });
+})();
