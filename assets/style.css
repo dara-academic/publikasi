@@ -3099,13 +3099,13 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 .hero-x-tautan a:hover { color: var(--modul, var(--accent-dark)); text-decoration: underline; }
 
 .hero-x-potret { position: relative; justify-self: center; text-align: center; }
-.hero-x-bingkai { position: relative; width: 100%; max-width: 340px; margin: 0 auto; }
+.hero-x-bingkai { position: relative; width: 100%; max-width: 300px; margin: 0 auto; }
 .hero-x-potret img {
-  width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+  width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; display: block;
   border-radius: 24px; position: relative; z-index: 1;
   box-shadow: 0 24px 60px rgba(20,35,50,0.24);
 }
-.hero-x-nama { margin-top: 22px; }
+.hero-x-nama { margin-top: 16px; }
 .hn-nama {
   font-family: var(--display); font-weight: 800; font-size: 23px;
   letter-spacing: -0.01em; color: var(--ink); margin: 0;
@@ -3142,8 +3142,13 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 
 .beranda-bawah { max-width: 964px; margin: 0 auto; padding: 54px 26px 70px; }
 
-/* Warna dipindah ke judul besar (ganti kebiasaan border/aksen kotak) */
-.beranda-bawah > h2, .karya-kepala h2, .hook-judul { color: var(--modul, var(--accent-dark)); }
+/* Warna dipindah ke judul besar (ganti kebiasaan border/aksen kotak).
+   Sekaligus matikan garis bawah bawaan .ak-utama h2 yang cuma cocok di artikel. */
+.beranda-bawah > h2, .karya-kepala h2, .ak-utama .hook-judul {
+  color: var(--modul, var(--accent-dark));
+  border-bottom: 0; padding-bottom: 0;
+}
+.ak-utama .hook-judul { margin-top: 0; }
 
 @media (max-width: 860px) {
   .hero-x-isi { grid-template-columns: 1fr; gap: 30px; text-align: center; padding-top: 40px; }
@@ -3285,37 +3290,37 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 /* ============================================================
    Hook — ikon berwarna, tanpa kotak, terpusat (pertanyaan user)
    ============================================================ */
-.hook { margin-top: 34px; text-align: center; }
-.hook-judul { margin: 0 0 6px; }
-.hook-sub { font-size: 15.5px; color: var(--ink-soft); margin: 0 auto 28px; max-width: 40em; }
-.hook-strip {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px 24px;
-  max-width: 880px; margin: 0 auto;
-}
+.hook { margin: 40px auto 0; max-width: 760px; padding: 0 26px; text-align: center; }
+.hook-judul { margin: 0 0 8px; }
+.hook-sub { font-size: 15px; color: var(--ink-soft); margin: 0 auto 26px; max-width: 32em; }
+.hook-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 .hook-item {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  padding: 0 8px; text-decoration: none; color: var(--ink);
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  text-decoration: none; color: var(--ink);
 }
 .hook-ikon {
-  width: 66px; height: 66px; border-radius: 50%; margin-bottom: 6px;
+  width: 58px; height: 58px; border-radius: 50%; margin-bottom: 6px;
   display: inline-flex; align-items: center; justify-content: center;
-  font-size: 30px; line-height: 1;
-  box-shadow: 0 8px 20px rgba(20,35,50,0.14);
+  box-shadow: 0 6px 16px rgba(20,35,50,0.14);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-.i-mulai  { background: linear-gradient(140deg, #0a7c80, #04565a); }
-.i-jurnal { background: linear-gradient(140deg, #ffd54a, #f0a91e); }
-.i-review { background: linear-gradient(140deg, #ef5b63, #cf1e2e); }
-.hook-item:hover .hook-ikon { transform: translateY(-4px) scale(1.05); box-shadow: 0 14px 28px rgba(20,35,50,0.22); }
-.hook-item b {
-  font-family: var(--display); font-weight: 800; font-size: 18px;
-  line-height: 1.25; letter-spacing: -0.01em; color: var(--ink);
+.hook-ikon svg {
+  width: 27px; height: 27px; fill: none; stroke: #fff; stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round;
 }
-.hook-ket { font-size: 13.5px; line-height: 1.5; color: var(--ink-soft); max-width: 22em; }
+.i-mulai  { background: linear-gradient(140deg, #0a7c80, #04565a); }
+.i-jurnal { background: linear-gradient(140deg, #f0a91e, #d98a0c); }
+.i-review { background: linear-gradient(140deg, #ef5b63, #cf1e2e); }
+.hook-item:hover .hook-ikon { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(20,35,50,0.22); }
+.hook-item b {
+  font-family: var(--display); font-weight: 800; font-size: 17px;
+  line-height: 1.2; letter-spacing: -0.01em; color: var(--ink);
+}
+.hook-ket { font-size: 13px; line-height: 1.45; color: var(--ink-soft); max-width: 17em; }
 .hook-aksi {
-  margin-top: 4px; font-family: var(--display); font-weight: 700; font-size: 14px;
+  margin-top: 5px; font-family: var(--display); font-weight: 700; font-size: 13.5px;
   color: var(--modul, var(--accent-dark));
 }
 .hook-panah { display: inline-block; transition: transform 0.16s ease; }
 .hook-item:hover .hook-panah { transform: translateX(4px); }
-@media (max-width: 640px) { .hook-strip { grid-template-columns: 1fr; gap: 26px; max-width: 340px; } }
+@media (max-width: 640px) { .hook-strip { grid-template-columns: 1fr; gap: 24px; max-width: 300px; margin: 0 auto; } }
