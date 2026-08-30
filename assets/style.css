@@ -1202,16 +1202,7 @@ body.ak { background: var(--surface); }
 .ak-bar .nav-menu.lebar a { white-space: nowrap; }
 
 /* Spanduk selebar layar */
-.ak-spanduk { line-height: 0; background: var(--pastel-gray); position: relative; }
-.ak-spanduk img {
-  width: 100%; height: clamp(170px, 25vw, 320px);
-  object-fit: cover; object-position: center 46%; display: block;
-}
 /* sisi kiri diredupkan tipis supaya potret yang menumpuk tetap terbaca */
-.ak-spanduk::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(90deg, rgba(28,52,80,0.18) 0%, rgba(28,52,80,0.05) 34%, rgba(28,52,80,0) 60%);
-}
 
 /* Dua kolom */
 .ak-wadah {
@@ -3157,3 +3148,5 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
   .stat-strip { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 460px) { .stat-strip { grid-template-columns: 1fr 1fr; } .stat-strip b { font-size: 30px; } }
+
+.hero-x-teks { min-width: 0; }
