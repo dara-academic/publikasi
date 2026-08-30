@@ -91,11 +91,6 @@ body {
   .nav-menu a { padding: 10px 12px; border-radius: 12px; }
 }
 
-
-  display: inline-flex; align-items: center; gap: 7px; font-size: 14px;
-@media (max-width: 920px) {
-  }
-
 /* Hero */
 .hero {
   position: relative; padding: 84px 0 68px; border-bottom: 1px solid var(--line);
@@ -3397,3 +3392,16 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 
 /* Nota penekanan di hero (mis. poin APC), tanpa kotak */
 .hal-nota { font-size: 15px; line-height: 1.55; color: var(--modul, var(--accent-dark)); font-weight: 600; margin: -6px 0 20px; max-width: 46em; }
+
+/* Fan-out hub: direktori tautan ke sub-halaman, tanpa kotak */
+.hub-tautan { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 18px; margin-top: 4px; }
+.hub-tautan a { display: block; padding: 12px 14px; border-radius: 12px; text-decoration: none; color: var(--ink); transition: background 0.15s ease; }
+.hub-tautan a:hover { background: var(--modul-tipis, var(--pastel-blue)); }
+.hub-tautan b { display: block; font-family: var(--display, var(--sans)); font-weight: 700; font-size: 15.5px; color: var(--ink); }
+.hub-tautan b::after { content: " \2192"; color: var(--modul, var(--accent-dark)); }
+.hub-tautan span { display: block; font-size: 13px; line-height: 1.45; color: var(--ink-soft); margin-top: 2px; }
+@media (max-width: 620px) { .hub-tautan { grid-template-columns: 1fr; } }
+.hal-tautan-baris { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+
+/* Footer: item grid harus bisa menyusut di mobile agar tak meluber */
+.kaki-peta > div { min-width: 0; }
