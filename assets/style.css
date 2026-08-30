@@ -3150,3 +3150,32 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 @media (max-width: 460px) { .stat-strip { grid-template-columns: 1fr 1fr; } .stat-strip b { font-size: 30px; } }
 
 .hero-x-teks { min-width: 0; }
+
+/* ============================================================
+   Footer router persona — menangkap pengunjung di dasar halaman
+   ============================================================ */
+.kaki-router { display: flex; flex-direction: column; gap: 9px; }
+.kaki-persona {
+  display: flex; align-items: center; gap: 12px; text-decoration: none;
+  padding: 11px 14px; border-radius: 12px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
+.kaki-persona:hover {
+  background: rgba(255,255,255,0.12); border-color: var(--unj-emas, #ffdd00);
+  transform: translateX(3px);
+}
+.kaki-persona-emoji {
+  font-size: 22px; line-height: 1; flex-shrink: 0;
+  width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.08); border-radius: 10px;
+}
+.kaki-persona-teks { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.kaki-persona-teks b { font-family: var(--display); font-weight: 700; font-size: 14.5px; color: #f3f6f9; }
+.kaki-persona-teks span { font-size: 12.5px; color: #a8c3c0; }
+.kaki-persona-panah {
+  margin-left: auto; flex-shrink: 0; font-size: 18px; color: var(--unj-emas, #ffdd00);
+  opacity: 0; transform: translateX(-5px); transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.kaki-persona:hover .kaki-persona-panah { opacity: 1; transform: none; }
+@media (max-width: 700px) { .kaki-persona { padding: 12px 14px; } }
