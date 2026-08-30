@@ -2840,3 +2840,69 @@ body.halaman-masuk {
 
 /* Bilah header di halaman auth tetap hijau; disamakan dengan panggung. */
 .halaman-masuk .ak-bar { box-shadow: none; }
+
+/* ============================================================
+   LAPISAN ENERGI VISUAL — situs terasa hidup, bukan brosur datar
+   ============================================================ */
+
+/* --- Kartu pintu jadi kartu ajakan bergradasi, ikon besar di atas --- */
+.ak-pintu {
+  background: linear-gradient(160deg, #fff 60%, color-mix(in srgb, var(--modul-tipis, var(--pastel-blue)) 55%, #fff));
+  border: 1px solid color-mix(in srgb, var(--modul, var(--accent-dark)) 14%, #fff);
+  border-left: 4px solid var(--modul, var(--accent-dark));
+  box-shadow: 0 2px 6px rgba(20,35,50,0.05);
+  padding: 22px 22px 20px; position: relative; overflow: hidden;
+}
+.ak-pintu::after {
+  content: "→"; position: absolute; right: 18px; bottom: 14px;
+  font-size: 20px; color: var(--modul, var(--accent-dark));
+  opacity: 0; transform: translateX(-6px); transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.ak-pintu:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(20,35,50,0.15); }
+.ak-pintu:hover::after { opacity: 1; transform: translateX(0); }
+.ak-pintu-ikon {
+  font-size: 30px; line-height: 1; margin-bottom: 6px;
+  display: inline-flex; width: 52px; height: 52px; align-items: center; justify-content: center;
+  background: color-mix(in srgb, var(--modul-tipis, var(--pastel-blue)) 60%, #fff);
+  border-radius: 14px;
+}
+.ak-pintu b { font-size: 17px; }
+
+/* --- Angka besar bergradasi, penanda capaian --- */
+.ak-angka > div { position: relative; overflow: hidden; transition: transform 0.16s ease; }
+.ak-angka > div:hover { transform: translateY(-2px); }
+.ak-angka b {
+  background: linear-gradient(135deg, var(--modul, var(--accent-dark)), color-mix(in srgb, var(--modul, var(--accent-dark)) 55%, #0a7d81));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* --- Judul bagian diberi aksen batang berwarna modul di kiri --- */
+.ak-utama h2 { position: relative; padding-left: 16px; }
+.ak-utama h2::before {
+  content: ""; position: absolute; left: 0; top: 4px; bottom: 6px; width: 5px;
+  border-radius: 999px;
+  background: linear-gradient(var(--modul, var(--accent-dark)), var(--unj-emas, #ffdd00));
+}
+/* kecuali judul yang memang tak butuh, seperti di dalam kartu */
+.ak-utama .lanjut h2, .ak-utama .isi-hal h2 { padding-left: 0; }
+.ak-utama .lanjut h2::before, .ak-utama .isi-hal h2::before { display: none; }
+
+/* --- Potret beranda diberi cincin gradient --- */
+.ak-potret { position: relative; }
+.ak-potret::before {
+  content: ""; position: absolute; inset: -6px; border-radius: 18px; z-index: -1;
+  background: linear-gradient(135deg, var(--unj-hijau, #006569), var(--unj-emas, #ffdd00));
+}
+.ak-potret img { border-radius: 14px; position: relative; z-index: 1; }
+
+/* --- Gerak muncul saat digulir, dimatikan bila diminta --- */
+.muncul { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.muncul.tampil { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .muncul { opacity: 1; transform: none; transition: none; }
+  .ak-pintu:hover, .ak-angka > div:hover { transform: none; }
+}
+
+/* --- Kartu materi (mkl) dan kabar ikut terangkat saat disentuh --- */
+.ak-mkl a { transition: transform 0.14s ease, box-shadow 0.14s ease; }
+.ak-mkl a:hover { transform: translateX(3px); }

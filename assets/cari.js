@@ -170,3 +170,35 @@
     });
   }, { passive: true });
 })();
+
+/* ------------------------------------------------------------------
+   Gerak muncul saat digulir. Elemen bertanda .muncul memudar naik saat
+   masuk layar. Dimatikan bila pengguna meminta gerak dikurangi, dan
+   diberi tanda tampil langsung bila IntersectionObserver tak tersedia.
+   Kelas .muncul dibubuhkan dari sini pada blok-blok utama, supaya tidak
+   perlu menyunting markup tiap halaman.
+   ------------------------------------------------------------------ */
+(function () {
+  var kurangiGerak = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sasaran = document.querySelectorAll(
+    '.ak-utama > h2, .ak-utama .ak-pintu, .ak-utama .ak-angka, .ak-utama .ak-sumber,' +
+    '.ak-utama .mt-kartu, .ak-utama .book, .ak-utama .rs-kartu, .ak-utama .ws-kartu,' +
+    '.ak-utama .card, .ak-utama .glos-group, .ak-utama .prog-pil, .ak-utama .bm-kartu');
+  if (!sasaran.length) return;
+  if (kurangiGerak || !('IntersectionObserver' in window)) {
+    sasaran.forEach(function (el) { el.classList.add('muncul', 'tampil'); });
+    return;
+  }
+  sasaran.forEach(function (el) { el.classList.add('muncul'); });
+  var io = new IntersectionObserver(function (masuk) {
+    masuk.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('tampil'); io.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  sasaran.forEach(function (el) { io.observe(el); });
+  /* Jaring pengaman: apa pun yang belum tampil dalam 1,2 detik dipaksa
+     muncul, supaya observer yang meleset tak pernah menyembunyikan konten. */
+  setTimeout(function () {
+    sasaran.forEach(function (el) { el.classList.add('tampil'); });
+  }, 1200);
+})();
