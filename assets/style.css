@@ -3352,3 +3352,28 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 .materi-jml { font-size: 12.5px; color: var(--ink-soft); }
 @media (max-width: 820px) { .materi-rak { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 460px) { .materi-rak { grid-template-columns: 1fr 1fr; gap: 12px; } .materi-kartu b { font-size: 13.5px; } }
+
+/* ============================================================
+   Template "pintu bagian" — hero halaman + bagian ber-kartu
+   (dipakai landing tiap bagian: Pengajaran, Penelitian, dll.)
+   ============================================================ */
+.hal-hero { padding-top: 4px; margin-bottom: 8px; }
+.hal-hero h1 {
+  font-family: var(--display, var(--sans)); font-weight: 800;
+  font-size: clamp(32px, 5vw, 46px); letter-spacing: -0.022em; line-height: 1.05;
+  margin: 2px 0 6px;
+}
+.hal-lead {
+  font-size: 19px; line-height: 1.5; color: var(--ink-soft);
+  max-width: 40em; margin: 6px 0 22px; font-weight: 500;
+}
+.hal-aksi { display: flex; gap: 12px; flex-wrap: wrap; }
+.hal-bagian { margin-top: 44px; }
+.hal-sub { font-size: 15.5px; line-height: 1.55; color: var(--ink-soft); margin: -2px 0 20px; max-width: 46em; }
+.hal-tautan {
+  display: inline-block; margin-top: 6px; font-family: var(--display); font-weight: 700;
+  font-size: 15px; color: var(--modul, var(--accent-dark)); text-decoration: none;
+}
+.hal-tautan span { display: inline-block; transition: transform 0.16s ease; }
+.hal-tautan:hover span { transform: translateX(4px); }
+.kursus-rak { grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); }
