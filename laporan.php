@@ -3,13 +3,13 @@
  * Laporan kunjungan.
  *
  * Halaman ini membaca catatan harian yang ditulis catat.php dan merangkumnya.
- * Dilindungi kunci yang harus diganti sendiri sebelum dipakai. Kuncinya bukan
+ * Dilindungi kunci yang harus diganti sendiri sebelum digunakan. Kuncinya bukan
  * pengamanan tingkat tinggi, hanya penghalang agar alamatnya tidak terbuka
  * kalau tertebak, dan itu memadai karena isinya hanya hitungan kunjungan tanpa
  * satu pun data pribadi.
  */
 
-// GANTI kunci di bawah ini dengan kata sandi Anda sendiri sebelum dipakai.
+// GANTI kunci di bawah ini dengan kata sandi Anda sendiri sebelum digunakan.
 $KUNCI = 'GANTI-KUNCI-INI';
 
 header('Content-Type: text/html; charset=utf-8');

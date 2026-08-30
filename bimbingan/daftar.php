@@ -129,7 +129,7 @@ $csrf = htmlspecialchars(token_csrf(), ENT_QUOTES);
              autocomplete="email" required>
       <button class="masuk-tombol" type="submit">Kirim pendaftaran</button>
     </form>
-    <p class="masuk-kaki">Surel hanya dipakai untuk mengirim kode akses dan
+    <p class="masuk-kaki">Surel hanya digunakan untuk mengirim kode akses dan
       tidak ditampilkan di mana pun.</p>
 <?php endif; ?>
   </section>

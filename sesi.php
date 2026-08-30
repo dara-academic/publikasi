@@ -10,7 +10,7 @@
    halaman hanya bicara lewat fungsi-fungsi di berkas ini.
 
    PostgreSQL tidak tersedia di shared hosting Hostinger; MySQL yang
-   disediakan, maka MySQL yang dipakai. Kata sandi selalu disimpan
+   disediakan, maka MySQL yang digunakan. Kata sandi selalu disimpan
    sebagai hash bcrypt di kedua moda.
    ------------------------------------------------------------------ */
 
@@ -263,7 +263,7 @@ function catat_gagal(string $kunci): void {
 }
 
 /* Kode akses acak untuk akun baru dan reset sandi. Huruf yang mudah
-   tertukar (l, 1, o, 0, i) sengaja tidak dipakai karena kode ini akan
+   tertukar (l, 1, o, 0, i) sengaja tidak digunakan karena kode ini akan
    dibacakan dan diketik ulang orang. */
 function kode_akses(int $n = 10): string {
     $a = 'abcdefghjkmnpqrstuvwxyz23456789';

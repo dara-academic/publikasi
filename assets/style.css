@@ -331,7 +331,7 @@ a.card:hover { border-color: var(--accent); transform: translateY(-2px); box-sha
 
 .prose h2 { font-family: var(--serif); font-size: clamp(21px, 2.2vw, 26px); font-weight: 600; margin: 40px 0 14px; scroll-margin-top: 84px; }
 .prose h2:first-child { margin-top: 0; }
-.prose p { margin-bottom: 16px; color: #38424e; }
+.prose p { margin-bottom: 18px; color: var(--ink); font-size: 16px; line-height: 1.72; }
 .prose .callout {
   background: var(--pastel-blue); border-radius: 12px; padding: 18px 22px;
   margin: 20px 0; font-size: 16px; color: #1c4e7d;
@@ -2207,20 +2207,21 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
 }
 
 /* Kotak Di halaman ini: daftar lompat untuk halaman panduan panjang */
-.isi-hal {
-  border: 1px solid var(--line); border-radius: 12px;
-  background: color-mix(in srgb, var(--modul-tipis, var(--pastel-blue)) 30%, #fff);
-  padding: 16px 20px 14px; margin: 26px 0 6px;
-}
+/* Isi halaman: baris chip lompat, bukan kotak */
+.isi-hal { border: 0; background: none; padding: 0; margin: 20px 0 8px; }
 .isi-hal-judul {
-  font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--ink-muted); margin: 0 0 8px;
+  font-family: var(--display, var(--sans)); font-size: 11.5px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 10px;
 }
-.isi-hal ul { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 28px; }
-.isi-hal li { margin: 0 0 6px; break-inside: avoid; }
-.isi-hal a { font-size: 14px; color: var(--modul, var(--accent-dark)); text-decoration: none; }
-.isi-hal a:hover { text-decoration: underline; }
-@media (max-width: 640px) { .isi-hal ul { columns: 1; } }
+.isi-hal ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.isi-hal li { margin: 0; }
+.isi-hal a {
+  display: inline-block; font-size: 13.5px; font-weight: 600; text-decoration: none;
+  color: var(--modul, var(--accent-dark)); background: var(--modul-tipis, var(--pastel-blue));
+  padding: 7px 14px; border-radius: 999px;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.isi-hal a:hover { transform: translateY(-1px); filter: brightness(0.97); text-decoration: none; }
 
 /* Tombol kembali ke atas: muncul setelah pembaca melewati dua layar,
    dibuat dari skrip supaya tidak perlu menyunting markup semua halaman */

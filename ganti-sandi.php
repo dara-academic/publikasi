@@ -3,7 +3,7 @@
    Ganti kata sandi. Wajib bagi pemegang sandi bawaan, terbuka bagi
    siapa pun yang ingin mengganti. Sandi lama diminta lagi di sini
    supaya sesi yang tertinggal terbuka di komputer umum tidak bisa
-   dipakai orang lain untuk membajak akun.
+   digunakan orang lain untuk membajak akun.
    ------------------------------------------------------------------ */
 require __DIR__ . '/sesi.php';
 $pengguna = wajib_masuk();

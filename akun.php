@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_sah()) {
         if ($nama === '' || $u === '') {
             $_SESSION['pesan_akun'] = 'Nama dan nama pengguna wajib diisi.';
         } elseif ($ada) {
-            $_SESSION['pesan_akun'] = 'Nama pengguna ' . $u . ' sudah dipakai.';
+            $_SESSION['pesan_akun'] = 'Nama pengguna ' . $u . ' sudah digunakan.';
         } else {
             $kode = kode_akses();
             tambah_pengguna(['email' => $u, 'nama' => $nama, 'peran' => $peran,
