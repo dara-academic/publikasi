@@ -3155,13 +3155,13 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
    Footer router persona — menangkap pengunjung di dasar halaman
    ============================================================ */
 .kaki-router { display: flex; flex-direction: column; gap: 9px; }
-.kaki-persona {
+.kaki-peta .kaki-persona {
   display: flex; align-items: center; gap: 12px; text-decoration: none;
   padding: 11px 14px; border-radius: 12px;
   background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
   transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
 }
-.kaki-persona:hover {
+.kaki-peta .kaki-persona:hover {
   background: rgba(255,255,255,0.12); border-color: var(--unj-emas, #ffdd00);
   transform: translateX(3px);
 }
@@ -3177,5 +3177,75 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
   margin-left: auto; flex-shrink: 0; font-size: 18px; color: var(--unj-emas, #ffdd00);
   opacity: 0; transform: translateX(-5px); transition: opacity 0.15s ease, transform 0.15s ease;
 }
-.kaki-persona:hover .kaki-persona-panah { opacity: 1; transform: none; }
-@media (max-width: 700px) { .kaki-persona { padding: 12px 14px; } }
+.kaki-peta .kaki-persona:hover .kaki-persona-panah { opacity: 1; transform: none; }
+@media (max-width: 700px) { .kaki-peta .kaki-persona { padding: 12px 14px; } }
+
+/* ============================================================
+   Gerbang beranda — kartu pengantar ke halaman dalam
+   ============================================================ */
+.beranda-sub { font-size: 16px; color: var(--ink-soft); margin: -6px 0 22px; }
+.gerbang { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.gerbang-kartu {
+  position: relative; display: flex; flex-direction: column; gap: 8px;
+  padding: 22px 22px 44px; text-decoration: none; color: var(--ink);
+  background: var(--kartu); border: 1px solid var(--line); border-radius: 18px;
+  box-shadow: var(--bayang-kartu);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+  overflow: hidden;
+}
+.gerbang-kartu:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(20,35,50,0.16); border-color: color-mix(in srgb, var(--modul, var(--accent-dark)) 30%, var(--line)); }
+.gerbang-emoji {
+  font-size: 26px; line-height: 1; width: 52px; height: 52px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--modul-tipis, var(--pastel-blue)); border-radius: 14px; margin-bottom: 4px;
+}
+.gerbang-kartu b { font-family: var(--display); font-weight: 800; font-size: 19px; letter-spacing: -0.01em; }
+.gerbang-ket { font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
+.gerbang-panah {
+  position: absolute; right: 20px; bottom: 18px; font-size: 20px;
+  color: var(--modul, var(--accent-dark)); opacity: 0.5;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+.gerbang-kartu:hover .gerbang-panah { opacity: 1; transform: translateX(4px); }
+
+/* Kartu unggulan: lebar penuh, gradasi, teks terang */
+.gerbang-kartu.besar {
+  grid-column: 1 / -1; flex-direction: column; color: #eaf6f6;
+  background: linear-gradient(135deg, #012f31 8%, var(--unj-hijau, #006569) 90%);
+  border: 0; padding: 28px 28px 30px;
+}
+.gerbang-kartu.besar b { color: #fff; font-size: 24px; }
+.gerbang-kartu.besar .gerbang-ket { color: #bfe0e0; max-width: 46em; }
+.gerbang-kartu.besar .gerbang-emoji { background: rgba(255,255,255,0.12); }
+.gerbang-kartu.besar .gerbang-panah { color: var(--unj-emas, #ffdd00); opacity: 1; font-size: 24px; }
+.gerbang-atas { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+.gerbang-lencana {
+  font-family: var(--display); font-weight: 700; font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #012f31; background: var(--unj-emas, #ffdd00);
+  padding: 4px 12px; border-radius: 999px;
+}
+@media (max-width: 760px) { .gerbang { grid-template-columns: 1fr; } }
+
+/* Strip dampak ringkas */
+.dampak-strip {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  margin: 22px 0 0; padding: 18px 24px; border-radius: 16px;
+  background: var(--modul-tipis, var(--pastel-blue)); border: 1px solid color-mix(in srgb, var(--modul, var(--accent-dark)) 15%, transparent);
+}
+.dampak-judul { font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--modul, var(--accent-dark)); margin: 0 0 4px; }
+.dampak-angka { font-size: 15px; color: var(--ink); margin: 0; }
+.dampak-angka b { font-family: var(--display); font-weight: 800; color: var(--modul, var(--accent-dark)); }
+.dampak-tautan { font-family: var(--display); font-weight: 700; font-size: 14.5px; color: var(--modul, var(--accent-dark)); text-decoration: none; white-space: nowrap; }
+.dampak-tautan:hover { text-decoration: underline; }
+
+/* Footer: kolom tak lagi meregang, kartu persona ringkas */
+.kaki-peta { align-items: start; }
+.kaki-router { align-self: start; }
+.kaki-peta .kaki-persona { align-self: stretch; }
+
+.dampak-teks { min-width: 0; }
+
+/* Footer kolom identitas ringkas (menggantikan router persona) */
+.kaki-brand-nama { font-family: var(--display); font-weight: 800; font-size: 17px; color: #f3f6f9; margin: 0 0 8px; }
+.kaki-brand-ket { font-size: 13.5px; line-height: 1.6; color: #a8c3c0; margin: 0; max-width: 30em; }
+.kaki-brand { min-width: 0; }
