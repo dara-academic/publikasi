@@ -3276,34 +3276,39 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 .kaki-kontak li { margin: 0; flex: 0 0 auto; white-space: nowrap; }
 
 /* ============================================================
-   Hook strip — pertanyaan user -> panduan (ganti stat vanity)
+   Hook — ikon berwarna, tanpa kotak, terpusat (pertanyaan user)
    ============================================================ */
-.hook { margin-top: 30px; }
-.hook-lead { font-size: 16px; color: var(--ink-soft); margin: 0 0 16px; max-width: 46em; }
-.hook-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.hook-kartu {
-  display: flex; flex-direction: column; gap: 9px;
-  padding: 20px 20px 18px; text-decoration: none; color: var(--ink);
-  background: var(--kartu); border: 1px solid var(--line);
-  border-left: 3px solid var(--modul, var(--accent-dark)); border-radius: 14px;
-  box-shadow: var(--bayang-kartu);
-  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+.hook { margin-top: 34px; text-align: center; }
+.hook-judul { margin: 0 0 6px; }
+.hook-sub { font-size: 15.5px; color: var(--ink-soft); margin: 0 auto 28px; max-width: 40em; }
+.hook-strip {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px 24px;
+  max-width: 880px; margin: 0 auto;
 }
-.hook-kartu:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(20,35,50,0.15); }
-.hook-tag {
-  align-self: flex-start; font-family: var(--display); font-weight: 700; font-size: 10.5px;
-  letter-spacing: 0.09em; text-transform: uppercase; color: var(--modul, var(--accent-dark));
-  background: var(--modul-tipis, var(--pastel-blue)); padding: 4px 11px; border-radius: 999px;
+.hook-item {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 0 8px; text-decoration: none; color: var(--ink);
 }
-.hook-kartu b {
-  font-family: var(--display); font-weight: 800; font-size: 17.5px;
-  line-height: 1.28; letter-spacing: -0.01em; color: var(--ink);
+.hook-ikon {
+  width: 66px; height: 66px; border-radius: 50%; margin-bottom: 6px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 30px; line-height: 1;
+  box-shadow: 0 8px 20px rgba(20,35,50,0.14);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-.hook-ket { font-size: 13.5px; line-height: 1.5; color: var(--ink-soft); }
+.i-mulai  { background: linear-gradient(140deg, #0a7c80, #04565a); }
+.i-jurnal { background: linear-gradient(140deg, #ffd54a, #f0a91e); }
+.i-review { background: linear-gradient(140deg, #ef5b63, #cf1e2e); }
+.hook-item:hover .hook-ikon { transform: translateY(-4px) scale(1.05); box-shadow: 0 14px 28px rgba(20,35,50,0.22); }
+.hook-item b {
+  font-family: var(--display); font-weight: 800; font-size: 18px;
+  line-height: 1.25; letter-spacing: -0.01em; color: var(--ink);
+}
+.hook-ket { font-size: 13.5px; line-height: 1.5; color: var(--ink-soft); max-width: 22em; }
 .hook-aksi {
-  margin-top: auto; padding-top: 4px; font-family: var(--display); font-weight: 700;
-  font-size: 14px; color: var(--modul, var(--accent-dark));
+  margin-top: 4px; font-family: var(--display); font-weight: 700; font-size: 14px;
+  color: var(--modul, var(--accent-dark));
 }
-.hook-aksi span { display: inline-block; transition: transform 0.16s ease; }
-.hook-kartu:hover .hook-aksi span { transform: translateX(4px); }
-@media (max-width: 760px) { .hook-strip { grid-template-columns: 1fr; } }
+.hook-panah { display: inline-block; transition: transform 0.16s ease; }
+.hook-item:hover .hook-panah { transform: translateX(4px); }
+@media (max-width: 640px) { .hook-strip { grid-template-columns: 1fr; gap: 26px; max-width: 340px; } }
