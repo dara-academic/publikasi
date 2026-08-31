@@ -177,8 +177,9 @@ body {
 }
 
 /* Band: seksi berlatar warna */
-.band { background: #f7f4ed; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 44px; }
-.band .section { padding: 76px 0 68px; }
+/* Band dulu berlatar beige; kini menyatu dengan background halaman */
+.band { background: transparent; border-top: 0; border-bottom: 0; margin-top: 8px; }
+.band .section { padding: 40px 0 8px; }
 
 /* Value grid */
 .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
@@ -1447,7 +1448,6 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
 .ak-utama .hero-profile { display: none; }
 
 .ak-utama .paper-head { padding: 0 0 22px; }
-.ak-utama .glos-tutup + 
 /* Pita berlatar gambar dari tata letak lama dinetralkan di dalam kolom kanan.
    Latar bergambar itu dirancang untuk pita selebar layar. Begitu dipaksa masuk
    ke kolom 678 piksel, gambarnya jadi terpotong dan tulisannya justru sulit
@@ -3024,8 +3024,8 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 :root[data-theme="dark"] .statbar .s { color: var(--ink-soft); border-right-color: rgba(255,255,255,0.12); }
 :root[data-theme="dark"] .statbar b { color: var(--modul, #5b9bd8); }
 
-/* Pita band (mis. di Tips) jadi gelap */
-:root[data-theme="dark"] .band { background: #12181f; }
+/* Band kini transparan; tak perlu latar gelap khusus */
+:root[data-theme="dark"] .band { background: transparent; }
 
 /* Batang kemajuan bimbingan & elemen lajur abu di mode gelap */
 :root[data-theme="dark"] .bim-batang { background: #222c38; }
