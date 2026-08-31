@@ -1235,8 +1235,8 @@ body.ak { background: var(--surface); }
 /* Kolom kanan: isi */
 .ak-utama { padding-top: 48px; }
 .ak-utama h1 {
-  font-family: var(--sans); font-size: clamp(32px, 5vw, 48px); font-weight: 700;
-  line-height: 1.2; letter-spacing: -0.024em; margin-bottom: 16px;
+  font-family: var(--display, var(--sans)); font-size: clamp(32px, 5vw, 46px); font-weight: 800;
+  line-height: 1.07; letter-spacing: -0.022em; margin-bottom: 14px;
 }
 .ak-utama h2 {
   font-family: var(--display, var(--sans)); font-size: 26px; font-weight: 800; letter-spacing: -0.016em;
