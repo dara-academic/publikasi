@@ -351,92 +351,144 @@
 })();
 
 /* ------------------------------------------------------------------
-   Sisipkan materi unggahan dosen ke daftar pertemuan halaman mata kuliah.
-   Halaman kuliah tetap statis; materi baru dari admin ditarik lewat
-   materi-mk.php dan ditempel ke <ol class="tl"> dengan tampilan sama.
+   Tab semester di halaman mata kuliah.
+
+   Materi statis yang sudah ada dianggap Semester 124. Materi unggahan
+   dosen (materi-mk.php) dikelompokkan per semester, mis. 125, dan tampil
+   sebagai pertemuan bernomor lengkap dengan sampulnya. Halaman kuliah
+   tetap statis; tab dan panel semester dibangun di sisi klien.
    ------------------------------------------------------------------ */
 (function () {
-  var ol = document.querySelector('main .tl');
+  var ol = document.querySelector('main .glos-wrap .tl');
   if (!ol) return;
   var cocok = location.pathname.match(/\/mata-kuliah\/([a-z0-9\-]+)\.html$/);
   if (!cocok || cocok[1] === 'index') return;
   var slug = cocok[1];
+  var SEM_DASAR = '124';
 
+  function el(tag, kelas) { var e = document.createElement(tag); if (kelas) e.className = kelas; return e; }
   function ukuran(b) {
     if (b >= 1048576) return (Math.round(b / 1048576 * 10) / 10) + ' MB';
     if (b >= 1024) return Math.round(b / 1024) + ' KB';
     return (b || 0) + ' B';
   }
-  function tambahHitung(n) {
+  var IKON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v6"/><path d="M9.5 15.5 12 18l2.5-2.5"/></svg>';
+
+  function kartu(it) {
+    var li = el('li', 'tl-butir tl-ada tl-unggah');
+    var no = el('span', 'tl-no');
+    no.textContent = it.pertemuan ? ('P' + it.pertemuan) : '+';
+    li.appendChild(no);
+
+    var sampul;
+    if (it.sampul) {
+      sampul = el('span', 'tl-sampul');
+      var img = el('img');
+      img.src = '../' + it.sampul;
+      img.alt = 'Sampul ' + (it.judul || 'materi');
+      img.loading = 'lazy'; img.decoding = 'async';
+      sampul.appendChild(img);
+    } else {
+      sampul = el('span', 'tl-sampul tl-sampul-kosong');
+      sampul.setAttribute('aria-hidden', 'true');
+      sampul.innerHTML = IKON;
+    }
+    li.appendChild(sampul);
+
+    var teks = el('div', 'tl-teks');
+    var b = el('b'); b.textContent = it.judul || 'Materi'; teks.appendChild(b);
+    if (it.deskripsi) { var top = el('span', 'tl-topik'); top.textContent = it.deskripsi; teks.appendChild(top); }
+    var a = el('a', 'pk-unduh');
+    a.href = '../unduh.php?mk=' + encodeURIComponent(it.mk) + '&f=' + encodeURIComponent(it.berkas);
+    a.target = '_blank'; a.rel = 'noopener';
+    a.appendChild(document.createTextNode('Unduh PDF '));
+    var meta = el('span');
+    var mt = ukuran(it.ukuran);
+    if (it.unduh_teks) mt += ' · ' + it.unduh_teks + '× diunduh';
+    meta.textContent = mt;
+    a.appendChild(meta);
+    teks.appendChild(a);
+    li.appendChild(teks);
+    return li;
+  }
+
+  function setStat(sem, panel) {
     var sb = document.querySelectorAll('.statbar .s');
     for (var i = 0; i < sb.length; i++) {
-      var sp = sb[i].querySelector('span');
-      if (sp && /materi siap unduh/i.test(sp.textContent || '')) {
-        var b = sb[i].querySelector('b');
-        var cur = parseInt((b.textContent || '0').replace(/\D/g, ''), 10) || 0;
-        b.textContent = String(cur + n);
-        break;
-      }
+      var sp = sb[i].querySelector('span'), b = sb[i].querySelector('b');
+      if (!sp || !b) continue;
+      if (/semester/i.test(sp.textContent || '')) b.textContent = sem;
+      else if (/materi siap unduh/i.test(sp.textContent || '')) b.textContent = String(panel.querySelectorAll('.tl-butir').length);
     }
   }
-  var IKON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v6"/><path d="M9.5 15.5 12 18l2.5-2.5"/></svg>';
 
   fetch('../materi-mk.php?mk=' + encodeURIComponent(slug))
     .then(function (r) { return r.json(); })
     .then(function (d) {
       var daftar = (d && d.materi) || [];
       if (!daftar.length) return;
+
+      var perSem = {};
       daftar.forEach(function (it) {
-        var li = document.createElement('li');
-        li.className = 'tl-butir tl-ada tl-unggah';
-
-        var no = document.createElement('span');
-        no.className = 'tl-no';
-        no.textContent = '+';
-        li.appendChild(no);
-
-        var sampul = document.createElement('span');
-        sampul.className = 'tl-sampul tl-sampul-kosong';
-        sampul.setAttribute('aria-hidden', 'true');
-        sampul.innerHTML = IKON;
-        li.appendChild(sampul);
-
-        var teks = document.createElement('div');
-        teks.className = 'tl-teks';
-
-        var b = document.createElement('b');
-        b.textContent = it.judul || 'Materi';
-        teks.appendChild(b);
-
-        var kaj = document.createElement('span');
-        kaj.className = 'tl-kajian';
-        kaj.textContent = 'Materi tambahan dari dosen';
-        teks.appendChild(kaj);
-
-        if (it.deskripsi) {
-          var top = document.createElement('span');
-          top.className = 'tl-topik';
-          top.textContent = it.deskripsi;
-          teks.appendChild(top);
-        }
-
-        var a = document.createElement('a');
-        a.className = 'pk-unduh';
-        a.href = '../unduh.php?mk=' + encodeURIComponent(it.mk) + '&f=' + encodeURIComponent(it.berkas);
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.appendChild(document.createTextNode('Unduh PDF '));
-        var meta = document.createElement('span');
-        var mt = ukuran(it.ukuran);
-        if (it.unduh_teks) mt += ' · ' + it.unduh_teks + '× diunduh';
-        meta.textContent = mt;
-        a.appendChild(meta);
-        teks.appendChild(a);
-
-        li.appendChild(teks);
-        ol.appendChild(li);
+        var s = it.semester || '125';
+        (perSem[s] = perSem[s] || []).push(it);
       });
-      tambahHitung(daftar.length);
+
+      var wrap = ol.closest('.glos-wrap');
+      var kepala = wrap.querySelector('.section-head');
+
+      var panel124 = el('div', 'sem-panel'); panel124.setAttribute('data-sem', SEM_DASAR);
+      var pindah = [], n = ol;
+      while (n) { pindah.push(n); n = n.nextElementSibling; }
+      pindah.forEach(function (x) { panel124.appendChild(x); });
+      if (perSem[SEM_DASAR]) {
+        var olStatik = panel124.querySelector('.tl');
+        perSem[SEM_DASAR].sort(function (a, b) { return (a.pertemuan || 99) - (b.pertemuan || 99); })
+          .forEach(function (it) { olStatik.appendChild(kartu(it)); });
+        delete perSem[SEM_DASAR];
+      }
+
+      var semua = [SEM_DASAR];
+      Object.keys(perSem).forEach(function (s) { if (semua.indexOf(s) < 0) semua.push(s); });
+      semua.sort(function (a, b) { return parseInt(a, 10) - parseInt(b, 10); });
+
+      var bar = el('div', 'sem-tabs'); bar.setAttribute('role', 'tablist');
+      var panels = {}; panels[SEM_DASAR] = panel124;
+
+      semua.forEach(function (s) {
+        if (!panels[s]) {
+          var p = el('div', 'sem-panel'); p.setAttribute('data-sem', s);
+          var ul = el('ol', 'tl');
+          (perSem[s] || []).sort(function (a, b) { return (a.pertemuan || 99) - (b.pertemuan || 99); })
+            .forEach(function (it) { ul.appendChild(kartu(it)); });
+          p.appendChild(ul);
+          panels[s] = p;
+        }
+        var t = el('button', 'sem-tab'); t.type = 'button';
+        t.setAttribute('role', 'tab'); t.setAttribute('data-sem', s);
+        t.textContent = 'Semester ' + s;
+        bar.appendChild(t);
+      });
+
+      kepala.after(bar);
+      var titik = bar;
+      semua.forEach(function (s) { titik.after(panels[s]); titik = panels[s]; });
+
+      var aktif = semua[semua.length - 1];
+      function pilih(s) {
+        semua.forEach(function (x) {
+          var on = x === s;
+          panels[x].hidden = !on;
+          var tb = bar.querySelector('.sem-tab[data-sem="' + x + '"]');
+          if (tb) { tb.classList.toggle('aktif', on); tb.setAttribute('aria-selected', on ? 'true' : 'false'); }
+        });
+        setStat(s, panels[s]);
+      }
+      bar.addEventListener('click', function (e) {
+        var t = e.target.closest('.sem-tab');
+        if (t) pilih(t.getAttribute('data-sem'));
+      });
+      pilih(aktif);
     })
     .catch(function () {});
 })();

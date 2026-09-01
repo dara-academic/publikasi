@@ -22,11 +22,15 @@ $keluar = [];
 foreach (muat_materi() as $m) {
     if (($m['mk'] ?? '') !== $mk) continue;
     $u = (int) ($stat['unduh:' . $m['mk'] . '/' . $m['berkas']] ?? 0);
+    $sampul = (string) ($m['sampul'] ?? '');
     $keluar[] = [
         'judul'     => (string) ($m['judul'] ?? ''),
         'deskripsi' => (string) ($m['deskripsi'] ?? ''),
         'berkas'    => (string) ($m['berkas'] ?? ''),
         'mk'        => (string) ($m['mk'] ?? ''),
+        'semester'  => (string) ($m['semester'] ?? '125'),
+        'pertemuan' => (int) ($m['pertemuan'] ?? 0),
+        'sampul'    => $sampul !== '' ? 'unggahan/' . $m['mk'] . '/' . $sampul : '',
         'ukuran'    => (int) ($m['ukuran'] ?? 0),
         'tanggal'   => (string) ($m['tanggal'] ?? ''),
         'unduh'     => $u,
