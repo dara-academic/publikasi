@@ -3478,3 +3478,12 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 .unduh-meta { font-size: 12px; color: var(--ink-muted); }
 .unduh-aksi { margin-left: auto; flex-shrink: 0; font-family: var(--display, var(--sans)); font-weight: 700; font-size: 14px; color: #fff; background: linear-gradient(135deg, var(--modul, #006569), #0a7d81); padding: 9px 16px; border-radius: 999px; }
 @media (max-width: 520px) { .unduh-aksi { padding: 8px 12px; font-size: 13px; } .unduh-ket { display: none; } }
+
+/* Bilah menu panel admin */
+.admin-menu { max-width: 900px; margin: 22px auto 4px; padding: 0 26px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.admin-menu a, .admin-menu-segera { font-family: var(--display, var(--sans)); font-weight: 700; font-size: 14px; padding: 9px 16px; border-radius: 999px; text-decoration: none; }
+.admin-menu a { color: var(--ink-soft); background: var(--kartu); border: 1px solid var(--line); transition: border-color 0.15s ease, color 0.15s ease; }
+.admin-menu a:hover { border-color: var(--modul, var(--accent-dark)); color: var(--modul, var(--accent-dark)); }
+.admin-menu a.active { background: var(--modul, var(--accent-dark)); color: #fff; border-color: transparent; }
+.admin-menu-segera { color: var(--ink-muted); background: none; border: 1px dashed var(--line); cursor: default; }
+.admin-menu-segera em { font-style: normal; font-size: 11px; opacity: 0.75; margin-left: 5px; }

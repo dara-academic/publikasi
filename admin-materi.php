@@ -166,6 +166,11 @@ $jml = count($materi);
 </div>
 
 <main class="ak-utama admin-utama" id="konten">
+  <nav class="admin-menu" aria-label="Menu panel admin">
+    <a href="akun.php">Bimbingan &amp; akun</a>
+    <a href="admin-materi.php" class="active">Materi kuliah</a>
+    <span class="admin-menu-segera">Bedah paper <em>segera</em></span>
+  </nav>
 
   <?php if ($pesan): ?>
     <p class="admin-pesan" role="status"><?= ee($pesan) ?></p>
