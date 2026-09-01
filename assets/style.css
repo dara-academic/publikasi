@@ -3514,3 +3514,17 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 .admin-pintu-tanda { font-family: var(--display, var(--sans)); font-weight: 700; font-size: 13px; color: var(--modul, var(--accent-dark)); margin-top: 2px; }
 .admin-pintu-panah { position: absolute; right: 20px; bottom: 18px; font-size: 20px; color: var(--modul, var(--accent-dark)); opacity: 0.5; transition: opacity 0.16s ease, transform 0.16s ease; }
 .admin-pintu:hover .admin-pintu-panah { opacity: 1; transform: translateX(4px); }
+
+/* ============================================================
+   Perbaikan kontras mode gelap
+   ============================================================ */
+/* Judul kartu materi/karya sempat terkunci warna terang lewat text-fill
+   warisan, jadi gelap-di-gelap. Paksa ikut token dan netralkan text-fill. */
+.karya-teks b, .materi-kartu b { -webkit-text-fill-color: currentColor; }
+:root[data-theme="dark"] .karya-teks b,
+:root[data-theme="dark"] .materi-kartu b {
+  color: var(--ink); -webkit-text-fill-color: var(--ink);
+}
+/* Header tabel banding dan pemisah remah agar terbaca di gelap */
+:root[data-theme="dark"] table.banding thead th { background: #1b2530; color: #cfdae8; }
+:root[data-theme="dark"] .remah-pisah { color: #6b7887; }
