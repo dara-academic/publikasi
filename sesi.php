@@ -21,6 +21,7 @@ const BERKAS_KONFIG   = __DIR__ . '/data/konfig.php';
 const BERKAS_BIMBINGAN = __DIR__ . '/data/bimbingan.json';
 const BERKAS_ANTREAN   = __DIR__ . '/data/pendaftaran.json';
 const BERKAS_MATERI    = __DIR__ . '/data/materi.json';
+const BERKAS_PAPER     = __DIR__ . '/data/paper.json';
 
 /* ================= sesi ================= */
 
@@ -269,6 +270,40 @@ function hapus_materi(int $id): ?array {
     array_splice($semua, $id, 1);
     foreach ($semua as $i => $x) unset($semua[$i]['id']);
     file_put_contents(BERKAS_MATERI,
+        json_encode(array_values($semua), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+        LOCK_EX);
+    return $baris;
+}
+
+/* ================= bedah paper terbit ================= */
+
+/* Manifes paper Dara yang sudah terbit, ditambah lewat panel admin
+   setiap ada publikasi baru. Sama seperti materi: berkas JSON sebagai
+   daftar, sampul (opsional) tersimpan di folder unggahan. Tiap baris
+   pulang membawa id berupa indeks larik. */
+function muat_paper(): array {
+    if (!is_file(BERKAS_PAPER)) return [];
+    $a = json_decode((string) file_get_contents(BERKAS_PAPER), true) ?: [];
+    foreach ($a as $i => $x) $a[$i]['id'] = $i;
+    return $a;
+}
+
+function tambah_paper(array $p): void {
+    $semua = muat_paper();
+    foreach ($semua as $i => $x) unset($semua[$i]['id']);
+    $semua[] = $p;
+    file_put_contents(BERKAS_PAPER,
+        json_encode(array_values($semua), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+        LOCK_EX);
+}
+
+function hapus_paper(int $id): ?array {
+    $semua = muat_paper();
+    if (!isset($semua[$id])) return null;
+    $baris = $semua[$id];
+    array_splice($semua, $id, 1);
+    foreach ($semua as $i => $x) unset($semua[$i]['id']);
+    file_put_contents(BERKAS_PAPER,
         json_encode(array_values($semua), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
         LOCK_EX);
     return $baris;

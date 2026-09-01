@@ -152,7 +152,7 @@ $n_lulus_b = count(array_filter($rekap_b, fn($m) => $m['tahap'] === 'lulus'));
   <nav class="admin-menu" aria-label="Menu panel admin">
     <a href="akun.php" class="active">Bimbingan &amp; akun</a>
     <a href="admin-materi.php">Materi kuliah</a>
-    <span class="admin-menu-segera">Bedah paper <em>segera</em></span>
+    <a href="admin-bedah.php">Bedah paper</a>
   </nav>
   <div class="container">
 <?php if ($pesan): ?>
