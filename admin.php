@@ -21,6 +21,7 @@ $akun    = muat_pengguna();
 $rekap_b = muat_bimbingan()['mahasiswa'] ?? [];
 $materi  = muat_materi();
 $paper   = muat_paper();
+$buku    = muat_buku();
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -79,6 +80,14 @@ $paper   = muat_paper();
       <b>Bedah paper</b>
       <span class="admin-pintu-ket">Tambahkan paper Dara yang sudah terbit dan kelola daftarnya.</span>
       <span class="admin-pintu-tanda"><?= count($paper) ?> paper terdaftar</span>
+      <span class="admin-pintu-panah" aria-hidden="true">&rarr;</span>
+    </a>
+
+    <a class="admin-pintu" href="admin-buku.php">
+      <span class="admin-pintu-ikon" aria-hidden="true">&#128214;</span>
+      <b>Buku</b>
+      <span class="admin-pintu-ket">Tambahkan buku Dara yang sudah terbit dan kelola daftarnya.</span>
+      <span class="admin-pintu-tanda"><?= count($buku) ?> buku terdaftar</span>
       <span class="admin-pintu-panah" aria-hidden="true">&rarr;</span>
     </a>
 

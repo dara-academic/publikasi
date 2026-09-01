@@ -2464,7 +2464,7 @@ body.ak .glos-wrap { max-width: var(--lebar-bingkai); }
   background: linear-gradient(130deg, #041e1f 10%, #01474a 100%);
   color: #e9f1f5; padding: 44px 0 38px; border-bottom: 3px solid var(--unj-emas);
 }
-.admin-band-isi { max-width: var(--lebar-bingkai, 1216px); margin: 0 auto; padding: 0 26px; }
+.admin-band-isi { max-width: 940px; margin: 0 auto; padding: 0 26px; }
 .admin-lencana {
   display: inline-block; font-size: 12px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase;
@@ -3431,7 +3431,7 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 /* ============================================================
    Kelola & unduh materi (panel admin + halaman publik)
    ============================================================ */
-.admin-utama { max-width: 840px; }
+.admin-utama { max-width: 940px; margin: 0 auto; padding: 26px 26px 64px; }
 .admin-kartu {
   background: var(--kartu); border: 1px solid var(--line); border-radius: 16px;
   padding: 24px 24px 26px; margin-bottom: 22px; box-shadow: var(--bayang-kartu);
@@ -3480,7 +3480,7 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 @media (max-width: 520px) { .unduh-aksi { padding: 8px 12px; font-size: 13px; } .unduh-ket { display: none; } }
 
 /* Bilah menu panel admin */
-.admin-menu { max-width: 900px; margin: 22px auto 4px; padding: 0 26px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.admin-menu { max-width: 940px; margin: 22px auto 4px; padding: 0 26px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .admin-menu a, .admin-menu-segera { font-family: var(--display, var(--sans)); font-weight: 700; font-size: 14px; padding: 9px 16px; border-radius: 999px; text-decoration: none; }
 .admin-menu a { color: var(--ink-soft); background: var(--kartu); border: 1px solid var(--line); transition: border-color 0.15s ease, color 0.15s ease; }
 .admin-menu a:hover { border-color: var(--modul, var(--accent-dark)); color: var(--modul, var(--accent-dark)); }

@@ -22,6 +22,7 @@ const BERKAS_BIMBINGAN = __DIR__ . '/data/bimbingan.json';
 const BERKAS_ANTREAN   = __DIR__ . '/data/pendaftaran.json';
 const BERKAS_MATERI    = __DIR__ . '/data/materi.json';
 const BERKAS_PAPER     = __DIR__ . '/data/paper.json';
+const BERKAS_BUKU      = __DIR__ . '/data/buku.json';
 
 /* ================= sesi ================= */
 
@@ -304,6 +305,38 @@ function hapus_paper(int $id): ?array {
     array_splice($semua, $id, 1);
     foreach ($semua as $i => $x) unset($semua[$i]['id']);
     file_put_contents(BERKAS_PAPER,
+        json_encode(array_values($semua), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+        LOCK_EX);
+    return $baris;
+}
+
+/* ================= buku terbit ================= */
+
+/* Manifes buku Dara yang sudah terbit, ditambah lewat panel admin.
+   Sama pola dengan paper: berkas JSON, sampul opsional di folder unggahan. */
+function muat_buku(): array {
+    if (!is_file(BERKAS_BUKU)) return [];
+    $a = json_decode((string) file_get_contents(BERKAS_BUKU), true) ?: [];
+    foreach ($a as $i => $x) $a[$i]['id'] = $i;
+    return $a;
+}
+
+function tambah_buku(array $b): void {
+    $semua = muat_buku();
+    foreach ($semua as $i => $x) unset($semua[$i]['id']);
+    $semua[] = $b;
+    file_put_contents(BERKAS_BUKU,
+        json_encode(array_values($semua), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+        LOCK_EX);
+}
+
+function hapus_buku(int $id): ?array {
+    $semua = muat_buku();
+    if (!isset($semua[$id])) return null;
+    $baris = $semua[$id];
+    array_splice($semua, $id, 1);
+    foreach ($semua as $i => $x) unset($semua[$i]['id']);
+    file_put_contents(BERKAS_BUKU,
         json_encode(array_values($semua), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
         LOCK_EX);
     return $baris;
