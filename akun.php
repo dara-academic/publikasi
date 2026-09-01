@@ -136,7 +136,7 @@ $n_lulus_b = count(array_filter($rekap_b, fn($m) => $m['tahap'] === 'lulus'));
 <div class="admin-band">
   <div class="admin-band-isi">
     <p class="admin-lencana">Panel admin</p>
-    <h1>Pusat kendali bimbingan</h1>
+    <h1>Bimbingan &amp; akun</h1>
     <p class="admin-band-lead">Verifikasi pendaftar, kelola akun, dan pantau
     monitoring bimbingan dari satu tempat, <?= htmlspecialchars($pengguna['nama'], ENT_QUOTES) ?>.</p>
     <div class="prog-band-angka">
@@ -150,6 +150,7 @@ $n_lulus_b = count(array_filter($rekap_b, fn($m) => $m['tahap'] === 'lulus'));
 <div class="ak-halaman">
 <main class="ak-utama" id="konten">
   <nav class="admin-menu" aria-label="Menu panel admin">
+    <a href="admin.php">&larr; Panel admin</a>
     <a href="akun.php" class="active">Bimbingan &amp; akun</a>
     <a href="admin-materi.php">Materi kuliah</a>
     <a href="admin-bedah.php">Bedah paper</a>

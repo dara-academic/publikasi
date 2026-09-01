@@ -167,6 +167,7 @@ $jml = count($materi);
 
 <main class="ak-utama admin-utama" id="konten">
   <nav class="admin-menu" aria-label="Menu panel admin">
+    <a href="admin.php">&larr; Panel admin</a>
     <a href="akun.php">Bimbingan &amp; akun</a>
     <a href="admin-materi.php" class="active">Materi kuliah</a>
     <a href="admin-bedah.php">Bedah paper</a>

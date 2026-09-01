@@ -13,7 +13,7 @@ require __DIR__ . '/sesi.php';
 mulai_sesi();
 
 if (($p = pengguna_sekarang()) !== null) {
-    header('Location: ' . ($p['peran'] === 'admin' ? '/akun.php' : '/bimbingan/rekap.php'));
+    header('Location: ' . ($p['peran'] === 'admin' ? '/admin.php' : '/bimbingan/rekap.php'));
     exit;
 }
 
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             rename(BERKAS_SETUP, BERKAS_SETUP . '.terpakai');
             session_regenerate_id(true);
             $_SESSION['pengguna'] = ['email' => $email, 'nama' => $nama, 'peran' => 'admin'];
-            header('Location: /bimbingan/rekap.php');
+            header('Location: /admin.php');
             exit;
         }
     } else {
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'wajib_ganti' => !empty($cocok['wajib_ganti']),
             ];
             header('Location: ' . (!empty($cocok['wajib_ganti']) ? '/ganti-sandi.php'
-                : ($cocok['peran'] === 'admin' ? '/akun.php' : '/bimbingan/rekap.php')));
+                : ($cocok['peran'] === 'admin' ? '/admin.php' : '/bimbingan/rekap.php')));
             exit;
         }
         catat_gagal($ip);
