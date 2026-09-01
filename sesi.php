@@ -20,6 +20,7 @@ const BERKAS_SETUP    = __DIR__ . '/data/kode-setup.txt';
 const BERKAS_KONFIG   = __DIR__ . '/data/konfig.php';
 const BERKAS_BIMBINGAN = __DIR__ . '/data/bimbingan.json';
 const BERKAS_ANTREAN   = __DIR__ . '/data/pendaftaran.json';
+const BERKAS_MATERI    = __DIR__ . '/data/materi.json';
 
 /* ================= sesi ================= */
 
@@ -235,6 +236,40 @@ function ambil_antrean(int $id): ?array {
     foreach ($antre as $i => $x) unset($antre[$i]['id']);
     file_put_contents(BERKAS_ANTREAN,
         json_encode(array_values($antre), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+        LOCK_EX);
+    return $baris;
+}
+
+/* ================= materi unggahan ================= */
+
+/* Manifes materi kuliah yang diunggah dosen lewat panel admin. Selalu
+   berkas JSON: ini hanya daftar rujukan, sedangkan PDF-nya tersimpan di
+   folder unggahan yang bisa diakses web. Tiap baris pulang membawa id
+   berupa indeks larik, supaya penghapusan bisa menunjuk baris tertentu. */
+function muat_materi(): array {
+    if (!is_file(BERKAS_MATERI)) return [];
+    $a = json_decode((string) file_get_contents(BERKAS_MATERI), true) ?: [];
+    foreach ($a as $i => $x) $a[$i]['id'] = $i;
+    return $a;
+}
+
+function tambah_materi(array $m): void {
+    $semua = muat_materi();
+    foreach ($semua as $i => $x) unset($semua[$i]['id']);
+    $semua[] = $m;
+    file_put_contents(BERKAS_MATERI,
+        json_encode(array_values($semua), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+        LOCK_EX);
+}
+
+function hapus_materi(int $id): ?array {
+    $semua = muat_materi();
+    if (!isset($semua[$id])) return null;
+    $baris = $semua[$id];
+    array_splice($semua, $id, 1);
+    foreach ($semua as $i => $x) unset($semua[$i]['id']);
+    file_put_contents(BERKAS_MATERI,
+        json_encode(array_values($semua), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
         LOCK_EX);
     return $baris;
 }

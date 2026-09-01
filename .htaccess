@@ -10,7 +10,7 @@ ErrorDocument 404 /404.html
 # ikut turun apa adanya ke public_html, termasuk berkas yang tidak ada
 # urusannya dengan pengunjung.
 <IfModule mod_authz_core.c>
-  <FilesMatch "^(README\.md|\.gitignore|\.gitattributes|\.nojekyll|.*\.py|.*\.zip|.*\.log)$">
+  <FilesMatch "^(README\.md|\.gitignore|\.gitattributes|\.nojekyll|\.user\.ini|.*\.py|.*\.zip|.*\.log)$">
     Require all denied
   </FilesMatch>
 

@@ -123,6 +123,7 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
   <div class="ak-bar-isi">
     <a class="ak-nama" href="index.html">Belajar Bersama Dara</a>
     <span class="rekap-siapa"><b><?= e($pengguna['nama']) ?></b>
+      &middot; <a href="admin-materi.php">Kelola materi</a>
       &middot; <a href="bimbingan/rekap.php">Rincian</a>
       &middot; <a href="ganti-sandi.php">Ganti sandi</a>
       &middot; <a href="keluar.php">Keluar</a></span>

@@ -3427,3 +3427,54 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 .cta-monitor-panah { margin-left: auto; flex-shrink: 0; font-size: 24px; color: var(--unj-emas, #ffdd00); transition: transform 0.16s ease; }
 .cta-monitor:hover .cta-monitor-panah { transform: translateX(4px); }
 @media (max-width: 480px) { .cta-monitor { padding: 15px 16px; gap: 12px; } .cta-monitor-teks b { font-size: 16px; } }
+
+/* ============================================================
+   Kelola & unduh materi (panel admin + halaman publik)
+   ============================================================ */
+.admin-utama { max-width: 840px; }
+.admin-kartu {
+  background: var(--kartu); border: 1px solid var(--line); border-radius: 16px;
+  padding: 24px 24px 26px; margin-bottom: 22px; box-shadow: var(--bayang-kartu);
+}
+.admin-kartu h2 { margin: 0 0 14px; font-size: 20px; }
+.materi-form { display: grid; gap: 4px; }
+.materi-form select.masuk-input { appearance: auto; }
+.admin-pesan {
+  background: var(--pastel-mint, #e6f6ec); color: #1d5c3a; border-radius: 12px;
+  padding: 12px 16px; font-weight: 600; margin: 0 0 18px;
+}
+.admin-kosong { color: var(--ink-soft); margin: 0; }
+.materi-mk-judul { font-family: var(--display, var(--sans)); font-weight: 800; font-size: 15px; margin: 20px 0 8px; color: var(--modul, var(--accent-dark)); }
+.materi-mk-judul span { color: var(--ink-muted); font-weight: 600; }
+.materi-kelola { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.materi-kelola li { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; }
+.materi-kelola-teks { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.materi-kelola-teks b { font-weight: 700; font-size: 14.5px; }
+.materi-kelola-teks > span { font-size: 12.5px; color: var(--ink-soft); }
+.materi-kelola-meta { color: var(--ink-muted) !important; }
+.materi-kelola form { margin-left: auto; flex-shrink: 0; }
+.materi-hapus {
+  background: none; border: 1px solid var(--line); color: var(--unj-merah, #cf1e2e);
+  border-radius: 999px; padding: 7px 14px; font-family: var(--display, var(--sans));
+  font-weight: 700; font-size: 13px; cursor: pointer;
+}
+.materi-hapus:hover { background: var(--unj-merah, #cf1e2e); color: #fff; border-color: transparent; }
+.admin-pulang { margin-top: 10px; }
+.admin-pulang a { color: var(--modul, var(--accent-dark)); text-decoration: none; font-weight: 600; }
+
+/* Daftar unduhan publik */
+.unduh-daftar { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; max-width: 760px; }
+.unduh-item {
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px;
+  text-decoration: none; color: var(--ink); background: var(--kartu); border: 1px solid var(--line);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.unduh-item:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(20,35,50,0.12); border-color: color-mix(in srgb, var(--modul, var(--accent-dark)) 30%, var(--line)); }
+.unduh-ikon { width: 44px; height: 44px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; background: var(--modul-tipis, var(--pastel-blue)); border-radius: 11px; color: var(--modul, var(--accent-dark)); }
+.unduh-ikon svg { width: 22px; height: 22px; }
+.unduh-teks { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.unduh-teks b { font-family: var(--display, var(--sans)); font-weight: 800; font-size: 15.5px; }
+.unduh-ket { font-size: 13px; color: var(--ink-soft); }
+.unduh-meta { font-size: 12px; color: var(--ink-muted); }
+.unduh-aksi { margin-left: auto; flex-shrink: 0; font-family: var(--display, var(--sans)); font-weight: 700; font-size: 14px; color: #fff; background: linear-gradient(135deg, var(--modul, #006569), #0a7d81); padding: 9px 16px; border-radius: 999px; }
+@media (max-width: 520px) { .unduh-aksi { padding: 8px 12px; font-size: 13px; } .unduh-ket { display: none; } }

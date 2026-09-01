@@ -1,0 +1,8 @@
+# Folder ini hanya untuk berkas materi PDF yang diunggah dosen.
+# Tidak boleh ada skrip yang bisa dieksekusi dari sini, apa pun namanya.
+<FilesMatch "(?i)\.(php|phtml|phar|phps|py|pl|cgi|sh|asp|aspx|jsp|fcgi|htaccess)$">
+  Require all denied
+</FilesMatch>
+
+# Jangan jalankan CGI, jangan tampilkan daftar isi folder.
+Options -ExecCGI -Indexes
