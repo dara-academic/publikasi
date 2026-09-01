@@ -270,3 +270,48 @@
     }
   } catch (e) {}
 })();
+
+/* Simpan untuk nanti: bookmark halaman di localStorage, tanpa server. */
+(function () {
+  var KEY = 'dara_simpan';
+  function baca() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
+  function tulis(a) { try { localStorage.setItem(KEY, JSON.stringify(a)); } catch (e) {} }
+  function esc(x) { var t = document.createElement('div'); t.textContent = x == null ? '' : x; return t.innerHTML; }
+
+  var rak = document.getElementById('tersimpan-rak');
+  if (rak) {
+    var render = function () {
+      var a = baca();
+      if (!a.length) { rak.innerHTML = '<p class="admin-kosong">Belum ada yang disimpan. Buka halaman mana pun, lalu tekan tombol "Simpan untuk nanti" di pojok bawah.</p>'; return; }
+      rak.innerHTML = a.map(function (it, i) {
+        return '<div class="simpan-item"><a href="' + esc(it.url) + '"><b>' + esc(it.judul) + '</b></a>'
+          + '<button type="button" class="simpan-hapus" data-i="' + i + '" aria-label="Hapus dari tersimpan">Hapus</button></div>';
+      }).join('');
+    };
+    rak.addEventListener('click', function (e) {
+      var b = e.target.closest('.simpan-hapus'); if (!b) return;
+      var a = baca(); a.splice(+b.getAttribute('data-i'), 1); tulis(a); render();
+    });
+    render();
+    return;
+  }
+
+  var main = document.querySelector('main.ak-utama');
+  if (!main || document.querySelector('.admin-band')) return;
+  var grup = document.body.getAttribute('data-grup');
+  if (grup === 'beranda') return;
+  var url = location.pathname;
+  var judul = (document.title || url).split(/[,|]/)[0].trim() || document.title;
+  function ada() { return baca().some(function (x) { return x.url === url; }); }
+  var btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'simpan-apung';
+  var sync = function () { var s = ada(); btn.classList.toggle('aktif', s); btn.innerHTML = s ? '✓ Tersimpan' : '♡ Simpan untuk nanti'; };
+  btn.addEventListener('click', function () {
+    var a = baca();
+    if (ada()) a = a.filter(function (x) { return x.url !== url; });
+    else a.unshift({ judul: judul, url: url });
+    tulis(a); sync();
+  });
+  sync();
+  document.body.appendChild(btn);
+})();

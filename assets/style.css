@@ -3562,3 +3562,22 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 .lanjut-belajar-rak b { font-family: var(--display, var(--sans)); font-weight: 800; font-size: 16px; letter-spacing: -0.01em; color: var(--modul, var(--accent-dark)); }
 .lanjut-belajar-rak b::after { content: " \2192"; }
 .lanjut-belajar-rak span { font-size: 13.5px; line-height: 1.45; color: var(--ink-soft); }
+
+/* Tombol "Simpan untuk nanti" mengambang + halaman tersimpan */
+.simpan-apung {
+  position: fixed; left: 18px; bottom: 18px; z-index: 40;
+  font-family: var(--display, var(--sans)); font-weight: 700; font-size: 13.5px;
+  color: var(--ink); background: var(--kartu); border: 1px solid var(--line);
+  border-radius: 999px; padding: 10px 16px; cursor: pointer;
+  box-shadow: 0 8px 22px rgba(20,35,50,0.16); transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.simpan-apung:hover { transform: translateY(-2px); border-color: var(--modul, var(--accent-dark)); }
+.simpan-apung.aktif { background: var(--modul, var(--accent-dark)); color: #fff; border-color: transparent; }
+@media (max-width: 560px) { .simpan-apung { left: 12px; bottom: 12px; font-size: 12.5px; padding: 9px 13px; } }
+.tersimpan-rak { display: grid; gap: 10px; max-width: 680px; }
+.simpan-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--kartu); }
+.simpan-item a { flex: 1; min-width: 0; text-decoration: none; color: var(--ink); }
+.simpan-item a b { font-family: var(--display, var(--sans)); font-weight: 700; font-size: 15px; }
+.simpan-item a:hover b { color: var(--modul, var(--accent-dark)); }
+.simpan-hapus { flex-shrink: 0; background: none; border: 1px solid var(--line); color: var(--unj-merah, #cf1e2e); border-radius: 999px; padding: 6px 13px; font-family: var(--display, var(--sans)); font-weight: 700; font-size: 12.5px; cursor: pointer; }
+.simpan-hapus:hover { background: var(--unj-merah, #cf1e2e); color: #fff; border-color: transparent; }
