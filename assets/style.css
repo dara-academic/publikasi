@@ -3620,3 +3620,15 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 /* Beranda: rapatkan jarak hero ke bagian hook (dulu 88px terlalu tinggi) */
 body[data-grup="beranda"] .ak-utama { padding-top: 22px; }
 body[data-grup="beranda"] .hook { margin-top: 0; }
+
+/* Materi unggahan dosen yang disisipkan ke daftar pertemuan mata kuliah */
+.tl-sampul-kosong {
+  aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center;
+  color: var(--accent-dark); background: var(--pastel-blue); box-shadow: none;
+}
+.tl-sampul-kosong:hover { transform: none; box-shadow: 0 6px 18px rgba(28, 52, 80, 0.13); }
+.tl-sampul-kosong svg { width: 34px; height: 34px; }
+.tl-unggah .tl-no {
+  color: var(--accent-dark); background: var(--pastel-blue);
+  border-color: transparent; font-weight: 700; font-size: 20px;
+}

@@ -349,3 +349,94 @@
     }).catch(function () { pesan.textContent = 'Gagal mengirim. Coba lagi.'; });
   });
 })();
+
+/* ------------------------------------------------------------------
+   Sisipkan materi unggahan dosen ke daftar pertemuan halaman mata kuliah.
+   Halaman kuliah tetap statis; materi baru dari admin ditarik lewat
+   materi-mk.php dan ditempel ke <ol class="tl"> dengan tampilan sama.
+   ------------------------------------------------------------------ */
+(function () {
+  var ol = document.querySelector('main .tl');
+  if (!ol) return;
+  var cocok = location.pathname.match(/\/mata-kuliah\/([a-z0-9\-]+)\.html$/);
+  if (!cocok || cocok[1] === 'index') return;
+  var slug = cocok[1];
+
+  function ukuran(b) {
+    if (b >= 1048576) return (Math.round(b / 1048576 * 10) / 10) + ' MB';
+    if (b >= 1024) return Math.round(b / 1024) + ' KB';
+    return (b || 0) + ' B';
+  }
+  function tambahHitung(n) {
+    var sb = document.querySelectorAll('.statbar .s');
+    for (var i = 0; i < sb.length; i++) {
+      var sp = sb[i].querySelector('span');
+      if (sp && /materi siap unduh/i.test(sp.textContent || '')) {
+        var b = sb[i].querySelector('b');
+        var cur = parseInt((b.textContent || '0').replace(/\D/g, ''), 10) || 0;
+        b.textContent = String(cur + n);
+        break;
+      }
+    }
+  }
+  var IKON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v6"/><path d="M9.5 15.5 12 18l2.5-2.5"/></svg>';
+
+  fetch('../materi-mk.php?mk=' + encodeURIComponent(slug))
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      var daftar = (d && d.materi) || [];
+      if (!daftar.length) return;
+      daftar.forEach(function (it) {
+        var li = document.createElement('li');
+        li.className = 'tl-butir tl-ada tl-unggah';
+
+        var no = document.createElement('span');
+        no.className = 'tl-no';
+        no.textContent = '+';
+        li.appendChild(no);
+
+        var sampul = document.createElement('span');
+        sampul.className = 'tl-sampul tl-sampul-kosong';
+        sampul.setAttribute('aria-hidden', 'true');
+        sampul.innerHTML = IKON;
+        li.appendChild(sampul);
+
+        var teks = document.createElement('div');
+        teks.className = 'tl-teks';
+
+        var b = document.createElement('b');
+        b.textContent = it.judul || 'Materi';
+        teks.appendChild(b);
+
+        var kaj = document.createElement('span');
+        kaj.className = 'tl-kajian';
+        kaj.textContent = 'Materi tambahan dari dosen';
+        teks.appendChild(kaj);
+
+        if (it.deskripsi) {
+          var top = document.createElement('span');
+          top.className = 'tl-topik';
+          top.textContent = it.deskripsi;
+          teks.appendChild(top);
+        }
+
+        var a = document.createElement('a');
+        a.className = 'pk-unduh';
+        a.href = '../unduh.php?mk=' + encodeURIComponent(it.mk) + '&f=' + encodeURIComponent(it.berkas);
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.appendChild(document.createTextNode('Unduh PDF '));
+        var meta = document.createElement('span');
+        var mt = ukuran(it.ukuran);
+        if (it.unduh_teks) mt += ' · ' + it.unduh_teks + '× diunduh';
+        meta.textContent = mt;
+        a.appendChild(meta);
+        teks.appendChild(a);
+
+        li.appendChild(teks);
+        ol.appendChild(li);
+      });
+      tambahHitung(daftar.length);
+    })
+    .catch(function () {});
+})();

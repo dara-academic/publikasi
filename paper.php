@@ -44,7 +44,6 @@ $masuk = pengguna_sekarang();
     <nav class="nav" aria-label="Navigasi utama">
         <a href="index.html">Beranda</a>
         <a href="mengajar.html">Pengajaran</a>
-        <a href="materi.php">Materi</a>
         <a href="bedah-publikasi.html" class="active">Bedah Publikasi</a>
         <a href="penelitian.html">Penelitian</a>
         <a href="kolaborasi.html">Kolaborasi</a>
