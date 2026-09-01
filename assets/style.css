@@ -3537,3 +3537,18 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 .stat-tabel td a { color: var(--modul, var(--accent-dark)); text-decoration: none; word-break: break-all; }
 .stat-tabel td a:hover { text-decoration: underline; }
 .stat-tabel .stat-n { text-align: right; white-space: nowrap; font-family: var(--display, var(--sans)); font-weight: 700; color: var(--ink); width: 80px; }
+
+/* Bagian "Terbaru di portal" di beranda (diisi otomatis dari manifes) */
+.terbaru { max-width: 964px; margin: 0 auto; padding: 44px 26px 0; }
+.terbaru-kepala { margin-bottom: 16px; }
+.terbaru-kicker { font-family: var(--display, var(--sans)); font-weight: 700; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--modul, var(--accent-dark)); margin: 0 0 4px; }
+.terbaru-kepala h2 { margin: 0; color: var(--modul, var(--accent-dark)); }
+.terbaru-rak { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.terbaru-kartu { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border-radius: 14px; text-decoration: none; color: var(--ink); background: var(--kartu); border: 1px solid var(--line); transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease; }
+.terbaru-kartu:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(20,35,50,0.12); border-color: color-mix(in srgb, var(--modul, var(--accent-dark)) 30%, var(--line)); }
+.terbaru-tipe { align-self: flex-start; font-family: var(--display, var(--sans)); font-weight: 700; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; }
+.t-materi { background: color-mix(in srgb, var(--modul, #006569) 15%, transparent); color: var(--modul, #006569); }
+.t-paper { background: rgba(22,121,74,0.16); color: #1f9d6a; }
+.t-buku { background: rgba(207,30,46,0.15); color: #e0576a; }
+.terbaru-kartu b { font-family: var(--display, var(--sans)); font-weight: 800; font-size: 15px; line-height: 1.3; letter-spacing: -0.01em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.terbaru-ket { font-size: 12.5px; color: var(--ink-soft); }
