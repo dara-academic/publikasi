@@ -11,11 +11,16 @@ require __DIR__ . '/sesi.php';
 
 $mk = (string) ($_GET['mk'] ?? '');
 $f  = basename((string) ($_GET['f'] ?? ''));
-$path = __DIR__ . '/unggahan/' . $mk . '/' . $f;
 
-if (!preg_match('/^[a-z0-9\-]+$/', $mk)
-    || !preg_match('/^[a-zA-Z0-9._\-]+\.pdf$/', $f)
-    || !is_file($path)) {
+/* Dua tempat sah: materi unggahan admin, dan materi kuliah lama. */
+$path = '';
+if (preg_match('/^[a-z0-9\-]+$/', $mk) && preg_match('/^[a-zA-Z0-9._\-]+\.pdf$/', $f)) {
+    foreach ([__DIR__ . '/unggahan/' . $mk . '/' . $f,
+              __DIR__ . '/assets/materi/124/' . $mk . '/' . $f] as $cand) {
+        if (is_file($cand)) { $path = $cand; break; }
+    }
+}
+if ($path === '') {
     http_response_code(404);
     echo 'Berkas tidak ditemukan.';
     exit;
