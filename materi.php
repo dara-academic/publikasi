@@ -48,7 +48,7 @@ $masuk = pengguna_sekarang();
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 </head>
-<body class="ak" data-grup="mengajar">
+<body class="ak" data-grup="materi">
 <a class="skip-link" href="#konten">Lewati ke konten utama</a>
 <header class="ak-bar">
   <div class="ak-bar-isi">
@@ -56,7 +56,8 @@ $masuk = pengguna_sekarang();
     <button class="nav-toggle" aria-label="Buka menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <nav class="nav" aria-label="Navigasi utama">
         <a href="index.html">Beranda</a>
-        <a href="mengajar.html" class="active">Pengajaran</a>
+        <a href="mengajar.html">Pengajaran</a>
+        <a href="materi.php" class="active">Materi</a>
         <a href="bedah-publikasi.html">Bedah Publikasi</a>
         <a href="penelitian.html">Penelitian</a>
         <a href="kolaborasi.html">Kolaborasi</a>
