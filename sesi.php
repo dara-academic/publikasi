@@ -23,6 +23,7 @@ const BERKAS_ANTREAN   = __DIR__ . '/data/pendaftaran.json';
 const BERKAS_MATERI    = __DIR__ . '/data/materi.json';
 const BERKAS_PAPER     = __DIR__ . '/data/paper.json';
 const BERKAS_BUKU      = __DIR__ . '/data/buku.json';
+const BERKAS_STATISTIK = __DIR__ . '/data/statistik.json';
 
 /* ================= sesi ================= */
 
@@ -340,6 +341,38 @@ function hapus_buku(int $id): ?array {
         json_encode(array_values($semua), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
         LOCK_EX);
     return $baris;
+}
+
+/* ================= statistik (baca, unduh, kunjungan) ================= */
+
+/* Penghitung sederhana berbasis JSON. Kunci berupa string, misalnya
+   "unduh:pengantar-manajemen/berkas.pdf", "buka:paper:3", atau
+   "lihat:/panduan-jurnal.html". Baca-tulis-ulang seluruh berkas; pada
+   skala portal ini itu cukup, dan LOCK_EX menahan tulis bersamaan. Sesekali
+   ada increment yang lolos saat trafik tinggi, dan itu tidak masalah untuk
+   angka yang sifatnya indikatif. */
+function baca_statistik(): array {
+    if (!is_file(BERKAS_STATISTIK)) return [];
+    return json_decode((string) file_get_contents(BERKAS_STATISTIK), true) ?: [];
+}
+
+function catat_statistik(string $kunci): int {
+    $kunci = substr($kunci, 0, 200);
+    $s = baca_statistik();
+    $s[$kunci] = (int) ($s[$kunci] ?? 0) + 1;
+    file_put_contents(BERKAS_STATISTIK, json_encode($s, JSON_UNESCAPED_UNICODE), LOCK_EX);
+    return $s[$kunci];
+}
+
+function nilai_statistik(string $kunci): int {
+    return (int) (baca_statistik()[$kunci] ?? 0);
+}
+
+/* Ubah angka jadi bentuk ringkas: 1200 -> "1,2rb". */
+function angka_ringkas(int $n): string {
+    if ($n >= 1000000) return rtrim(rtrim(number_format($n / 1000000, 1, ',', ''), '0'), ',') . 'jt';
+    if ($n >= 1000)    return rtrim(rtrim(number_format($n / 1000, 1, ',', ''), '0'), ',') . 'rb';
+    return (string) $n;
 }
 
 /* ================= pembatas percobaan ================= */

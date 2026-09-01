@@ -18,6 +18,7 @@ function badge_kelas(string $indeks): string {
 }
 
 $paper = array_reverse(muat_paper());
+$stat  = baca_statistik();
 $jml   = count($paper);
 $masuk = pengguna_sekarang();
 ?>
@@ -74,7 +75,7 @@ $masuk = pengguna_sekarang();
     <section class="hal-bagian">
       <div class="karya-rak">
         <?php foreach ($paper as $p): ?>
-          <a class="karya-kartu" href="<?= ee($p['tautan']) ?>" target="_blank" rel="noopener noreferrer">
+          <a class="karya-kartu" href="buka.php?t=paper&amp;id=<?= (int) $p['id'] ?>" target="_blank" rel="noopener noreferrer">
             <span class="karya-sampul">
               <?php if (!empty($p['sampul'])): ?>
                 <img src="unggahan/paper/<?= ee($p['sampul']) ?>" alt="Sampul <?= ee($p['jurnal']) ?>" loading="lazy" decoding="async">
@@ -85,7 +86,7 @@ $masuk = pengguna_sekarang();
             </span>
             <span class="karya-teks">
               <b><?= ee($p['judul']) ?></b>
-              <span class="karya-venue"><?= ee($p['jurnal']) ?> &middot; <?= ee($p['tahun']) ?></span>
+              <span class="karya-venue"><?= ee($p['jurnal']) ?> &middot; <?= ee($p['tahun']) ?><?php $bk = (int) ($stat['buka:paper:' . (int) $p['id']] ?? 0); if ($bk > 0): ?> &middot; <?= angka_ringkas($bk) ?>&times; dibuka<?php endif; ?></span>
               <?php if (!empty($p['ringkasan'])): ?><span class="karya-venue"><?= ee($p['ringkasan']) ?></span><?php endif; ?>
             </span>
           </a>

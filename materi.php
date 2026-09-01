@@ -27,6 +27,7 @@ function ukuran_manusia(int $b): string {
 }
 
 $materi = muat_materi();
+$stat = baca_statistik();
 $per_mk = [];
 foreach (array_reverse($materi) as $m) {
     if (array_key_exists($m['mk'], MK_NAMA)) $per_mk[$m['mk']][] = $m;
@@ -91,14 +92,14 @@ $masuk = pengguna_sekarang();
         <ul class="unduh-daftar">
           <?php foreach ($per_mk[$slug] as $m): ?>
             <li>
-              <a class="unduh-item" href="unggahan/<?= ee($m['mk']) ?>/<?= ee($m['berkas']) ?>" target="_blank" rel="noopener">
+              <a class="unduh-item" href="unduh.php?mk=<?= ee($m['mk']) ?>&amp;f=<?= ee($m['berkas']) ?>" target="_blank" rel="noopener">
                 <span class="unduh-ikon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 12v6"/><path d="M9.5 15.5 12 18l2.5-2.5"/></svg>
                 </span>
                 <span class="unduh-teks">
                   <b><?= ee($m['judul']) ?></b>
                   <?php if (!empty($m['deskripsi'])): ?><span class="unduh-ket"><?= ee($m['deskripsi']) ?></span><?php endif; ?>
-                  <span class="unduh-meta">PDF &middot; <?= ukuran_manusia((int) ($m['ukuran'] ?? 0)) ?> &middot; <?= ee($m['tanggal']) ?></span>
+                  <span class="unduh-meta">PDF &middot; <?= ukuran_manusia((int) ($m['ukuran'] ?? 0)) ?> &middot; <?= ee($m['tanggal']) ?><?php $u = (int) ($stat['unduh:' . $m['mk'] . '/' . $m['berkas']] ?? 0); if ($u > 0): ?> &middot; <?= angka_ringkas($u) ?>&times; diunduh<?php endif; ?></span>
                 </span>
                 <span class="unduh-aksi">Unduh</span>
               </a>

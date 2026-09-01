@@ -257,3 +257,16 @@
   }, { threshold: 0.4 });
   angka.forEach(function (el) { io.observe(el); });
 })();
+
+/* Ketukan kunjungan halaman: tanpa cookie, tanpa data pribadi, hanya
+   menambah hitungan per path di server. */
+(function () {
+  try {
+    var p = location.pathname || '/';
+    if (navigator.sendBeacon) {
+      var fd = new FormData();
+      fd.append('p', p);
+      navigator.sendBeacon('/hit.php', fd);
+    }
+  } catch (e) {}
+})();

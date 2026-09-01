@@ -3528,3 +3528,12 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 /* Header tabel banding dan pemisah remah agar terbaca di gelap */
 :root[data-theme="dark"] table.banding thead th { background: #1b2530; color: #cfdae8; }
 :root[data-theme="dark"] .remah-pisah { color: #6b7887; }
+
+/* Statistik admin */
+.stat-ringkas { margin-bottom: 22px; }
+.stat-tabel { width: 100%; border-collapse: collapse; }
+.stat-tabel td { padding: 9px 4px; border-bottom: 1px solid var(--line); font-size: 14px; vertical-align: top; }
+.stat-tabel tr:last-child td { border-bottom: 0; }
+.stat-tabel td a { color: var(--modul, var(--accent-dark)); text-decoration: none; word-break: break-all; }
+.stat-tabel td a:hover { text-decoration: underline; }
+.stat-tabel .stat-n { text-align: right; white-space: nowrap; font-family: var(--display, var(--sans)); font-weight: 700; color: var(--ink); width: 80px; }

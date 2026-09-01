@@ -11,6 +11,7 @@ require __DIR__ . '/sesi.php';
 function ee($s): string { return htmlspecialchars((string) $s, ENT_QUOTES); }
 
 $buku  = array_reverse(muat_buku());
+$stat  = baca_statistik();
 $jml   = count($buku);
 $masuk = pengguna_sekarang();
 ?>
@@ -68,9 +69,9 @@ $masuk = pengguna_sekarang();
       <div class="karya-rak">
         <?php foreach ($buku as $b): ?>
           <?php
-            $tag = 'a';
-            $href = !empty($b['tautan']) ? ' href="' . ee($b['tautan']) . '" target="_blank" rel="noopener noreferrer"' : '';
-            if (empty($b['tautan'])) $tag = 'div';
+            $tag  = !empty($b['tautan']) ? 'a' : 'div';
+            $href = !empty($b['tautan']) ? ' href="buka.php?t=buku&amp;id=' . (int) $b['id'] . '" target="_blank" rel="noopener noreferrer"' : '';
+            $bk   = (int) ($stat['buka:buku:' . (int) $b['id']] ?? 0);
           ?>
           <<?= $tag ?> class="karya-kartu"<?= $href ?>>
             <span class="karya-sampul">
@@ -83,7 +84,7 @@ $masuk = pengguna_sekarang();
             </span>
             <span class="karya-teks">
               <b><?= ee($b['judul']) ?></b>
-              <span class="karya-venue"><?= $b['penerbit'] ? ee($b['penerbit']) . ' &middot; ' : '' ?><?= ee($b['tahun']) ?></span>
+              <span class="karya-venue"><?= $b['penerbit'] ? ee($b['penerbit']) . ' &middot; ' : '' ?><?= ee($b['tahun']) ?><?php if ($bk > 0): ?> &middot; <?= angka_ringkas($bk) ?>&times; dibuka<?php endif; ?></span>
               <?php if (!empty($b['deskripsi'])): ?><span class="karya-venue"><?= ee($b['deskripsi']) ?></span><?php endif; ?>
             </span>
           </<?= $tag ?>>

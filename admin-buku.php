@@ -156,6 +156,7 @@ $jml  = count($buku);
   <a href="admin-materi.php">Materi kuliah</a>
   <a href="admin-bedah.php">Bedah paper</a>
   <a href="admin-buku.php" class="active">Buku</a>
+  <a href="admin-statistik.php">Statistik</a>
 </nav>
 
 <main class="ak-utama admin-utama" id="konten">

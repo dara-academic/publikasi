@@ -22,6 +22,8 @@ $rekap_b = muat_bimbingan()['mahasiswa'] ?? [];
 $materi  = muat_materi();
 $paper   = muat_paper();
 $buku    = muat_buku();
+$stat    = baca_statistik();
+$total_lihat = 0; foreach ($stat as $k => $v) if (strncmp($k, 'lihat:', 6) === 0) $total_lihat += (int) $v;
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -88,6 +90,14 @@ $buku    = muat_buku();
       <b>Buku</b>
       <span class="admin-pintu-ket">Tambahkan buku Dara yang sudah terbit dan kelola daftarnya.</span>
       <span class="admin-pintu-tanda"><?= count($buku) ?> buku terdaftar</span>
+      <span class="admin-pintu-panah" aria-hidden="true">&rarr;</span>
+    </a>
+
+    <a class="admin-pintu" href="admin-statistik.php">
+      <span class="admin-pintu-ikon" aria-hidden="true">&#128202;</span>
+      <b>Statistik</b>
+      <span class="admin-pintu-ket">Kunjungan, unduhan, dan buka paper atau buku, dihitung sendiri di server.</span>
+      <span class="admin-pintu-tanda"><?= number_format($total_lihat, 0, ',', '.') ?> kunjungan</span>
       <span class="admin-pintu-panah" aria-hidden="true">&rarr;</span>
     </a>
 

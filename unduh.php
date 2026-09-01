@@ -1,0 +1,31 @@
+<?php
+/* ------------------------------------------------------------------
+   Penyalur unduhan materi sekaligus penghitungnya.
+
+   Materi ditautkan lewat berkas ini, bukan langsung ke PDF-nya, supaya
+   tiap unduhan bisa dihitung. Sesudah dicatat, berkas PDF disajikan apa
+   adanya. Nama mata kuliah dan berkas disaring ketat agar tidak bisa
+   dipakai menembus keluar folder unggahan.
+   ------------------------------------------------------------------ */
+require __DIR__ . '/sesi.php';
+
+$mk = (string) ($_GET['mk'] ?? '');
+$f  = basename((string) ($_GET['f'] ?? ''));
+$path = __DIR__ . '/unggahan/' . $mk . '/' . $f;
+
+if (!preg_match('/^[a-z0-9\-]+$/', $mk)
+    || !preg_match('/^[a-zA-Z0-9._\-]+\.pdf$/', $f)
+    || !is_file($path)) {
+    http_response_code(404);
+    echo 'Berkas tidak ditemukan.';
+    exit;
+}
+
+catat_statistik('unduh:' . $mk . '/' . $f);
+
+header('Content-Type: application/pdf');
+header('Content-Disposition: inline; filename="' . $f . '"');
+header('Content-Length: ' . filesize($path));
+header('Cache-Control: public, max-age=86400');
+readfile($path);
+exit;
