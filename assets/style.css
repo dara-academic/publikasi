@@ -3581,3 +3581,38 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 .simpan-item a:hover b { color: var(--modul, var(--accent-dark)); }
 .simpan-hapus { flex-shrink: 0; background: none; border: 1px solid var(--line); color: var(--unj-merah, #cf1e2e); border-radius: 999px; padding: 6px 13px; font-family: var(--display, var(--sans)); font-weight: 700; font-size: 12.5px; cursor: pointer; }
 .simpan-hapus:hover { background: var(--unj-merah, #cf1e2e); color: #fff; border-color: transparent; }
+
+/* Tanya jawab (komentar) */
+.komentar-wrap { margin-top: 6px; padding-top: 28px; border-top: 1px solid var(--line); }
+.komentar-wrap h2 { margin: 0 0 4px; }
+.komentar-sub { font-size: 14.5px; color: var(--ink-soft); margin: 0 0 18px; max-width: 44em; }
+.komentar-form { display: grid; gap: 10px; max-width: 560px; margin-bottom: 26px; }
+.komentar-form textarea.masuk-input { resize: vertical; min-height: 84px; font-family: inherit; }
+.komentar-form .kf-web { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.komentar-form .masuk-tombol { justify-self: start; }
+.kf-pesan { font-size: 13.5px; color: var(--modul, var(--accent-dark)); margin: 2px 0 0; min-height: 1em; }
+.komentar-daftar { display: grid; gap: 14px; max-width: 640px; }
+.komentar-kosong { color: var(--ink-soft); font-size: 14px; }
+.komentar-item { padding: 15px 17px; border: 1px solid var(--line); border-radius: 13px; background: var(--kartu); }
+.komentar-kepala { display: flex; align-items: baseline; gap: 10px; margin: 0 0 5px; }
+.komentar-kepala b { font-family: var(--display, var(--sans)); font-weight: 700; font-size: 14.5px; }
+.komentar-kepala span { font-size: 12px; color: var(--ink-muted); }
+.komentar-isi { font-size: 14.5px; line-height: 1.6; color: var(--ink); margin: 0; }
+.komentar-balas { margin: 12px 0 0; padding: 12px 14px; border-radius: 11px; background: var(--modul-tipis, var(--pastel-blue)); }
+.komentar-balas b { display: block; font-family: var(--display, var(--sans)); font-weight: 700; font-size: 12.5px; color: var(--modul, var(--accent-dark)); margin-bottom: 3px; }
+.komentar-balas p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink); }
+
+/* Moderasi tanya jawab (admin) */
+.mod-item { padding: 15px 17px; border: 1px solid var(--line); border-radius: 13px; background: var(--kartu); margin-bottom: 12px; }
+.mod-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px 12px; margin: 0 0 6px; font-size: 12.5px; }
+.mod-meta b { font-family: var(--display, var(--sans)); font-weight: 700; font-size: 14.5px; color: var(--ink); }
+.mod-meta span { color: var(--ink-muted); }
+.mod-meta a { color: var(--modul, var(--accent-dark)); text-decoration: none; word-break: break-all; }
+.mod-isi { font-size: 14.5px; line-height: 1.6; margin: 0 0 10px; color: var(--ink); }
+.mod-balas-form { display: grid; gap: 8px; }
+.mod-balas-form textarea.masuk-input { resize: vertical; font-family: inherit; min-height: 56px; }
+.mod-aksi { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.mod-aksi .masuk-tombol { padding: 9px 16px; font-size: 13.5px; }
+.mod-setuju { background: none; border: 1px solid var(--modul, var(--accent-dark)); color: var(--modul, var(--accent-dark)); border-radius: 999px; padding: 8px 15px; font-family: var(--display, var(--sans)); font-weight: 700; font-size: 13px; cursor: pointer; }
+.mod-setuju:hover { background: var(--modul, var(--accent-dark)); color: #fff; }
+.mod-jml { font-family: var(--display, var(--sans)); font-size: 14px; color: var(--ink-muted); font-weight: 700; }

@@ -176,6 +176,7 @@ $jml   = count($paper);
   <a href="admin-bedah.php" class="active">Bedah paper</a>
     <a href="admin-buku.php">Buku</a>
     <a href="admin-statistik.php">Statistik</a>
+  <a href="admin-komentar.php">Tanya jawab</a>
 </nav>
 
 <main class="ak-utama admin-utama" id="konten">

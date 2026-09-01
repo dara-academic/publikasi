@@ -24,6 +24,7 @@ $paper   = muat_paper();
 $buku    = muat_buku();
 $stat    = baca_statistik();
 $total_lihat = 0; foreach ($stat as $k => $v) if (strncmp($k, 'lihat:', 6) === 0) $total_lihat += (int) $v;
+$komentar_pending = count(array_filter(komentar_semua(), fn($k) => ($k['status'] ?? '') !== 'setuju'));
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -98,6 +99,14 @@ $total_lihat = 0; foreach ($stat as $k => $v) if (strncmp($k, 'lihat:', 6) === 0
       <b>Statistik</b>
       <span class="admin-pintu-ket">Kunjungan, unduhan, dan buka paper atau buku, dihitung sendiri di server.</span>
       <span class="admin-pintu-tanda"><?= number_format($total_lihat, 0, ',', '.') ?> kunjungan</span>
+      <span class="admin-pintu-panah" aria-hidden="true">&rarr;</span>
+    </a>
+
+    <a class="admin-pintu" href="admin-komentar.php">
+      <span class="admin-pintu-ikon" aria-hidden="true">&#128172;</span>
+      <b>Tanya jawab</b>
+      <span class="admin-pintu-ket">Setujui, balas, atau hapus pertanyaan dari pengunjung.</span>
+      <span class="admin-pintu-tanda"><?= (int) $komentar_pending ?> menunggu ditinjau</span>
       <span class="admin-pintu-panah" aria-hidden="true">&rarr;</span>
     </a>
 

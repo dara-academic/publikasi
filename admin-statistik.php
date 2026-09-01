@@ -78,6 +78,7 @@ $kosong = ($total_lihat + $total_unduh + $total_buka) === 0;
   <a href="admin-bedah.php">Bedah paper</a>
   <a href="admin-buku.php">Buku</a>
   <a href="admin-statistik.php" class="active">Statistik</a>
+  <a href="admin-komentar.php">Tanya jawab</a>
 </nav>
 
 <main class="ak-utama admin-utama" id="konten">

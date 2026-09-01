@@ -24,6 +24,7 @@ const BERKAS_MATERI    = __DIR__ . '/data/materi.json';
 const BERKAS_PAPER     = __DIR__ . '/data/paper.json';
 const BERKAS_BUKU      = __DIR__ . '/data/buku.json';
 const BERKAS_STATISTIK = __DIR__ . '/data/statistik.json';
+const BERKAS_KOMENTAR  = __DIR__ . '/data/komentar.json';
 
 /* ================= sesi ================= */
 
@@ -373,6 +374,56 @@ function angka_ringkas(int $n): string {
     if ($n >= 1000000) return rtrim(rtrim(number_format($n / 1000000, 1, ',', ''), '0'), ',') . 'jt';
     if ($n >= 1000)    return rtrim(rtrim(number_format($n / 1000, 1, ',', ''), '0'), ',') . 'rb';
     return (string) $n;
+}
+
+/* ================= tanya jawab (komentar) ================= */
+
+/* Komentar disimpan di satu berkas JSON dengan nomor naik yang stabil,
+   supaya setujui/hapus/balas menunjuk komentar yang tepat meski daftar
+   berubah. Semua komentar berstatus pending sampai admin menyetujui, jadi
+   tidak ada yang tampil ke publik tanpa ditinjau. */
+function _komentar_raw(): array {
+    if (!is_file(BERKAS_KOMENTAR)) return ['berikutnya' => 1, 'daftar' => []];
+    $d = json_decode((string) file_get_contents(BERKAS_KOMENTAR), true);
+    if (!is_array($d)) return ['berikutnya' => 1, 'daftar' => []];
+    return ['berikutnya' => (int) ($d['berikutnya'] ?? 1), 'daftar' => $d['daftar'] ?? []];
+}
+function _komentar_simpan(array $d): void {
+    file_put_contents(BERKAS_KOMENTAR,
+        json_encode($d, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
+}
+function tambah_komentar(string $hal, string $nama, string $isi): void {
+    $d = _komentar_raw();
+    $no = (int) $d['berikutnya'];
+    $d['berikutnya'] = $no + 1;
+    $d['daftar'][] = [
+        'no' => $no, 'hal' => $hal, 'nama' => $nama, 'isi' => $isi,
+        'waktu' => date('Y-m-d H:i'), 'status' => 'pending', 'balasan' => '',
+    ];
+    _komentar_simpan($d);
+}
+function komentar_disetujui(string $hal): array {
+    return array_values(array_filter(_komentar_raw()['daftar'],
+        fn($k) => ($k['hal'] ?? '') === $hal && ($k['status'] ?? '') === 'setuju'));
+}
+function komentar_semua(): array { return _komentar_raw()['daftar']; }
+function setujui_komentar(int $no): void {
+    $d = _komentar_raw();
+    foreach ($d['daftar'] as $i => $k) if ((int) $k['no'] === $no) $d['daftar'][$i]['status'] = 'setuju';
+    _komentar_simpan($d);
+}
+function balas_komentar(int $no, string $teks): void {
+    $d = _komentar_raw();
+    foreach ($d['daftar'] as $i => $k) if ((int) $k['no'] === $no) {
+        $d['daftar'][$i]['balasan'] = $teks;
+        $d['daftar'][$i]['status'] = 'setuju';
+    }
+    _komentar_simpan($d);
+}
+function hapus_komentar(int $no): void {
+    $d = _komentar_raw();
+    $d['daftar'] = array_values(array_filter($d['daftar'], fn($k) => (int) $k['no'] !== $no));
+    _komentar_simpan($d);
 }
 
 /* ================= pembatas percobaan ================= */

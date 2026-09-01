@@ -315,3 +315,37 @@
   sync();
   document.body.appendChild(btn);
 })();
+
+/* Tanya jawab: memuat komentar yang disetujui dan mengirim pertanyaan baru. */
+(function () {
+  var wrap = document.querySelector('.komentar-wrap');
+  if (!wrap) return;
+  var hal = location.pathname;
+  var daftar = wrap.querySelector('.komentar-daftar');
+  var form = wrap.querySelector('.komentar-form');
+  var pesan = wrap.querySelector('.kf-pesan');
+  var esc = function (x) { var t = document.createElement('div'); t.textContent = x == null ? '' : x; return t.innerHTML; };
+  var token = '';
+  fetch('komentar.php?hal=' + encodeURIComponent(hal)).then(function (r) { return r.json(); }).then(function (d) {
+    token = d.token || '';
+    if (!d.komentar || !d.komentar.length) { daftar.innerHTML = '<p class="komentar-kosong">Belum ada pertanyaan. Jadilah yang pertama.</p>'; return; }
+    daftar.innerHTML = d.komentar.map(function (k) {
+      var bal = k.balasan ? '<div class="komentar-balas"><b>Dr. Dara menjawab</b><p>' + esc(k.balasan) + '</p></div>' : '';
+      return '<div class="komentar-item"><p class="komentar-kepala"><b>' + esc(k.nama) + '</b><span>' + esc(k.waktu) + '</span></p><p class="komentar-isi">' + esc(k.isi) + '</p>' + bal + '</div>';
+    }).join('');
+  }).catch(function () {});
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var fd = new FormData();
+    fd.append('hal', hal);
+    fd.append('nama', form.querySelector('.kf-nama').value);
+    fd.append('isi', form.querySelector('.kf-isi').value);
+    fd.append('web', form.querySelector('.kf-web').value);
+    fd.append('csrf', token);
+    pesan.textContent = 'Mengirim...';
+    fetch('komentar.php', { method: 'POST', body: fd }).then(function (r) { return r.json(); }).then(function (d) {
+      pesan.textContent = d.pesan || (d.ok ? 'Terkirim.' : 'Gagal mengirim.');
+      if (d.ok) { form.querySelector('.kf-nama').value = ''; form.querySelector('.kf-isi').value = ''; }
+    }).catch(function () { pesan.textContent = 'Gagal mengirim. Coba lagi.'; });
+  });
+})();
