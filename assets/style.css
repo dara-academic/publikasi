@@ -3616,3 +3616,7 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
 .mod-setuju { background: none; border: 1px solid var(--modul, var(--accent-dark)); color: var(--modul, var(--accent-dark)); border-radius: 999px; padding: 8px 15px; font-family: var(--display, var(--sans)); font-weight: 700; font-size: 13px; cursor: pointer; }
 .mod-setuju:hover { background: var(--modul, var(--accent-dark)); color: #fff; }
 .mod-jml { font-family: var(--display, var(--sans)); font-size: 14px; color: var(--ink-muted); font-weight: 700; }
+
+/* Beranda: rapatkan jarak hero ke bagian hook (dulu 88px terlalu tinggi) */
+body[data-grup="beranda"] .ak-utama { padding-top: 22px; }
+body[data-grup="beranda"] .hook { margin-top: 0; }
