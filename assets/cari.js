@@ -367,6 +367,7 @@
   var SEM_DASAR = '124';
 
   function el(tag, kelas) { var e = document.createElement(tag); if (kelas) e.className = kelas; return e; }
+  function labelSem(s) { return s === '124' ? 'Semester lalu' : (s === '125' ? 'Semester ini' : 'Semester ' + s); }
   function ukuran(b) {
     if (b >= 1048576) return (Math.round(b / 1048576 * 10) / 10) + ' MB';
     if (b >= 1024) return Math.round(b / 1024) + ' KB';
@@ -466,7 +467,7 @@
         }
         var t = el('button', 'sem-tab'); t.type = 'button';
         t.setAttribute('role', 'tab'); t.setAttribute('data-sem', s);
-        t.textContent = 'Semester ' + s;
+        t.textContent = labelSem(s);
         bar.appendChild(t);
       });
 
@@ -491,4 +492,71 @@
       pilih(aktif);
     })
     .catch(function () {});
+})();
+
+/* ------------------------------------------------------------------
+   Tab semester di halaman Pengajaran (daftar mata kuliah).
+
+   Kartu mata kuliah yang tampil sekarang dianggap Semester lalu. Tab
+   Semester ini menampilkan mata kuliah yang sudah punya materi semester
+   berjalan (125), jumlahnya ditarik dari materi-ringkas.php.
+   ------------------------------------------------------------------ */
+(function () {
+  if (!/\/mengajar\.html$/.test(location.pathname)) return;
+  var grid = document.querySelector('.kursus-rak');
+  if (!grid) return;
+
+  function el(tag, kelas) { var e = document.createElement(tag); if (kelas) e.className = kelas; return e; }
+  function labelSem(s) { return s === '124' ? 'Semester lalu' : (s === '125' ? 'Semester ini' : 'Semester ' + s); }
+
+  fetch('materi-ringkas.php').then(function (r) { return r.json(); }).then(function (counts) {
+    counts = counts || {};
+    var induk = grid.parentNode;
+    var bar = el('div', 'sem-tabs'); bar.setAttribute('role', 'tablist');
+
+    var pLalu = el('div', 'sem-panel'); pLalu.setAttribute('data-sem', '124');
+    induk.insertBefore(pLalu, grid); pLalu.appendChild(grid);
+
+    var pIni = el('div', 'sem-panel'); pIni.setAttribute('data-sem', '125'); pIni.hidden = true;
+    var gridIni = el('div', 'materi-rak kursus-rak');
+    var ada = false;
+    [].forEach.call(grid.querySelectorAll('.materi-kartu'), function (card) {
+      var href = card.getAttribute('href') || '';
+      var m = href.match(/mata-kuliah\/([a-z0-9\-]+)\.html/);
+      if (!m) return;
+      var n = (counts[m[1]] && counts[m[1]]['125']) || 0;
+      if (n > 0) {
+        var c = card.cloneNode(true);
+        var jml = c.querySelector('.materi-jml');
+        if (jml) jml.textContent = n + ' materi';
+        gridIni.appendChild(c);
+        ada = true;
+      }
+    });
+    if (!ada) {
+      var kos = el('p', 'hal-sub');
+      kos.textContent = 'Materi semester ini diunggah bertahap tiap minggu. Buka mata kuliahnya untuk melihat yang sudah tersedia.';
+      pIni.appendChild(kos);
+    }
+    pIni.appendChild(gridIni);
+
+    induk.insertBefore(bar, pLalu);
+    induk.insertBefore(pIni, pLalu.nextSibling);
+
+    ['124', '125'].forEach(function (s) {
+      var t = el('button', 'sem-tab'); t.type = 'button'; t.setAttribute('data-sem', s);
+      t.textContent = labelSem(s); bar.appendChild(t);
+    });
+    function pilih(s) {
+      pLalu.hidden = (s !== '124'); pIni.hidden = (s !== '125');
+      [].forEach.call(bar.querySelectorAll('.sem-tab'), function (b) {
+        var on = b.getAttribute('data-sem') === s;
+        b.classList.toggle('aktif', on); b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+    }
+    bar.addEventListener('click', function (e) {
+      var t = e.target.closest('.sem-tab'); if (t) pilih(t.getAttribute('data-sem'));
+    });
+    pilih('124');
+  }).catch(function () {});
 })();

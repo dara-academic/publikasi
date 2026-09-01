@@ -13,3 +13,8 @@ desktop.ini
 *.bak.jpg
 *.bak.css
 data/
+
+# materi PDF & sampul yang diunggah dosen: hidup di server, jangan
+# sampai tersapu git clean saat deploy. Hanya .htaccess yang ikut repo.
+unggahan/*
+!unggahan/.htaccess
