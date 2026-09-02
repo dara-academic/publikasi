@@ -28,7 +28,7 @@ foreach (muat_materi() as $m) {
         'deskripsi' => (string) ($m['deskripsi'] ?? ''),
         'berkas'    => (string) ($m['berkas'] ?? ''),
         'mk'        => (string) ($m['mk'] ?? ''),
-        'semester'  => (string) ($m['semester'] ?? '125'),
+        'semester'  => (string) ($m['semester'] ?? SEM_INI),
         'pertemuan' => (int) ($m['pertemuan'] ?? 0),
         'sampul'    => $sampul !== '' ? 'unggahan/' . $m['mk'] . '/' . $sampul : '',
         'ukuran'    => (int) ($m['ukuran'] ?? 0),
@@ -40,4 +40,9 @@ foreach (muat_materi() as $m) {
 /* Materi terbaru di atas. */
 $keluar = array_reverse($keluar);
 
-echo json_encode(['mk' => $mk, 'materi' => $keluar], JSON_UNESCAPED_UNICODE);
+echo json_encode([
+    'mk'       => $mk,
+    'sem_ini'  => SEM_INI,
+    'sem_lalu' => SEM_LALU,
+    'materi'   => $keluar,
+], JSON_UNESCAPED_UNICODE);

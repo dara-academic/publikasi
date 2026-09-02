@@ -15,9 +15,13 @@ $out = [];
 foreach (muat_materi() as $m) {
     $mk = (string) ($m['mk'] ?? '');
     if ($mk === '') continue;
-    $sem = (string) ($m['semester'] ?? '125');
+    $sem = (string) ($m['semester'] ?? SEM_INI);
     if (!isset($out[$mk])) $out[$mk] = [];
     $out[$mk][$sem] = ($out[$mk][$sem] ?? 0) + 1;
 }
 
-echo json_encode($out, JSON_UNESCAPED_UNICODE);
+echo json_encode([
+    'sem_ini'  => SEM_INI,
+    'sem_lalu' => SEM_LALU,
+    'kuliah'   => (object) $out,
+], JSON_UNESCAPED_UNICODE);

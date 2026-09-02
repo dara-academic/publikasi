@@ -32,7 +32,6 @@ const MK = [
 const MAKS_UKURAN = 31457280; /* 30 MB */
 const MAKS_SAMPUL = 5242880;  /* 5 MB */
 const DIR_UNGGAH  = __DIR__ . '/unggahan';
-const SEMESTER = ['125', '124'];
 const SAMPUL_MIME = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
 
 function ee($s): string { return htmlspecialchars((string) $s, ENT_QUOTES); }
@@ -76,8 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mk        = (string) ($_POST['mk'] ?? '');
             $judul     = trim(preg_replace('/\s+/', ' ', strip_tags((string) ($_POST['judul'] ?? ''))));
             $deskripsi = trim(preg_replace('/\s+/', ' ', strip_tags((string) ($_POST['deskripsi'] ?? ''))));
-            $semester  = (string) ($_POST['semester'] ?? '125');
-            if (!in_array($semester, SEMESTER, true)) $semester = '125';
+            $semester  = (string) ($_POST['semester'] ?? SEM_INI);
+            if (!in_array($semester, semester_pilihan(), true)) $semester = SEM_INI;
             $pertemuan = (int) ($_POST['pertemuan'] ?? 0);
             if ($pertemuan < 0 || $pertemuan > 40) $pertemuan = 0;
             $f         = $_FILES['berkas'] ?? null;
@@ -232,8 +231,8 @@ $jml = count($materi);
         <div>
           <label class="masuk-label" for="semester">Semester</label>
           <select class="masuk-input" id="semester" name="semester" required>
-            <?php foreach (SEMESTER as $s): ?>
-              <option value="<?= ee($s) ?>"><?= ee($s) ?></option>
+            <?php foreach (semester_pilihan() as $s): ?>
+              <option value="<?= ee($s) ?>"><?= ee($s . ' — ' . label_semester($s)) ?></option>
             <?php endforeach; ?>
           </select>
         </div>

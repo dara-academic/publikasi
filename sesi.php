@@ -26,6 +26,36 @@ const BERKAS_BUKU      = __DIR__ . '/data/buku.json';
 const BERKAS_STATISTIK = __DIR__ . '/data/statistik.json';
 const BERKAS_KOMENTAR  = __DIR__ . '/data/komentar.json';
 
+/* ------------------------------------------------------------------
+   Semester berjalan. SATU tempat acuan untuk seluruh situs: pilihan di
+   form unggah, tab di halaman mata kuliah, dan labelnya. Tiap ganti
+   semester cukup ubah dua nilai ini; sisanya ikut sendiri.
+   SEM_INI  = semester berjalan (materi diunggah bertahap).
+   SEM_LALU = semester sebelumnya (materinya sudah lengkap/statis).
+   ------------------------------------------------------------------ */
+const SEM_INI  = '125';
+const SEM_LALU = '124';
+
+function semester_pilihan(): array { return [SEM_INI, SEM_LALU]; }
+function label_semester(string $kode): string {
+    if ($kode === SEM_INI)  return 'Semester ini';
+    if ($kode === SEM_LALU) return 'Semester lalu';
+    return 'Semester ' . $kode;
+}
+
+/* Nama tampil tiap mata kuliah, satu acuan untuk seluruh situs. */
+function mk_nama(): array {
+    return [
+        'pengantar-manajemen'           => 'Pengantar Manajemen',
+        'pengadaan-sdm-aparatur'        => 'Pengadaan SDM Aparatur',
+        'kompensasi-perlindungan-sdm'   => 'Kompensasi dan Perlindungan SDM Aparatur',
+        'pelatihan-dan-pengembangan'    => 'Pelatihan dan Pengembangan',
+        'manajemen-kinerja'             => 'Manajemen Kinerja',
+        'simulasi-bisnis'               => 'Simulasi Bisnis',
+        'management-information-system' => 'Management Information System',
+    ];
+}
+
 /* ================= sesi ================= */
 
 function mulai_sesi(): void {
