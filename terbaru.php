@@ -8,24 +8,17 @@ require __DIR__ . '/sesi.php';
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-cache');
 
-const MK_NAMA = [
-    'pengantar-manajemen'          => 'Pengantar Manajemen',
-    'pengadaan-sdm-aparatur'       => 'Pengadaan SDM Aparatur',
-    'kompensasi-perlindungan-sdm'  => 'Kompensasi dan Perlindungan SDM',
-    'pelatihan-dan-pengembangan'   => 'Pelatihan dan Pengembangan',
-    'manajemen-kinerja'            => 'Manajemen Kinerja',
-    'simulasi-bisnis'              => 'Simulasi Bisnis',
-    'management-information-system'=> 'Management Information System',
-];
+$MK_NAMA = mk_nama();
 
 $items = [];
 foreach (muat_materi() as $m) {
+    $mk = (string) ($m['mk'] ?? '');
     $items[] = [
         'tipe'    => 'Materi',
         'judul'   => (string) $m['judul'],
-        'ket'     => MK_NAMA[$m['mk']] ?? 'Materi kuliah',
+        'ket'     => $MK_NAMA[$mk] ?? 'Materi kuliah',
         'tanggal' => (string) ($m['tanggal'] ?? ''),
-        'url'     => 'materi.php',
+        'url'     => isset($MK_NAMA[$mk]) ? 'mata-kuliah/' . $mk . '.html' : 'mengajar.html',
     ];
 }
 foreach (muat_paper() as $p) {

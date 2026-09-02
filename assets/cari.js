@@ -370,6 +370,13 @@
 
   function el(tag, kelas) { var e = document.createElement(tag); if (kelas) e.className = kelas; return e; }
   function labelSem(s) { return s === SEM_INI_V ? 'Semester ini' : (s === SEM_DASAR ? 'Semester lalu' : 'Semester ' + s); }
+  function baru(tgl) {
+    if (!tgl) return false;
+    var t = new Date(tgl + 'T00:00:00');
+    if (isNaN(t.getTime())) return false;
+    var beda = (Date.now() - t.getTime()) / 86400000;
+    return beda >= 0 && beda <= 10;
+  }
   function ukuran(b) {
     if (b >= 1048576) return (Math.round(b / 1048576 * 10) / 10) + ' MB';
     if (b >= 1024) return Math.round(b / 1024) + ' KB';
@@ -396,6 +403,7 @@
       sampul.setAttribute('aria-hidden', 'true');
       sampul.innerHTML = IKON;
     }
+    if (baru(it.tanggal)) { var bd = el('span', 'tl-baru'); bd.textContent = 'Baru'; sampul.appendChild(bd); }
     li.appendChild(sampul);
 
     var teks = el('div', 'tl-teks');
@@ -443,6 +451,7 @@
       var kepala = wrap.querySelector('.section-head');
 
       var panel124 = el('div', 'sem-panel'); panel124.setAttribute('data-sem', SEM_DASAR);
+      panel124.setAttribute('role', 'tabpanel'); panel124.setAttribute('tabindex', '0');
       var pindah = [], n = ol;
       while (n) { pindah.push(n); n = n.nextElementSibling; }
       pindah.forEach(function (x) { panel124.appendChild(x); });
@@ -463,6 +472,7 @@
       semua.forEach(function (s) {
         if (!panels[s]) {
           var p = el('div', 'sem-panel'); p.setAttribute('data-sem', s);
+          p.setAttribute('role', 'tabpanel'); p.setAttribute('tabindex', '0');
           var ul = el('ol', 'tl');
           (perSem[s] || []).sort(function (a, b) { return (a.pertemuan || 99) - (b.pertemuan || 99); })
             .forEach(function (it) { ul.appendChild(kartu(it)); });
@@ -492,6 +502,14 @@
       bar.addEventListener('click', function (e) {
         var t = e.target.closest('.sem-tab');
         if (t) pilih(t.getAttribute('data-sem'));
+      });
+      bar.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        var tabs = [].slice.call(bar.querySelectorAll('.sem-tab'));
+        var i = tabs.indexOf(document.activeElement); if (i < 0) i = 0;
+        i = e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+        tabs[i].focus(); pilih(tabs[i].getAttribute('data-sem'));
+        e.preventDefault();
       });
       pilih(aktif);
     })
@@ -523,9 +541,11 @@
     var bar = el('div', 'sem-tabs'); bar.setAttribute('role', 'tablist');
 
     var pLalu = el('div', 'sem-panel'); pLalu.setAttribute('data-sem', SEM_LALU_V);
+    pLalu.setAttribute('role', 'tabpanel'); pLalu.setAttribute('tabindex', '0');
     induk.insertBefore(pLalu, grid); pLalu.appendChild(grid);
 
     var pIni = el('div', 'sem-panel'); pIni.setAttribute('data-sem', SEM_INI_V); pIni.hidden = true;
+    pIni.setAttribute('role', 'tabpanel'); pIni.setAttribute('tabindex', '0');
     var gridIni = el('div', 'materi-rak kursus-rak');
     var ada = false;
     [].forEach.call(grid.querySelectorAll('.materi-kartu'), function (card) {
@@ -564,6 +584,14 @@
     }
     bar.addEventListener('click', function (e) {
       var t = e.target.closest('.sem-tab'); if (t) pilih(t.getAttribute('data-sem'));
+    });
+    bar.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      var tabs = [].slice.call(bar.querySelectorAll('.sem-tab'));
+      var i = tabs.indexOf(document.activeElement); if (i < 0) i = 0;
+      i = e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+      tabs[i].focus(); pilih(tabs[i].getAttribute('data-sem'));
+      e.preventDefault();
     });
     pilih(SEM_LALU_V);
   }).catch(function () {});

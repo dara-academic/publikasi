@@ -3649,3 +3649,13 @@ body[data-grup="beranda"] .hook { margin-top: 0; }
 .materi-form-baris { display: flex; gap: 14px; }
 .materi-form-baris > div { flex: 1; min-width: 0; }
 .masuk-bantu { margin: 6px 0 2px; font-size: 12.5px; color: var(--ink-muted); }
+
+/* Penanda "Baru" pada sampul materi yang baru diunggah */
+.tl-sampul { position: relative; }
+.tl-baru {
+  position: absolute; top: 8px; left: 8px;
+  padding: 2px 9px; border-radius: 999px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+  background: var(--accent-dark); color: #fff;
+  box-shadow: 0 2px 8px rgba(28, 52, 80, 0.25);
+}

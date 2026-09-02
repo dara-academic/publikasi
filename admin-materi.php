@@ -46,6 +46,34 @@ function ukuran_manusia(int $b): string {
     return $b . ' B';
 }
 
+/* Kecilkan gambar sampul jadi WebP (lebar maksimal 640) supaya ringan.
+   Mengembalikan nama berkas hasil, atau '' bila GD tidak tersedia / gagal,
+   sehingga pemanggil bisa jatuh balik menyimpan gambar aslinya. */
+function sampul_ke_webp(string $src, string $mime, string $dir, string $dasar): string {
+    if (!function_exists('imagewebp')) return '';
+    $img = null;
+    if ($mime === 'image/jpeg' && function_exists('imagecreatefromjpeg')) $img = @imagecreatefromjpeg($src);
+    elseif ($mime === 'image/png' && function_exists('imagecreatefrompng'))  $img = @imagecreatefrompng($src);
+    elseif ($mime === 'image/webp' && function_exists('imagecreatefromwebp')) $img = @imagecreatefromwebp($src);
+    if (!$img) return '';
+
+    $w = imagesx($img); $h = imagesy($img);
+    $maks = 640;
+    if ($w > $maks && $h > 0) {
+        $nh = (int) max(1, round($h * $maks / $w));
+        $kecil = imagecreatetruecolor($maks, $nh);
+        imagealphablending($kecil, false);
+        imagesavealpha($kecil, true);
+        imagecopyresampled($kecil, $img, 0, 0, 0, 0, $maks, $nh, $w, $h);
+        imagedestroy($img);
+        $img = $kecil;
+    }
+    $nama = $dasar . '-' . date('Ymd-His') . '-sampul.webp';
+    $ok = @imagewebp($img, $dir . '/' . $nama, 82);
+    imagedestroy($img);
+    return $ok ? $nama : '';
+}
+
 $pesan = $_SESSION['pesan_materi'] ?? '';
 unset($_SESSION['pesan_materi']);
 $galat = '';
@@ -122,10 +150,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 && ($cf['size'] ?? 0) > 0 && $cf['size'] <= MAKS_SAMPUL) {
                                 $cmime = (new finfo(FILEINFO_MIME_TYPE))->file($cf['tmp_name']);
                                 if (isset(SAMPUL_MIME[$cmime])) {
-                                    $cnama = $dasar . '-' . date('Ymd-His') . '-sampul.' . SAMPUL_MIME[$cmime];
-                                    if (@move_uploaded_file($cf['tmp_name'], $dir . '/' . $cnama)) {
-                                        @chmod($dir . '/' . $cnama, 0644);
-                                        $sampul = $cnama;
+                                    /* Coba kecilkan jadi WebP dulu supaya ringan; kalau GD tak
+                                       tersedia, simpan gambar aslinya apa adanya. */
+                                    $sampul = sampul_ke_webp($cf['tmp_name'], $cmime, $dir, $dasar);
+                                    if ($sampul !== '') {
+                                        @chmod($dir . '/' . $sampul, 0644);
+                                    } else {
+                                        $cnama = $dasar . '-' . date('Ymd-His') . '-sampul.' . SAMPUL_MIME[$cmime];
+                                        if (@move_uploaded_file($cf['tmp_name'], $dir . '/' . $cnama)) {
+                                            @chmod($dir . '/' . $cnama, 0644);
+                                            $sampul = $cnama;
+                                        }
                                     }
                                 }
                             }
