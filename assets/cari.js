@@ -666,25 +666,34 @@
     bar.hidden = total === 0;
   }
 
+  function tandai(li) {
+    li.classList.add('tl-selesai');
+    var teksEl = li.querySelector('.tl-teks');
+    if (teksEl && !teksEl.querySelector('.tl-selesai-tanda')) {
+      var badge = document.createElement('span');
+      badge.className = 'tl-selesai-tanda';
+      badge.textContent = '✓ Selesai';
+      var unduh = teksEl.querySelector('.pk-unduh');
+      if (unduh) unduh.insertAdjacentElement('afterend', badge);
+      else teksEl.appendChild(badge);
+    }
+  }
   function pasang() {
     var dibaca = baca();
     wrap.querySelectorAll('.tl-butir').forEach(function (li) {
       var id = idButir(li); if (!id) return;
-      if (dibaca[id]) li.classList.add('tl-selesai');
-      if (li.querySelector('.tl-selesai-btn')) return;
-      var teksEl = li.querySelector('.tl-teks'); if (!teksEl) return;
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'tl-selesai-btn';
-      btn.textContent = dibaca[id] ? '✓ Selesai' : 'Tandai selesai';
-      btn.setAttribute('aria-pressed', dibaca[id] ? 'true' : 'false');
-      btn.addEventListener('click', function () {
-        var d = baca();
-        if (d[id]) { delete d[id]; li.classList.remove('tl-selesai'); btn.textContent = 'Tandai selesai'; btn.setAttribute('aria-pressed', 'false'); }
-        else { d[id] = 1; li.classList.add('tl-selesai'); btn.textContent = '✓ Selesai'; btn.setAttribute('aria-pressed', 'true'); }
-        tulis(d); perbarui();
-      });
-      teksEl.appendChild(btn);
+      if (dibaca[id]) tandai(li);
+      /* Tandai selesai otomatis saat materi diunduh; pengunjung tak perlu klik apa pun lagi. */
+      var unduh = li.querySelector('.pk-unduh');
+      if (unduh && !unduh.getAttribute('data-selesai-pasang')) {
+        unduh.setAttribute('data-selesai-pasang', '1');
+        unduh.addEventListener('click', function () {
+          var d = baca();
+          if (!d[id]) { d[id] = 1; tulis(d); }
+          tandai(li);
+          perbarui();
+        });
+      }
     });
     perbarui();
   }

@@ -3676,12 +3676,10 @@ body[data-grup="beranda"] .hook { margin-top: 0; }
 .materi-progres-teks { display: block; font-size: 13.5px; font-weight: 600; color: var(--ink-soft); }
 .materi-progres-rel { display: block; margin-top: 6px; height: 8px; border-radius: 999px; background: var(--pastel-blue); overflow: hidden; max-width: 420px; }
 .materi-progres-isi { display: block; height: 100%; width: 0; background: var(--accent-dark); border-radius: 999px; transition: width 0.25s ease; }
-.tl-selesai-btn {
-  margin-top: 10px; font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
-  padding: 5px 13px; border-radius: 999px; border: 1px solid var(--line);
-  background: var(--kartu); color: var(--ink-soft);
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+.tl-selesai-tanda {
+  display: inline-flex; align-items: center; gap: 5px; vertical-align: middle;
+  margin-left: 8px; padding: 7px 15px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 700; white-space: nowrap;
+  background: var(--accent-dark); color: #fff;
 }
-.tl-selesai-btn:hover { border-color: var(--accent); color: var(--accent-dark); }
-.tl-selesai .tl-selesai-btn { background: var(--accent-dark); color: #fff; border-color: transparent; }
 .tl-selesai .tl-no { background: var(--accent-dark); color: #fff; border-color: transparent; }
