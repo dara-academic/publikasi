@@ -318,10 +318,43 @@
   document.body.appendChild(btn);
 })();
 
-/* Tanya jawab: memuat komentar yang disetujui dan mengirim pertanyaan baru. */
+/* Tanya jawab: memuat komentar yang disetujui dan mengirim pertanyaan baru.
+   Blok formulirnya cukup ditulis di sebagian halaman; di halaman konten lain
+   yang layak, blok itu dipasang sendiri dari sini supaya "Tanya jawab" tampil
+   konsisten tanpa menyunting tiap halaman. */
 (function () {
+  function layakKomentar() {
+    var p = location.pathname.toLowerCase();
+    if (p === '/' || p.endsWith('/') || /\/index\.html$/.test(p)) return false; // beranda & indeks folder
+    if (/(admin|masuk|keluar|akun|rekap|tersimpan|progres|setup|kelola)/.test(p)) return false;
+    if (/\/bimbingan\//.test(p)) return false;
+    if (!document.querySelector('header .nav')) return false;   // halaman admin/utilitas tanpa nav utama
+    return !!document.querySelector('main.ak-utama');
+  }
+  function buatBlokKomentar() {
+    var sec = document.createElement('section');
+    sec.className = 'section';
+    sec.innerHTML = '<div class="container"><div class="komentar-wrap">'
+      + '<h2>Tanya jawab</h2>'
+      + '<p class="komentar-sub">Ada yang mau ditanyakan soal halaman ini? Tulis di bawah. Pertanyaan tampil setelah ditinjau.</p>'
+      + '<form class="komentar-form">'
+      + '<input type="text" class="kf-nama masuk-input" placeholder="Nama (boleh inisial)" maxlength="60" autocomplete="name" required>'
+      + '<textarea class="kf-isi masuk-input" rows="3" placeholder="Pertanyaan atau komentar Anda" maxlength="1000" required></textarea>'
+      + '<input type="text" class="kf-web" tabindex="-1" autocomplete="off" aria-hidden="true">'
+      + '<button type="submit" class="masuk-tombol">Kirim pertanyaan</button>'
+      + '<p class="kf-pesan" role="status" aria-live="polite"></p>'
+      + '</form><div class="komentar-daftar"></div></div></div>';
+    return sec;
+  }
+
   var wrap = document.querySelector('.komentar-wrap');
-  if (!wrap) return;
+  if (!wrap) {
+    if (!layakKomentar()) return;
+    var utama = document.querySelector('main.ak-utama');
+    var sec = buatBlokKomentar();
+    utama.appendChild(sec);
+    wrap = sec.querySelector('.komentar-wrap');
+  }
   var hal = location.pathname;
   var daftar = wrap.querySelector('.komentar-daftar');
   var form = wrap.querySelector('.komentar-form');
