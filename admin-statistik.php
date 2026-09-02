@@ -39,6 +39,54 @@ function nama_buka(string $k, array $jp, array $jb): string {
     return $k;
 }
 $kosong = ($total_lihat + $total_unduh + $total_buka) === 0;
+
+/* ------------------------------------------------------------------
+   Log kunjungan harian dari catat.php (data/<hari>.tsv): waktu, sidik
+   harian, halaman, perujuk, lebar layar. Diringkas jadi tren kunjungan,
+   perujuk teratas, dan sebaran perangkat.
+   ------------------------------------------------------------------ */
+$tsv = glob(__DIR__ . '/data/*.tsv') ?: [];
+sort($tsv);
+$tsv = array_slice($tsv, -30);
+$per_hari = [];
+$rujukan = [];
+$perangkat = ['Ponsel' => 0, 'Tablet' => 0, 'Desktop' => 0];
+foreach ($tsv as $berkas) {
+    $hari = basename($berkas, '.tsv');
+    $fh = @fopen($berkas, 'r');
+    if (!$fh) continue;
+    $orang = []; $kunj = 0;
+    while (($ln = fgets($fh)) !== false) {
+        $c = explode("\t", rtrim($ln, "\r\n"));
+        if (count($c) < 5) continue;
+        $kunj++;
+        $orang[$c[1]] = 1;
+        $w = (int) $c[4];
+        if ($w > 0) {
+            if ($w < 768) $perangkat['Ponsel']++;
+            elseif ($w < 1024) $perangkat['Tablet']++;
+            else $perangkat['Desktop']++;
+        }
+        $ruj = trim($c[3]);
+        if ($ruj !== '') {
+            $host = parse_url($ruj, PHP_URL_HOST) ?: $ruj;
+            $host = preg_replace('/^www\./', '', strtolower($host));
+            if ($host !== '') $rujukan[$host] = ($rujukan[$host] ?? 0) + 1;
+        }
+    }
+    fclose($fh);
+    $per_hari[$hari] = ['kunjungan' => $kunj, 'orang' => count($orang)];
+}
+arsort($rujukan);
+$ada_tsv = !empty($per_hari);
+$tren = array_slice($per_hari, -14, null, true);
+$maks_tren = $tren ? max(array_map(fn($x) => $x['kunjungan'], $tren)) : 0;
+$total_perangkat = array_sum($perangkat);
+
+function hari_pendek(string $ymd): string {
+    $t = date_create($ymd);
+    return $t ? $t->format('d/m') : $ymd;
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -132,6 +180,49 @@ $kosong = ($total_lihat + $total_unduh + $total_buka) === 0;
       <?php endif; ?>
     </section>
 
+  <?php endif; ?>
+
+  <?php if ($ada_tsv): ?>
+    <section class="admin-kartu">
+      <h2>Tren kunjungan 14 hari</h2>
+      <div class="stat-tren">
+        <?php foreach ($tren as $hari => $d): $tinggi = $maks_tren > 0 ? round($d['kunjungan'] / $maks_tren * 100) : 0; ?>
+          <div class="stat-tren-kolom" title="<?= ee($hari) ?>: <?= (int) $d['kunjungan'] ?> kunjungan, <?= (int) $d['orang'] ?> pengunjung">
+            <span class="stat-tren-bar" style="height: <?= max($tinggi, 2) ?>%"></span>
+            <span class="stat-tren-tgl"><?= ee(hari_pendek($hari)) ?></span>
+          </div>
+        <?php endforeach; ?>
+      </div>
+      <p class="stat-catatan">Batang = kunjungan halaman per hari. Arahkan kursor untuk lihat jumlah pengunjung uniknya.</p>
+    </section>
+
+    <div class="admin-kolom2">
+      <section class="admin-kartu">
+        <h2>Datang dari mana</h2>
+        <?php if (!$rujukan): ?><p class="admin-kosong">Belum ada perujuk luar. Pengunjung datang langsung atau dari tautan yang tak mengirim perujuk.</p><?php else: ?>
+        <table class="stat-tabel">
+          <tbody>
+            <?php $i = 0; foreach ($rujukan as $host => $n): if (++$i > 10) break; ?>
+              <tr><td><?= ee($host) ?></td><td class="stat-n"><?= number_format($n, 0, ',', '.') ?></td></tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <?php endif; ?>
+      </section>
+
+      <section class="admin-kartu">
+        <h2>Perangkat pengunjung</h2>
+        <?php if ($total_perangkat === 0): ?><p class="admin-kosong">Belum ada data perangkat.</p><?php else: ?>
+        <table class="stat-tabel">
+          <tbody>
+            <?php foreach ($perangkat as $nama => $n): $pct = round($n / $total_perangkat * 100); ?>
+              <tr><td><?= ee($nama) ?></td><td class="stat-n"><?= $pct ?>% <span class="stat-kecil">(<?= number_format($n, 0, ',', '.') ?>)</span></td></tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <?php endif; ?>
+      </section>
+    </div>
   <?php endif; ?>
 
   <p class="admin-pulang"><a href="admin.php">&larr; Kembali ke panel admin</a></p>

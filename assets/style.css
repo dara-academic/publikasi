@@ -3659,3 +3659,13 @@ body[data-grup="beranda"] .hook { margin-top: 0; }
   background: var(--accent-dark); color: #fff;
   box-shadow: 0 2px 8px rgba(28, 52, 80, 0.25);
 }
+
+/* Statistik: tren kunjungan harian + tata dua kolom */
+.stat-tren { display: flex; align-items: flex-end; gap: 6px; height: 140px; margin: 6px 0 4px; }
+.stat-tren-kolom { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 6px; min-width: 0; }
+.stat-tren-bar { width: 70%; max-width: 34px; background: var(--accent-dark); border-radius: 5px 5px 0 0; display: block; min-height: 2px; }
+.stat-tren-tgl { font-size: 11px; color: var(--ink-muted); white-space: nowrap; }
+.stat-catatan { font-size: 12.5px; color: var(--ink-muted); margin: 4px 0 0; }
+.stat-kecil { color: var(--ink-muted); font-weight: 400; }
+.admin-kolom2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 640px) { .admin-kolom2 { grid-template-columns: 1fr; } }
