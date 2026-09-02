@@ -512,6 +512,7 @@
         e.preventDefault();
       });
       pilih(aktif);
+      document.dispatchEvent(new Event('materi:terpasang'));
     })
     .catch(function () {});
 })();
@@ -595,4 +596,66 @@
     });
     pilih(SEM_LALU_V);
   }).catch(function () {});
+})();
+
+/* ------------------------------------------------------------------
+   Kemajuan belajar per pengunjung di halaman mata kuliah.
+
+   Tiap materi bisa ditandai "selesai"; tersimpan di localStorage peramban
+   pengunjung sendiri (tanpa server, tanpa akun). Di atas daftar tampil bar
+   kemajuan. Dipasang ulang saat materi unggahan disisipkan.
+   ------------------------------------------------------------------ */
+(function () {
+  if (!/\/mata-kuliah\/[a-z0-9\-]+\.html$/.test(location.pathname)) return;
+  var wrap = document.querySelector('main .glos-wrap');
+  if (!wrap) return;
+
+  var KUNCI = 'dara_dibaca';
+  function baca() { try { return JSON.parse(localStorage.getItem(KUNCI) || '{}') || {}; } catch (e) { return {}; } }
+  function tulis(o) { try { localStorage.setItem(KUNCI, JSON.stringify(o)); } catch (e) {} }
+  function idButir(li) { var a = li.querySelector('.pk-unduh') || li.querySelector('a'); return a ? (a.getAttribute('href') || '') : ''; }
+
+  var bar = document.createElement('div');
+  bar.className = 'materi-progres';
+  bar.innerHTML = '<b class="materi-progres-teks"></b><span class="materi-progres-rel"><span class="materi-progres-isi"></span></span>';
+  var kepala = wrap.querySelector('.section-head');
+  if (kepala) kepala.appendChild(bar); else wrap.insertBefore(bar, wrap.firstChild);
+  var teks = bar.querySelector('.materi-progres-teks');
+  var isi = bar.querySelector('.materi-progres-isi');
+
+  function perbarui() {
+    var butir = wrap.querySelectorAll('.tl-butir');
+    var dibaca = baca(), total = 0, selesai = 0;
+    butir.forEach(function (li) { var id = idButir(li); if (!id) return; total++; if (dibaca[id]) selesai++; });
+    var pct = total ? Math.round(selesai / total * 100) : 0;
+    teks.textContent = 'Kemajuan belajar: ' + selesai + ' dari ' + total + ' materi (' + pct + '%)';
+    isi.style.width = pct + '%';
+    bar.hidden = total === 0;
+  }
+
+  function pasang() {
+    var dibaca = baca();
+    wrap.querySelectorAll('.tl-butir').forEach(function (li) {
+      var id = idButir(li); if (!id) return;
+      if (dibaca[id]) li.classList.add('tl-selesai');
+      if (li.querySelector('.tl-selesai-btn')) return;
+      var teksEl = li.querySelector('.tl-teks'); if (!teksEl) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'tl-selesai-btn';
+      btn.textContent = dibaca[id] ? '✓ Selesai' : 'Tandai selesai';
+      btn.setAttribute('aria-pressed', dibaca[id] ? 'true' : 'false');
+      btn.addEventListener('click', function () {
+        var d = baca();
+        if (d[id]) { delete d[id]; li.classList.remove('tl-selesai'); btn.textContent = 'Tandai selesai'; btn.setAttribute('aria-pressed', 'false'); }
+        else { d[id] = 1; li.classList.add('tl-selesai'); btn.textContent = '✓ Selesai'; btn.setAttribute('aria-pressed', 'true'); }
+        tulis(d); perbarui();
+      });
+      teksEl.appendChild(btn);
+    });
+    perbarui();
+  }
+
+  pasang();
+  document.addEventListener('materi:terpasang', pasang);
 })();
