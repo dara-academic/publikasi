@@ -3718,3 +3718,5 @@ body[data-grup="beranda"] .hook { margin-top: 0; }
 :root[data-theme="dark"] .stat-tren-bar { background: #3fb59a; }
 :root[data-theme="dark"] .tl-sampul-kosong,
 :root[data-theme="dark"] .materi-sampul-kosong { background: #14283c; color: #7db4e8; }
+/* Tab nonaktif di mode gelap dipaksa (ada aturan tak terdeteksi yang menimpa). */
+:root[data-theme="dark"] .sem-tab:not(.aktif) { background: #1a222c !important; color: #aab4c0 !important; border-color: #2c3642 !important; }
