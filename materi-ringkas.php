@@ -20,8 +20,18 @@ foreach (muat_materi() as $m) {
     $out[$mk][$sem] = ($out[$mk][$sem] ?? 0) + 1;
 }
 
+/* Mata kuliah tambahan (buatan admin) supaya tampil di halaman Pengajaran. */
+$tambahan = [];
+foreach (muat_matkul() as $mm) {
+    $slug = (string) ($mm['slug'] ?? '');
+    if ($slug === '') continue;
+    $jml = isset($out[$slug]) ? array_sum($out[$slug]) : 0;
+    $tambahan[] = ['slug' => $slug, 'nama' => (string) ($mm['nama'] ?? $slug), 'jml' => $jml];
+}
+
 echo json_encode([
     'sem_ini'  => SEM_INI,
     'sem_lalu' => SEM_LALU,
     'kuliah'   => (object) $out,
+    'tambahan' => $tambahan,
 ], JSON_UNESCAPED_UNICODE);

@@ -355,7 +355,7 @@
     utama.appendChild(sec);
     wrap = sec.querySelector('.komentar-wrap');
   }
-  var hal = location.pathname;
+  var hal = document.body.getAttribute('data-hal') || location.pathname;
   var daftar = wrap.querySelector('.komentar-daftar');
   var form = wrap.querySelector('.komentar-form');
   var pesan = wrap.querySelector('.kf-pesan');
@@ -571,6 +571,22 @@
     SEM_INI_V = d.sem_ini || SEM_INI_V;
     SEM_LALU_V = d.sem_lalu || SEM_LALU_V;
     var kuliah = d.kuliah || {};
+
+    /* Mata kuliah tambahan buatan admin: tampilkan kartunya di daftar. */
+    var IKON_MK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5A2.5 2.5 0 0 1 4 20.5z"/></svg>';
+    (d.tambahan || []).forEach(function (t) {
+      if (!t || !t.slug) return;
+      var a = el('a', 'materi-kartu');
+      a.href = 'mata-kuliah.php?mk=' + encodeURIComponent(t.slug);
+      var sampul = el('span', 'materi-sampul materi-sampul-kosong');
+      sampul.setAttribute('aria-hidden', 'true');
+      sampul.innerHTML = IKON_MK;
+      a.appendChild(sampul);
+      var b = el('b'); b.textContent = t.nama || t.slug; a.appendChild(b);
+      var jml = el('span', 'materi-jml'); jml.textContent = (t.jml || 0) + ' materi'; a.appendChild(jml);
+      grid.appendChild(a);
+    });
+
     var induk = grid.parentNode;
     var bar = el('div', 'sem-tabs'); bar.setAttribute('role', 'tablist');
 
@@ -639,7 +655,7 @@
    kemajuan. Dipasang ulang saat materi unggahan disisipkan.
    ------------------------------------------------------------------ */
 (function () {
-  if (!/\/mata-kuliah\/[a-z0-9\-]+\.html$/.test(location.pathname)) return;
+  if (!/\/mata-kuliah\/[a-z0-9\-]+\.html$/.test(location.pathname) && location.pathname !== '/mata-kuliah.php') return;
   var wrap = document.querySelector('main .glos-wrap');
   if (!wrap) return;
 

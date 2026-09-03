@@ -20,15 +20,7 @@ if ($pengguna['peran'] !== 'admin') {
     exit;
 }
 
-const MK = [
-    'pengantar-manajemen'          => 'Pengantar Manajemen',
-    'pengadaan-sdm-aparatur'       => 'Pengadaan SDM Aparatur',
-    'kompensasi-perlindungan-sdm'  => 'Kompensasi dan Perlindungan SDM Aparatur',
-    'pelatihan-dan-pengembangan'   => 'Pelatihan dan Pengembangan',
-    'manajemen-kinerja'            => 'Manajemen Kinerja',
-    'simulasi-bisnis'              => 'Simulasi Bisnis',
-    'management-information-system'=> 'Management Information System',
-];
+$MK = mk_nama();   /* mata kuliah dasar + tambahan dari admin */
 const MAKS_UKURAN = 31457280; /* 30 MB */
 const MAKS_SAMPUL = 5242880;  /* 5 MB */
 const DIR_UNGGAH  = __DIR__ . '/unggahan';
@@ -84,9 +76,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $aksi = (string) ($_POST['aksi'] ?? '');
 
+        if ($aksi === 'tambah_mk') {
+            $nama_mk = trim(preg_replace('/\s+/', ' ', strip_tags((string) ($_POST['nama_mk'] ?? ''))));
+            if ($nama_mk === '' || mb_strlen($nama_mk) > 100) {
+                $galat = 'Nama mata kuliah wajib diisi, maksimal 100 huruf.';
+            } elseif (slug_mk($nama_mk) === '') {
+                $galat = 'Nama mata kuliah tidak sah, pakai huruf atau angka.';
+            } elseif (array_key_exists(slug_mk($nama_mk), mk_nama())) {
+                $galat = 'Mata kuliah dengan nama itu sudah ada.';
+            } else {
+                tambah_matkul($nama_mk);
+                $_SESSION['pesan_materi'] = 'Mata kuliah "' . $nama_mk . '" ditambahkan. Sekarang bisa diisi materi.';
+                header('Location: /admin-materi.php');
+                exit;
+            }
+        }
+
+        if ($aksi === 'hapus_mk') {
+            $slug_hapus = (string) ($_POST['slug_mk'] ?? '');
+            $punya = false;
+            foreach (muat_materi() as $mm) { if (($mm['mk'] ?? '') === $slug_hapus) { $punya = true; break; } }
+            if (mk_statis($slug_hapus)) {
+                $galat = 'Mata kuliah bawaan tidak bisa dihapus.';
+            } elseif ($punya) {
+                $galat = 'Masih ada materi di mata kuliah itu. Hapus materinya dulu.';
+            } else {
+                hapus_matkul($slug_hapus);
+                $_SESSION['pesan_materi'] = 'Mata kuliah dihapus.';
+                header('Location: /admin-materi.php');
+                exit;
+            }
+        }
+
         if ($aksi === 'hapus') {
             $baris = hapus_materi((int) ($_POST['id'] ?? -1));
-            if ($baris !== null && !empty($baris['berkas']) && array_key_exists($baris['mk'], MK)) {
+            if ($baris !== null && !empty($baris['berkas']) && array_key_exists($baris['mk'], $MK)) {
                 $path = DIR_UNGGAH . '/' . $baris['mk'] . '/' . basename((string) $baris['berkas']);
                 if (is_file($path)) @unlink($path);
                 if (!empty($baris['sampul'])) {
@@ -109,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($pertemuan < 0 || $pertemuan > 40) $pertemuan = 0;
             $f         = $_FILES['berkas'] ?? null;
 
-            if (!array_key_exists($mk, MK)) {
+            if (!array_key_exists($mk, $MK)) {
                 $galat = 'Mata kuliah tidak sah.';
             } elseif ($judul === '') {
                 $galat = 'Judul materi wajib diisi.';
@@ -250,6 +274,38 @@ $jml = count($materi);
   <?php endif; ?>
 
   <section class="admin-kartu">
+    <h2>Mata kuliah</h2>
+    <p class="admin-sub">Tujuh mata kuliah bawaan sudah punya halaman lengkap. Tambah mata kuliah baru di sini kalau ada yang di luar itu, lalu isi materinya lewat form di bawah.</p>
+    <form method="post" action="admin-materi.php" class="mk-tambah-form">
+      <input type="hidden" name="csrf" value="<?= $csrf ?>">
+      <input type="hidden" name="aksi" value="tambah_mk">
+      <label class="masuk-label" for="nama_mk">Nama mata kuliah baru</label>
+      <div class="mk-tambah-baris">
+        <input class="masuk-input" id="nama_mk" name="nama_mk" type="text" maxlength="100" placeholder="Misalnya: Manajemen Talenta" required>
+        <button class="masuk-tombol" type="submit">Tambah</button>
+      </div>
+    </form>
+    <?php $mk_tambahan = muat_matkul(); ?>
+    <?php if ($mk_tambahan): ?>
+      <ul class="mk-daftar">
+        <?php foreach ($mk_tambahan as $mt): $s = (string) ($mt['slug'] ?? ''); ?>
+          <li>
+            <span><b><?= ee($mt['nama'] ?? $s) ?></b> &middot; <a href="mata-kuliah.php?mk=<?= ee($s) ?>" target="_blank" rel="noopener">lihat halaman</a></span>
+            <form method="post" action="admin-materi.php" onsubmit="return confirm('Hapus mata kuliah ini? Hanya bisa kalau materinya sudah kosong.');">
+              <input type="hidden" name="csrf" value="<?= $csrf ?>">
+              <input type="hidden" name="aksi" value="hapus_mk">
+              <input type="hidden" name="slug_mk" value="<?= ee($s) ?>">
+              <button type="submit" class="mk-hapus">Hapus</button>
+            </form>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+    <?php else: ?>
+      <p class="admin-kosong">Belum ada mata kuliah tambahan. Yang ada baru tujuh mata kuliah bawaan.</p>
+    <?php endif; ?>
+  </section>
+
+  <section class="admin-kartu">
     <h2>Unggah materi baru</h2>
     <form method="post" action="admin-materi.php" enctype="multipart/form-data" class="materi-form">
       <input type="hidden" name="csrf" value="<?= $csrf ?>">
@@ -257,7 +313,7 @@ $jml = count($materi);
 
       <label class="masuk-label" for="mk">Mata kuliah</label>
       <select class="masuk-input" id="mk" name="mk" required>
-        <?php foreach (MK as $slug => $nama): ?>
+        <?php foreach ($MK as $slug => $nama): ?>
           <option value="<?= ee($slug) ?>"><?= ee($nama) ?></option>
         <?php endforeach; ?>
       </select>
@@ -301,7 +357,7 @@ $jml = count($materi);
     <?php if ($jml === 0): ?>
       <p class="admin-kosong">Belum ada materi yang diunggah.</p>
     <?php else: ?>
-      <?php foreach (MK as $slug => $nama): ?>
+      <?php foreach ($MK as $slug => $nama): ?>
         <?php if (empty($per_mk[$slug])) continue; ?>
         <h3 class="materi-mk-judul"><?= ee($nama) ?> <span>(<?= count($per_mk[$slug]) ?>)</span></h3>
         <ul class="materi-kelola">

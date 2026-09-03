@@ -3683,3 +3683,17 @@ body[data-grup="beranda"] .hook { margin-top: 0; }
   background: var(--accent-dark); color: #fff;
 }
 .tl-selesai .tl-no { background: var(--accent-dark); color: #fff; border-color: transparent; }
+
+/* Kartu mata kuliah tambahan tanpa sampul */
+.materi-sampul-kosong { display: flex; align-items: center; justify-content: center; aspect-ratio: 16 / 9; background: var(--pastel-blue); color: var(--accent-dark); }
+.materi-sampul-kosong svg { width: 46px; height: 46px; }
+
+/* Kelola mata kuliah di panel admin */
+.admin-sub { color: var(--ink-muted); font-size: 14px; margin: 0 0 14px; }
+.mk-tambah-baris { display: flex; gap: 10px; align-items: stretch; flex-wrap: wrap; }
+.mk-tambah-baris .masuk-input { flex: 1; min-width: 220px; }
+.mk-tambah-baris .masuk-tombol { width: auto; white-space: nowrap; }
+.mk-daftar { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-direction: column; gap: 8px; }
+.mk-daftar li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--kartu); }
+.mk-hapus { font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; color: #b23; background: none; border: 1px solid #e5b7bf; border-radius: 999px; padding: 5px 12px; }
+.mk-hapus:hover { background: #fbeaed; }

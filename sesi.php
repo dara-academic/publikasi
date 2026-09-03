@@ -25,6 +25,7 @@ const BERKAS_PAPER     = __DIR__ . '/data/paper.json';
 const BERKAS_BUKU      = __DIR__ . '/data/buku.json';
 const BERKAS_STATISTIK = __DIR__ . '/data/statistik.json';
 const BERKAS_KOMENTAR  = __DIR__ . '/data/komentar.json';
+const BERKAS_MATKUL    = __DIR__ . '/data/matkul.json';
 
 /* ------------------------------------------------------------------
    Semester berjalan. SATU tempat acuan untuk seluruh situs: pilihan di
@@ -43,8 +44,8 @@ function label_semester(string $kode): string {
     return 'Semester ' . $kode;
 }
 
-/* Nama tampil tiap mata kuliah, satu acuan untuk seluruh situs. */
-function mk_nama(): array {
+/* Mata kuliah dasar: tujuh mata kuliah yang punya halaman statis lengkap. */
+function mk_dasar(): array {
     return [
         'pengantar-manajemen'           => 'Pengantar Manajemen',
         'pengadaan-sdm-aparatur'        => 'Pengadaan SDM Aparatur',
@@ -54,6 +55,50 @@ function mk_nama(): array {
         'simulasi-bisnis'               => 'Simulasi Bisnis',
         'management-information-system' => 'Management Information System',
     ];
+}
+
+/* Mata kuliah tambahan yang dibuat admin (halamannya dinamis). */
+function muat_matkul(): array {
+    if (!is_file(BERKAS_MATKUL)) return [];
+    $d = json_decode((string) @file_get_contents(BERKAS_MATKUL), true);
+    return is_array($d) ? $d : [];
+}
+
+/* Nama tampil tiap mata kuliah: dasar + tambahan. Satu acuan seluruh situs. */
+function mk_nama(): array {
+    $out = mk_dasar();
+    foreach (muat_matkul() as $m) {
+        $slug = (string) ($m['slug'] ?? '');
+        $nama = (string) ($m['nama'] ?? '');
+        if ($slug !== '' && $nama !== '') $out[$slug] = $nama;
+    }
+    return $out;
+}
+
+/* Mata kuliah dasar punya halaman statis; tambahan dilayani mata-kuliah.php. */
+function mk_statis(string $slug): bool { return array_key_exists($slug, mk_dasar()); }
+function mk_url(string $slug): string {
+    return mk_statis($slug) ? 'mata-kuliah/' . $slug . '.html' : 'mata-kuliah.php?mk=' . rawurlencode($slug);
+}
+
+function slug_mk(string $s): string {
+    $t = strtolower(trim($s));
+    $t = preg_replace('/[^a-z0-9]+/', '-', $t);
+    return trim((string) $t, '-');
+}
+function tambah_matkul(string $nama): string {
+    $slug = slug_mk($nama);
+    if ($slug === '' || array_key_exists($slug, mk_nama())) return $slug;
+    $d = muat_matkul();
+    $d[] = ['slug' => $slug, 'nama' => $nama, 'dibuat' => date('Y-m-d')];
+    file_put_contents(BERKAS_MATKUL,
+        json_encode(array_values($d), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
+    return $slug;
+}
+function hapus_matkul(string $slug): void {
+    $d = array_values(array_filter(muat_matkul(), fn($m) => ($m['slug'] ?? '') !== $slug));
+    file_put_contents(BERKAS_MATKUL,
+        json_encode($d, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
 }
 
 /* ================= sesi ================= */
