@@ -3697,3 +3697,24 @@ body[data-grup="beranda"] .hook { margin-top: 0; }
 .mk-daftar li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--kartu); }
 .mk-hapus { font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; color: #b23; background: none; border: 1px solid #e5b7bf; border-radius: 999px; padding: 5px 12px; }
 .mk-hapus:hover { background: #fbeaed; }
+
+/* ------------------------------------------------------------------
+   Mode gelap untuk pil berisi warna aksen/modul. Di tema gelap warna
+   aksen dan modul dibuat lebih terang supaya TEKS berwarna terbaca di
+   latar gelap; akibatnya pil yang berteks putih di atasnya justru tak
+   terbaca. Pil-pil itu dipatok ke teal pekat agar kontras tetap aman.
+   ------------------------------------------------------------------ */
+:root[data-theme="dark"] .pk-unduh,
+:root[data-theme="dark"] .tl-baru,
+:root[data-theme="dark"] .sem-tab.aktif,
+:root[data-theme="dark"] .tl-selesai-tanda,
+:root[data-theme="dark"] .tl-selesai .tl-no {
+  background: #006569; color: #fff; border-color: transparent;
+}
+:root[data-theme="dark"] .pk-unduh:hover { background: #007c81; filter: none; }
+:root[data-theme="dark"] .sem-tab:not(.aktif) { background: #1a222c; color: #aab4c0; border-color: #2c3642; }
+:root[data-theme="dark"] .sem-tab:not(.aktif):hover { color: #7db4e8; border-color: #7db4e8; }
+:root[data-theme="dark"] .materi-progres-isi,
+:root[data-theme="dark"] .stat-tren-bar { background: #3fb59a; }
+:root[data-theme="dark"] .tl-sampul-kosong,
+:root[data-theme="dark"] .materi-sampul-kosong { background: #14283c; color: #7db4e8; }

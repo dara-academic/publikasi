@@ -356,12 +356,15 @@
     wrap = sec.querySelector('.komentar-wrap');
   }
   var hal = document.body.getAttribute('data-hal') || location.pathname;
+  /* komentar.php ada di akar situs; halaman sub-folder butuh prefix naik. */
+  var akarCari = document.querySelector('.cari-input');
+  var naik = akarCari ? (akarCari.getAttribute('data-naik') || '') : '';
   var daftar = wrap.querySelector('.komentar-daftar');
   var form = wrap.querySelector('.komentar-form');
   var pesan = wrap.querySelector('.kf-pesan');
   var esc = function (x) { var t = document.createElement('div'); t.textContent = x == null ? '' : x; return t.innerHTML; };
   var token = '';
-  fetch('komentar.php?hal=' + encodeURIComponent(hal)).then(function (r) { return r.json(); }).then(function (d) {
+  fetch(naik + 'komentar.php?hal=' + encodeURIComponent(hal)).then(function (r) { return r.json(); }).then(function (d) {
     token = d.token || '';
     if (!d.komentar || !d.komentar.length) { daftar.innerHTML = '<p class="komentar-kosong">Belum ada pertanyaan. Jadilah yang pertama.</p>'; return; }
     daftar.innerHTML = d.komentar.map(function (k) {
@@ -378,7 +381,7 @@
     fd.append('web', form.querySelector('.kf-web').value);
     fd.append('csrf', token);
     pesan.textContent = 'Mengirim...';
-    fetch('komentar.php', { method: 'POST', body: fd }).then(function (r) { return r.json(); }).then(function (d) {
+    fetch(naik + 'komentar.php', { method: 'POST', body: fd }).then(function (r) { return r.json(); }).then(function (d) {
       pesan.textContent = d.pesan || (d.ok ? 'Terkirim.' : 'Gagal mengirim.');
       if (d.ok) { form.querySelector('.kf-nama').value = ''; form.querySelector('.kf-isi').value = ''; }
     }).catch(function () { pesan.textContent = 'Gagal mengirim. Coba lagi.'; });
