@@ -110,6 +110,14 @@ $komentar_pending = count(array_filter(komentar_semua(), fn($k) => ($k['status']
       <span class="admin-pintu-panah" aria-hidden="true">&rarr;</span>
     </a>
 
+    <a class="admin-pintu" href="admin-cadangan.php">
+      <span class="admin-pintu-ikon" aria-hidden="true">&#128190;</span>
+      <b>Cadangan data</b>
+      <span class="admin-pintu-ket">Unduh salinan materi, komentar, akun, dan statistik. Semuanya hanya ada di server ini.</span>
+      <span class="admin-pintu-tanda">Simpan berkala di luar server</span>
+      <span class="admin-pintu-panah" aria-hidden="true">&rarr;</span>
+    </a>
+
   </div>
 </main>
 </body>

@@ -94,6 +94,7 @@ function kartu_komentar(array $k, string $csrf, bool $is_pending): string {
   <a href="admin-buku.php">Buku</a>
   <a href="admin-statistik.php">Statistik</a>
   <a href="admin-komentar.php" class="active">Tanya jawab</a>
+  <a href="admin-cadangan.php">Cadangan</a>
 </nav>
 
 <main class="ak-utama admin-utama" id="konten">

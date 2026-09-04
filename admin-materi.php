@@ -264,6 +264,7 @@ $jml = count($materi);
     <a href="admin-buku.php">Buku</a>
     <a href="admin-statistik.php">Statistik</a>
   <a href="admin-komentar.php">Tanya jawab</a>
+  <a href="admin-cadangan.php">Cadangan</a>
   </nav>
 
   <?php if ($pesan): ?>

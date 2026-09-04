@@ -127,6 +127,7 @@ function hari_pendek(string $ymd): string {
   <a href="admin-buku.php">Buku</a>
   <a href="admin-statistik.php" class="active">Statistik</a>
   <a href="admin-komentar.php">Tanya jawab</a>
+  <a href="admin-cadangan.php">Cadangan</a>
 </nav>
 
 <main class="ak-utama admin-utama" id="konten">
