@@ -341,6 +341,22 @@ function tambah_materi(array $m): void {
         LOCK_EX);
 }
 
+/* Sunting keterangan materi tanpa menyentuh berkasnya. Hanya field yang
+   memang boleh diubah yang diterima, supaya nama berkas dan ukurannya
+   tidak bisa ikut tergeser lewat formulir. */
+function ubah_materi(int $id, array $ubah): bool {
+    $semua = muat_materi();
+    if (!isset($semua[$id])) return false;
+    foreach ($semua as $i => $x) unset($semua[$i]['id']);
+    foreach (['judul', 'deskripsi', 'semester', 'pertemuan'] as $k) {
+        if (array_key_exists($k, $ubah)) $semua[$id][$k] = $ubah[$k];
+    }
+    file_put_contents(BERKAS_MATERI,
+        json_encode(array_values($semua), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+        LOCK_EX);
+    return true;
+}
+
 function hapus_materi(int $id): ?array {
     $semua = muat_materi();
     if (!isset($semua[$id])) return null;

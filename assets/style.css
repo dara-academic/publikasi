@@ -3738,3 +3738,18 @@ body[data-grup="profil"]          { --modul-isi: #7a4a2a; }
 :root[data-theme="dark"] .sem-tab:not(.aktif) { background: var(--kartu); color: var(--ink-soft); border-color: var(--line); }
 :root[data-theme="dark"] .tl-sampul-kosong,
 :root[data-theme="dark"] .materi-sampul-kosong { background: var(--modul-tipis); color: var(--modul); }
+
+/* Form ubah keterangan materi di panel admin, disembunyikan di balik <details> */
+.materi-ubah { margin-top: 10px; }
+.materi-ubah > summary {
+  cursor: pointer; display: inline-block; font-size: 12.5px; font-weight: 600;
+  color: var(--modul, var(--accent-dark)); padding: 4px 0; list-style: none;
+}
+.materi-ubah > summary::-webkit-details-marker { display: none; }
+.materi-ubah > summary::before { content: "\270E\00A0"; }
+.materi-ubah[open] > summary::before { content: "\2715\00A0"; }
+.materi-ubah-form {
+  margin-top: 10px; padding: 14px; border: 1px solid var(--line);
+  border-radius: 12px; background: var(--bg);
+}
+.materi-ubah-form .masuk-tombol { margin-top: 12px; width: auto; }

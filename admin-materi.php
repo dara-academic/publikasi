@@ -66,6 +66,43 @@ function sampul_ke_webp(string $src, string $mime, string $dir, string $dasar): 
     return $ok ? $nama : '';
 }
 
+/* ------------------------------------------------------------------
+   Bantuan untuk unggah massal. Nama berkas dipakai menebak nomor
+   pertemuan dan judulnya, supaya mengunggah belasan PDF sekaligus tidak
+   berarti mengetik judul belasan kali. Tebakan boleh meleset; judul dan
+   nomornya tetap bisa disunting sesudahnya lewat tombol Ubah.
+   ------------------------------------------------------------------ */
+function tebak_pertemuan(string $nama): int {
+    $n = pathinfo($nama, PATHINFO_FILENAME);
+    if (preg_match('/pertemuan\s*(\d{1,2})/i', $n, $m)) return (int) $m[1];
+    if (preg_match('/^p[\s_-]?(\d{1,2})\b/i', $n, $m))  return (int) $m[1];
+    if (preg_match('/^(\d{1,2})[\s._-]/', $n, $m))      return (int) $m[1];
+    return 0;
+}
+function tebak_judul(string $nama): string {
+    $n = pathinfo($nama, PATHINFO_FILENAME);
+    $n = preg_replace('/^(p[\s_-]?\d{1,2}|pertemuan\s*\d{1,2}|\d{1,2})[\s._-]+/i', '', $n);
+    $n = str_replace(['-', '_'], ' ', (string) $n);
+    $n = trim((string) preg_replace('/\s+/', ' ', $n));
+    if ($n === '') return 'Materi';
+    return mb_strtoupper(mb_substr($n, 0, 1)) . mb_substr($n, 1);
+}
+
+/* Simpan satu PDF yang sudah lolos saring. Nama berkas diberi imbuhan acak
+   pendek supaya banyak unggahan dalam detik yang sama tidak saling menimpa. */
+function simpan_pdf(array $f, string $dir, string $dasar, ?string &$galat = null): string {
+    if (($f['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) { $galat = 'gagal diunggah'; return ''; }
+    if (($f['size'] ?? 0) <= 0 || $f['size'] > MAKS_UKURAN)     { $galat = 'ukuran tidak sah'; return ''; }
+    if (!is_uploaded_file($f['tmp_name']))                      { $galat = 'berkas tidak sah'; return ''; }
+    $ext  = strtolower(pathinfo((string) $f['name'], PATHINFO_EXTENSION));
+    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($f['tmp_name']);
+    if ($ext !== 'pdf' || $mime !== 'application/pdf')          { $galat = 'bukan PDF'; return ''; }
+    $berkas = $dasar . '-' . date('Ymd-His') . '-' . substr(bin2hex(random_bytes(3)), 0, 4) . '.pdf';
+    if (!@move_uploaded_file($f['tmp_name'], $dir . '/' . $berkas)) { $galat = 'gagal disimpan'; return ''; }
+    @chmod($dir . '/' . $berkas, 0644);
+    return $berkas;
+}
+
 $pesan = $_SESSION['pesan_materi'] ?? '';
 unset($_SESSION['pesan_materi']);
 $galat = '';
@@ -105,6 +142,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['pesan_materi'] = 'Mata kuliah dihapus.';
                 header('Location: /admin-materi.php');
                 exit;
+            }
+        }
+
+        if ($aksi === 'ubah') {
+            $id        = (int) ($_POST['id'] ?? -1);
+            $judul     = trim(preg_replace('/\s+/', ' ', strip_tags((string) ($_POST['judul'] ?? ''))));
+            $deskripsi = trim(preg_replace('/\s+/', ' ', strip_tags((string) ($_POST['deskripsi'] ?? ''))));
+            $semester  = (string) ($_POST['semester'] ?? SEM_INI);
+            if (!in_array($semester, semester_pilihan(), true)) $semester = SEM_INI;
+            $pertemuan = (int) ($_POST['pertemuan'] ?? 0);
+            if ($pertemuan < 0 || $pertemuan > 40) $pertemuan = 0;
+            if ($judul === '' || mb_strlen($judul) > 140) {
+                $galat = 'Judul wajib diisi, maksimal 140 huruf.';
+            } elseif (!ubah_materi($id, ['judul' => $judul, 'deskripsi' => $deskripsi,
+                                         'semester' => $semester, 'pertemuan' => $pertemuan])) {
+                $galat = 'Materi tidak ditemukan.';
+            } else {
+                $_SESSION['pesan_materi'] = 'Materi "' . $judul . '" diperbarui.';
+                header('Location: /admin-materi.php');
+                exit;
+            }
+        }
+
+        if ($aksi === 'unggah_massal') {
+            $mk       = (string) ($_POST['mk'] ?? '');
+            $semester = (string) ($_POST['semester'] ?? SEM_INI);
+            if (!in_array($semester, semester_pilihan(), true)) $semester = SEM_INI;
+            $ff = $_FILES['massal'] ?? null;
+
+            if (!array_key_exists($mk, $MK)) {
+                $galat = 'Mata kuliah tidak sah.';
+            } elseif (!$ff || !is_array($ff['name'] ?? null) || !count(array_filter((array) $ff['name']))) {
+                $galat = 'Pilih dulu berkas PDF yang mau diunggah.';
+            } else {
+                $dir = DIR_UNGGAH . '/' . $mk;
+                if (!is_dir($dir)) @mkdir($dir, 0755, true);
+                if (!is_dir($dir) || !is_writable($dir)) {
+                    $galat = 'Folder unggahan belum bisa ditulis di server. Cek izin folder unggahan.';
+                } else {
+                    $sukses = 0; $gagal = [];
+                    foreach (array_keys($ff['name']) as $i) {
+                        if (($ff['name'][$i] ?? '') === '') continue;
+                        $satu = ['name' => $ff['name'][$i], 'type' => $ff['type'][$i] ?? '',
+                                 'tmp_name' => $ff['tmp_name'][$i] ?? '', 'error' => $ff['error'][$i] ?? UPLOAD_ERR_NO_FILE,
+                                 'size' => $ff['size'][$i] ?? 0];
+                        $judul = tebak_judul((string) $satu['name']);
+                        $dasar = slugkan($judul) ?: 'materi';
+                        $sebab = null;
+                        $berkas = simpan_pdf($satu, $dir, $dasar, $sebab);
+                        if ($berkas === '') { $gagal[] = $satu['name'] . ' (' . $sebab . ')'; continue; }
+                        tambah_materi([
+                            'mk'        => $mk,
+                            'judul'     => $judul,
+                            'deskripsi' => '',
+                            'semester'  => $semester,
+                            'pertemuan' => tebak_pertemuan((string) $satu['name']),
+                            'berkas'    => $berkas,
+                            'sampul'    => '',
+                            'ukuran'    => (int) filesize($dir . '/' . $berkas),
+                            'tanggal'   => date('Y-m-d'),
+                            'oleh'      => $pengguna['nama'],
+                        ]);
+                        $sukses++;
+                    }
+                    $_SESSION['pesan_materi'] = $sukses . ' materi terunggah.'
+                        . ($gagal ? ' Gagal: ' . implode(', ', array_slice($gagal, 0, 5)) . '.' : '')
+                        . ' Judul dan nomor pertemuan ditebak dari nama berkas, silakan rapikan lewat tombol Ubah.';
+                    header('Location: /admin-materi.php');
+                    exit;
+                }
             }
         }
 
@@ -354,6 +461,39 @@ $jml = count($materi);
   </section>
 
   <section class="admin-kartu">
+    <h2>Unggah banyak sekaligus</h2>
+    <p class="admin-sub">Untuk mengisi satu mata kuliah sekali jalan. Pilih beberapa PDF sekaligus,
+    judul dan nomor pertemuannya ditebak dari nama berkas. Nama seperti
+    <b>p03-perencanaan-strategis.pdf</b> atau <b>Pertemuan 3 Perencanaan.pdf</b> paling rapi hasilnya.
+    Tebakan yang meleset bisa dirapikan lewat tombol Ubah di daftar bawah.</p>
+    <form method="post" action="admin-materi.php" enctype="multipart/form-data">
+      <input type="hidden" name="csrf" value="<?= $csrf ?>">
+      <input type="hidden" name="aksi" value="unggah_massal">
+      <div class="materi-form-baris">
+        <div>
+          <label class="masuk-label" for="mk_massal">Mata kuliah</label>
+          <select class="masuk-input" id="mk_massal" name="mk" required>
+            <?php foreach ($MK as $slug => $nama): ?>
+              <option value="<?= ee($slug) ?>"><?= ee($nama) ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div>
+          <label class="masuk-label" for="sem_massal">Semester</label>
+          <select class="masuk-input" id="sem_massal" name="semester" required>
+            <?php foreach (semester_pilihan() as $s): ?>
+              <option value="<?= ee($s) ?>"><?= ee($s . ' — ' . label_semester($s)) ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+      </div>
+      <label class="masuk-label" for="massal">Berkas PDF (bisa pilih banyak, maks. 30 MB per berkas)</label>
+      <input class="masuk-input" id="massal" name="massal[]" type="file" accept="application/pdf,.pdf" multiple required>
+      <button class="masuk-tombol" type="submit">Unggah semuanya</button>
+    </form>
+  </section>
+
+  <section class="admin-kartu">
     <h2>Materi terunggah</h2>
     <?php if ($jml === 0): ?>
       <p class="admin-kosong">Belum ada materi yang diunggah.</p>
@@ -369,6 +509,34 @@ $jml = count($materi);
                 <?php if (!empty($m['deskripsi'])): ?><span><?= ee($m['deskripsi']) ?></span><?php endif; ?>
                 <span class="materi-kelola-meta"><?php if (!empty($m['semester'])): ?>Semester <?= ee($m['semester']) ?> &middot; P<?= (int) ($m['pertemuan'] ?? 0) ?> &middot; <?php endif; ?><?= ee($m['tanggal']) ?> &middot; <?= ukuran_manusia((int) ($m['ukuran'] ?? 0)) ?>
                   &middot; <a href="unggahan/<?= ee($m['mk']) ?>/<?= ee($m['berkas']) ?>" target="_blank" rel="noopener">buka PDF</a></span>
+
+                <details class="materi-ubah">
+                  <summary>Ubah keterangan</summary>
+                  <form method="post" action="admin-materi.php" class="materi-ubah-form">
+                    <input type="hidden" name="csrf" value="<?= $csrf ?>">
+                    <input type="hidden" name="aksi" value="ubah">
+                    <input type="hidden" name="id" value="<?= (int) $m['id'] ?>">
+                    <label class="masuk-label" for="ju<?= (int) $m['id'] ?>">Judul</label>
+                    <input class="masuk-input" id="ju<?= (int) $m['id'] ?>" name="judul" type="text" maxlength="140" value="<?= ee($m['judul']) ?>" required>
+                    <label class="masuk-label" for="de<?= (int) $m['id'] ?>">Keterangan singkat</label>
+                    <input class="masuk-input" id="de<?= (int) $m['id'] ?>" name="deskripsi" type="text" maxlength="200" value="<?= ee($m['deskripsi'] ?? '') ?>">
+                    <div class="materi-form-baris">
+                      <div>
+                        <label class="masuk-label" for="se<?= (int) $m['id'] ?>">Semester</label>
+                        <select class="masuk-input" id="se<?= (int) $m['id'] ?>" name="semester">
+                          <?php foreach (semester_pilihan() as $s): ?>
+                            <option value="<?= ee($s) ?>"<?= (string) ($m['semester'] ?? SEM_INI) === $s ? ' selected' : '' ?>><?= ee($s . ' — ' . label_semester($s)) ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                      </div>
+                      <div>
+                        <label class="masuk-label" for="pe<?= (int) $m['id'] ?>">Pertemuan ke-</label>
+                        <input class="masuk-input" id="pe<?= (int) $m['id'] ?>" name="pertemuan" type="number" min="0" max="16" step="1" value="<?= (int) ($m['pertemuan'] ?? 0) ?>">
+                      </div>
+                    </div>
+                    <button class="masuk-tombol" type="submit">Simpan perubahan</button>
+                  </form>
+                </details>
               </div>
               <form method="post" action="admin-materi.php" onsubmit="return confirm('Hapus materi ini beserta berkasnya?');">
                 <input type="hidden" name="csrf" value="<?= $csrf ?>">
