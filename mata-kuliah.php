@@ -69,8 +69,25 @@ $masuk = pengguna_sekarang();
     </div>
     <nav class="nav" aria-label="Navigasi utama">
         <a href="index.html">Beranda</a>
-        <a href="mengajar.html" class="active">Pengajaran</a>
-        <a href="bedah-publikasi.html">Bedah Publikasi</a>
+        <div class="nav-group active">
+          <button class="nav-btn" type="button" aria-expanded="false" aria-haspopup="true">Pengajaran<span class="caret" aria-hidden="true">&#9662;</span></button>
+          <div class="nav-menu">
+            <a href="mengajar.html">Ringkasan pengajaran</a>
+            <a href="mata-kuliah/index.html">Semua materi kuliah</a>
+            <a href="bimbingan/index.html">Bimbingan karya ilmiah</a>
+            <a href="tersimpan.html">Materi tersimpan</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <button class="nav-btn" type="button" aria-expanded="false" aria-haspopup="true">Bedah Publikasi<span class="caret" aria-hidden="true">&#9662;</span></button>
+          <div class="nav-menu">
+            <a href="bedah-publikasi.html">Ringkasan bedah publikasi</a>
+            <a href="scopus/index.html">Paper Scopus</a>
+            <a href="buku/index.html">Buku</a>
+            <a href="mulai-dari-sini.html">Mulai dari sini</a>
+            <a href="glosarium.html">Glosarium istilah</a>
+          </div>
+        </div>
         <a href="penelitian.html">Penelitian</a>
         <a href="kolaborasi.html">Kolaborasi</a>
         <a href="tentang.html">Profil</a>
@@ -148,8 +165,41 @@ $masuk = pengguna_sekarang();
 
 <script>
 document.addEventListener('click', function (e) {
+  var btn = e.target.closest('.nav-btn');
+  document.querySelectorAll('.nav-group.open').forEach(function (g) {
+    if (!btn || g !== btn.parentElement) {
+      g.classList.remove('open');
+      g.querySelector('.nav-btn').setAttribute('aria-expanded', 'false');
+    }
+  });
+  if (btn) {
+    var open = btn.parentElement.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+    return;
+  }
   var tgl = e.target.closest('.nav-toggle');
-  if (tgl) { var open = document.querySelector('.nav').classList.toggle('open'); tgl.setAttribute('aria-expanded', open); }
+  if (tgl) {
+    var open2 = document.querySelector('.nav').classList.toggle('open');
+    tgl.setAttribute('aria-expanded', open2);
+  }
+});
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Escape') return;
+  var terbuka = document.querySelector('.nav-group.open');
+  if (terbuka) {
+    terbuka.classList.remove('open');
+    var b = terbuka.querySelector('.nav-btn');
+    b.setAttribute('aria-expanded', 'false');
+    b.focus();
+    return;
+  }
+  var nav = document.querySelector('.nav.open');
+  if (nav) {
+    nav.classList.remove('open');
+    var t = document.querySelector('.nav-toggle');
+    t.setAttribute('aria-expanded', 'false');
+    t.focus();
+  }
 });
 </script>
 <script src="assets/cari.js?v=<?= filemtime(__DIR__ . '/assets/cari.js') ?>" defer></script>
