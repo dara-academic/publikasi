@@ -3814,8 +3814,8 @@ body[data-grup="profil"]          { --modul-isi: #7a4a2a; }
   position: relative; overflow: hidden; padding: 14px 16px;
   align-items: flex-start; justify-content: flex-start; flex-direction: column;
   background:
-    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--unj-emas, #ffdd00) 45%, transparent), transparent 42%),
-    linear-gradient(150deg, var(--modul-tipis, #d2ecec), color-mix(in srgb, var(--modul, #006569) 28%, var(--modul-tipis, #d2ecec)));
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--unj-emas, #ffdd00) 26%, transparent), transparent 40%),
+    linear-gradient(150deg, var(--modul-tipis, #d2ecec), color-mix(in srgb, var(--modul, #006569) 30%, var(--modul-tipis, #d2ecec)));
   color: var(--modul, var(--accent-dark));
 }
 .materi-sampul-kosong svg { width: 22px; height: 22px; opacity: 0.75; margin-bottom: auto; }
