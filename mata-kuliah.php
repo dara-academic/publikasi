@@ -54,7 +54,7 @@ $masuk = pengguna_sekarang();
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/style.css?v=<?= filemtime(__DIR__ . '/assets/style.css') ?>">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 </head>
 <body class="ak" data-grup="mengajar" data-hal="/mata-kuliah/<?= ee($slug) ?>">
 <a class="skip-link" href="#konten">Lewati ke konten utama</a>
@@ -64,7 +64,7 @@ $masuk = pengguna_sekarang();
     <button class="nav-toggle" aria-label="Buka menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <div class="cari">
       <label class="sr-only" for="cari">Cari isi situs</label>
-      <input class="cari-input" id="cari" type="search" autocomplete="off" placeholder="Cari materi, paper, istilah" data-naik="">
+      <input class="cari-input" id="cari" type="search" autocomplete="off" placeholder="Cari materi, paper" data-naik="">
       <div class="cari-hasil" hidden></div>
     </div>
     <nav class="nav" aria-label="Navigasi utama">

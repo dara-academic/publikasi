@@ -584,6 +584,9 @@
       var sampul = el('span', 'materi-sampul materi-sampul-kosong');
       sampul.setAttribute('aria-hidden', 'true');
       sampul.innerHTML = IKON_MK;
+      /* nama mata kuliah ditulis di ubinnya, meniru sampul asli yang memuat judul */
+      var sj = el('span', 'materi-sampul-judul'); sj.textContent = t.nama || t.slug;
+      sampul.appendChild(sj);
       a.appendChild(sampul);
       var b = el('b'); b.textContent = t.nama || t.slug; a.appendChild(b);
       var jml = el('span', 'materi-jml'); jml.textContent = (t.jml || 0) + ' materi'; a.appendChild(jml);

@@ -72,7 +72,7 @@ body {
 .nav-toggle { display: none; flex-direction: column; gap: 4px; background: none; border: 0; padding: 9px; cursor: pointer; }
 .nav-toggle span { width: 20px; height: 2px; background: var(--ink); border-radius: 8px; }
 
-@media (max-width: 920px) {
+@media (max-width: 1079px) {
   .nav-toggle { display: flex; }
   .ak-bar-isi { padding-top: 8px; padding-bottom: 8px; min-height: 0; }
   .ak-bar .nav { margin-left: 0; }
@@ -1539,7 +1539,7 @@ body.ak .glos-wrap { max-width: 964px; margin-inline: auto; }
 .cari-hasil mark { background: var(--pastel-butter); color: inherit; padding: 0 1px; border-radius: 8px; }
 .cari-kosong { padding: 14px 12px; font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
 
-@media (max-width: 920px) {
+@media (max-width: 1079px) {
   .cari { margin-left: 0; flex-basis: 100%; order: 1; }
   .cari-input, .cari-input:focus { width: 100%; }
   .cari-hasil { left: 0; right: auto; width: 100%; }
@@ -1881,11 +1881,17 @@ body.ak .ak-utama .mk-ubin p { max-width: none; }
    memaksa spasi melebar. Halaman sudah menyatakan lang="id" sehingga peramban
    yang punya kamus Indonesia akan memakainya, dan yang tidak punya sekadar
    mengabaikannya tanpa merusak apa pun. */
+/* Catatan lanjutan: perataan kiri-kanan akhirnya dicabut. Chrome tidak
+   punya kamus pemenggalan bahasa Indonesia, jadi hyphens: auto tidak pernah
+   bekerja, dan yang tersisa hanya "sungai" spasi lebar di kartu buku, kartu
+   paper, dan kotak kontak yang kolomnya cuma 500-600 piksel. Rata kiri
+   dengan tepi kanan bergerigi lebih mudah dibaca di layar; kolom bacanya
+   sudah dijaga 42em, itu sudah cukup rapi tanpa dipaksa rata. */
 body.ak .ak-utama p,
 body.ak .ak-utama li {
-  text-align: justify;
-  text-align-last: left;
-  hyphens: auto;
+  text-align: inherit;   /* ikut induknya: rata kiri biasa, tengah bila induknya tengah */
+  text-align-last: auto;
+  hyphens: manual;
   overflow-wrap: break-word;
 }
 
@@ -2071,7 +2077,7 @@ body.ak .ak-utama .ak-sumber-tautan { font-size: 14px; margin: 14px 0 0; }
   color: #fff; background: rgba(255,255,255,0.14);
 }
 .nav-toggle span { background: #e7edf3; }
-@media (max-width: 920px) {
+@media (max-width: 1079px) {
   .ak-bar .nav-btn { color: #8fa1b3; }
   .ak-bar .nav-menu a { color: #d6dfe8; }
   .ak-bar .nav-menu a:hover { background: rgba(255,255,255,0.10); color: #fff; }
@@ -2551,7 +2557,7 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
 .ak-bar .nav > a:hover, .ak-bar .nav-btn:hover { background: rgba(255,255,255,0.14); color: #fff; }
 .ak-bar .nav > a.active, .ak-bar .nav-group.active > .nav-btn { background: rgba(255,255,255,0.20); color: #fff; }
 .nav-toggle span { background: #eaf6f6; }
-@media (max-width: 920px) {
+@media (max-width: 1079px) {
   .ak-bar .nav-btn { color: #9fcfd0; }
   .ak-bar .nav-menu a { color: #d8eeee; }
 }
@@ -2722,7 +2728,7 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
   stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
 }
 /* Di layar sempit, tombol Masuk melebar penuh di dalam menu geser */
-@media (max-width: 920px) {
+@media (max-width: 1079px) {
   .ak-bar .nav > a.nav-masuk {
     margin: 8px 12px 4px; justify-content: center; padding: 11px 16px;
   }
@@ -2993,7 +2999,7 @@ body.ak .ak-utama h2 { font-size: clamp(22px, 2.6vw, 27px); font-weight: 800; }
   transition: background 0.15s ease, transform 0.15s ease;
 }
 .tema-tombol:hover { background: rgba(255,255,255,0.20); transform: rotate(15deg); }
-@media (max-width: 920px) { .tema-tombol { margin: 8px 0 4px auto; } }
+@media (max-width: 1079px) { .tema-tombol { margin: 8px 0 4px auto; } }
 
 /* Halaman auth di mode gelap: latar tetap gradasi hijau gelap (sudah cocok) */
 :root[data-theme="dark"] .masuk-kartu { background: var(--kartu); }
@@ -3753,3 +3759,105 @@ body[data-grup="profil"]          { --modul-isi: #7a4a2a; }
   border-radius: 12px; background: var(--bg);
 }
 .materi-ubah-form .masuk-tombol { margin-top: 12px; width: auto; }
+
+/* ============================================================
+   PENYELARASAN TAMPILAN — hasil tinjauan potret layar penuh
+   ============================================================
+   Diperiksa dari tangkapan layar utuh 1366 px dan 390 px, terang dan
+   gelap. Tiap aturan di bawah menjawab satu temuan yang terlihat mata,
+   bukan tebakan. */
+
+/* 1. Baris kontak di kaki halaman terpotong di layar 1366 px ("Masuk area
+   bi..."). Barisnya dikunci satu baris dan digulir tanpa bilah gulir, jadi
+   di laptop biasa tautan terakhir hilang tanpa petunjuk apa pun. Di layar
+   lebar tautannya dibiarkan membungkus; gulir horizontal cukup untuk ponsel. */
+@media (min-width: 701px) {
+  .kaki-kontak ul { flex-wrap: wrap; overflow: visible; gap: 10px 22px; }
+}
+
+/* 2. Bilah atas. Dua temuan sekaligus:
+   a) Kotak cari 150 px memenggal placeholder-nya sendiri ("Cari materi, p").
+   b) Pengukuran di 940-1100 px: nama situs + kotak cari + enam tab + Masuk
+      + tombol tema butuh 1060 px lebih, sedangkan bilahnya cuma 890-1050 px.
+      Menu pun terlempar ke baris kedua dan bilah jadi 89 px tinggi, padahal
+      hamburger baru menyala di 920 px. Rentang itu justru laptop kecil dan
+      tablet mendatar. Batas hamburger dinaikkan ke 1079 px (semua media
+      query bilah di atas ikut diganti), dan di 1080-1200 px hurufnya
+      dirapatkan sedikit supaya muat satu baris.
+   Kotak cari mengikuti lebar layar dan baru melebar bila ruangnya ada. */
+@media (min-width: 1080px) {
+  .cari-input { width: clamp(150px, 15vw, 204px); }
+}
+@media (min-width: 1080px) and (max-width: 1220px) {
+  .ak-nama { font-size: 17.5px; }
+  .ak-bar .nav > a, .ak-bar .nav-btn { font-size: 13px; padding: 7px 6px; }
+  .cari-input { width: 140px; }
+  .ak-bar-isi { gap: 10px; }
+}
+
+/* 3. Satu keluarga huruf untuk semua judul. Judul halaman dan tombol sudah
+   pindah ke Plus Jakarta Sans, tetapi judul kartu paper, kartu buku, dan
+   kartu 404 masih Source Serif: dua wajah dalam satu halaman terasa
+   seperti dua situs. Token --serif dialihkan ke huruf tampilan, jadi
+   seluruh sisa serif ikut seragam tanpa menyentuh tiga puluh aturan lama,
+   dan berkas font Source Serif tidak perlu diunduh lagi. */
+:root { --serif: var(--display, "Plus Jakarta Sans", "Inter", system-ui, sans-serif); }
+.card h3, .book-body h3, .bm-kartu h3, .mk-isi b, .value h3, .flow-step h3 {
+  font-weight: 700; letter-spacing: -0.01em;
+}
+
+/* 4. Sampul pengganti mata kuliah tanpa gambar dulu biru pastel, warna
+   yang tidak ada di identitas teal-emas situs, dan hanya berisi ikon buku.
+   Sekarang ia ubin bergradasi warna modul dengan nama mata kuliahnya,
+   meniru sampul sungguhan yang memang selalu memuat judul. */
+.materi-sampul-kosong {
+  position: relative; overflow: hidden; padding: 14px 16px;
+  align-items: flex-start; justify-content: flex-start; flex-direction: column;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--unj-emas, #ffdd00) 45%, transparent), transparent 42%),
+    linear-gradient(150deg, var(--modul-tipis, #d2ecec), color-mix(in srgb, var(--modul, #006569) 28%, var(--modul-tipis, #d2ecec)));
+  color: var(--modul, var(--accent-dark));
+}
+.materi-sampul-kosong svg { width: 22px; height: 22px; opacity: 0.75; margin-bottom: auto; }
+.materi-sampul-judul {
+  display: block; font-family: var(--display, var(--sans)); font-weight: 800;
+  font-size: 15px; line-height: 1.2; letter-spacing: -0.01em; text-align: left;
+  color: color-mix(in srgb, var(--modul, #006569) 82%, #000);
+  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+}
+:root[data-theme="dark"] .materi-sampul-kosong {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(255,221,0,0.14), transparent 42%),
+    linear-gradient(150deg, var(--modul-tipis), color-mix(in srgb, var(--modul) 22%, var(--modul-tipis)));
+}
+:root[data-theme="dark"] .materi-sampul-judul { color: var(--ink); }
+
+/* 5. Kata "bareng." di judul beranda berakhir di kuning #ffdd00 murni di atas
+   latar hampir putih: kontrasnya 1,4:1, sehingga kata penutup judulnya
+   justru yang paling pudar. Ujung gradasinya diturunkan ke emas tua di
+   mode terang (3,4:1, lolos ambang teks besar); di mode gelap kuning
+   terang memang tepat dan dipertahankan. */
+.sorot-kata { background-image: linear-gradient(120deg, var(--modul, #006569) 25%, #a98c00); }
+:root[data-theme="dark"] .sorot-kata { background-image: linear-gradient(120deg, var(--modul, #3fb59a), var(--unj-emas, #ffdd00)); }
+
+/* 6. Chip statistik di potret beranda versi ponsel ("7 paper Scopus dalam
+   1,5 tahun") pecah jadi dua baris dan menabrak wajah. Dikunci satu baris,
+   diperkecil sedikit, dan ditarik ke dalam tepi potret. */
+.hero-x-chip { white-space: nowrap; }
+@media (max-width: 860px) {
+  .hero-x-chip { font-size: 12.5px; padding: 7px 12px; }
+  .hero-x-chip.chip-1 { top: -12px; left: -6px; }
+  .hero-x-chip.chip-2 { bottom: 10%; right: -6px; }
+}
+
+/* 7. Warna modul Profil dari cokelat lumpur ke oker hangat yang masih
+   sekeluarga dengan emas almamater; kontras 5,5:1 di atas putih. */
+body[data-grup="profil"] { --modul: #8a5a12; --modul-tipis: #f7ecd6; --modul-isi: #8a5a12; }
+
+/* 8. Sampul pengganti materi per pertemuan dan nomor pertemuan unggahan
+   ikut warna modul halamannya, bukan biru pastel. */
+.tl-sampul-kosong {
+  color: var(--modul, var(--accent-dark));
+  background: linear-gradient(150deg, var(--modul-tipis, #d2ecec), color-mix(in srgb, var(--modul, #006569) 22%, var(--modul-tipis, #d2ecec)));
+}
+.tl-unggah .tl-no { color: var(--modul, var(--accent-dark)); background: var(--modul-tipis, var(--pastel-blue)); }

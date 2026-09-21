@@ -26,9 +26,9 @@ $masuk = pengguna_sekarang();
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/style.css?v=<?= filemtime(__DIR__ . '/assets/style.css') ?>">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 </head>
-<body class="ak" data-grup="penelitian">
+<body class="ak" data-grup="bedah-publikasi">
 <a class="skip-link" href="#konten">Lewati ke konten utama</a>
 <header class="ak-bar">
   <div class="ak-bar-isi">
@@ -45,7 +45,7 @@ $masuk = pengguna_sekarang();
             <a href="tersimpan.html">Materi tersimpan</a>
           </div>
         </div>
-        <div class="nav-group">
+        <div class="nav-group active">
           <button class="nav-btn" type="button" aria-expanded="false" aria-haspopup="true">Bedah Publikasi<span class="caret" aria-hidden="true">&#9662;</span></button>
           <div class="nav-menu">
             <a href="bedah-publikasi.html">Ringkasan bedah publikasi</a>
@@ -55,7 +55,7 @@ $masuk = pengguna_sekarang();
             <a href="glosarium.html">Glosarium istilah</a>
           </div>
         </div>
-        <a href="penelitian.html" class="active">Penelitian</a>
+        <a href="penelitian.html">Penelitian</a>
         <a href="kolaborasi.html">Kolaborasi</a>
         <a href="tentang.html">Profil</a>
         <a class="nav-masuk" href="masuk.php"><svg viewBox="0 0 24 24" aria-hidden="true" class="nav-masuk-ikon"><rect x="5" y="10.5" width="14" height="10" rx="2.2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Masuk</a>
