@@ -4084,3 +4084,120 @@ body[data-grup="mengajar"] .materi-progres-rel { background: #d5f3ea; }
 
 /* Garis puncak kartu Masuk disamakan dengan garis bilah */
 .masuk-kartu::before { background: var(--grad-garis); }
+
+
+/* ============================================================
+   BERANDA YANG MENGAJAK: bukti, jalur, dan ajakan
+   ============================================================
+   Beranda lama memajang isi tetapi jarang mengajak berbuat: angka capaian
+   tersembunyi, blok Terbaru tipis, dan halaman berakhir di catatan
+   disclaimer. Susunan baru: pintu sesuai kebutuhan di hero, barisan
+   angka sebagai bukti, linimasa Terbaru bertanggal, daftar materi paling
+   banyak diunduh, pita karya bersama mahasiswa, lalu ajakan penutup. */
+
+/* --- Pintu sesuai kebutuhan di hero --- */
+.pintu-saya { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 4px; }
+.pintu-saya-label {
+  font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-muted); margin-right: 2px;
+}
+.pintu-chip {
+  display: inline-flex; align-items: center; gap: 7px; text-decoration: none;
+  font-family: var(--display); font-weight: 700; font-size: 14px; color: var(--ink);
+  background: color-mix(in srgb, var(--kartu) 80%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--modul, #006569) 22%, var(--line));
+  padding: 8px 14px; border-radius: 999px;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.pintu-chip:hover { transform: translateY(-2px); border-color: var(--g-toska, #0fb5a6); background: var(--kartu); color: var(--modul, var(--accent-dark)); }
+.hn-tautan { justify-content: center; margin-top: 10px; font-size: 13px; gap: 4px 14px; }
+@media (max-width: 860px) { .pintu-saya { justify-content: center; } }
+
+/* --- Barisan angka: kini tautan, tiap kotak membuka buktinya --- */
+.stat-strip > a {
+  display: block; text-decoration: none; color: var(--ink);
+  background: var(--kartu); border: 1px solid var(--line); border-radius: 16px;
+  padding: 20px 22px; box-shadow: var(--bayang-kartu);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+  position: relative; overflow: hidden;
+}
+.stat-strip > a::before {
+  content: ""; position: absolute; left: 0; top: 0; right: 0; height: 3px;
+  background: var(--grad-garis); opacity: 0.85;
+}
+.stat-strip > a:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(20,35,50,0.14); border-color: color-mix(in srgb, var(--g-toska, #0fb5a6) 40%, var(--line)); }
+.stat-strip b { background-image: var(--grad-teks); }
+.stat-strip span { display: block; line-height: 1.4; }
+@media (prefers-reduced-motion: reduce) { .stat-strip > a:hover, .pintu-chip:hover { transform: none; } }
+
+/* --- Terbaru: tanggal dan penanda Baru --- */
+.terbaru-atas { display: flex; align-items: center; gap: 6px; }
+.terbaru-baru {
+  font-family: var(--display); font-weight: 800; font-size: 10.5px; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+  color: #0b3d2c; background: linear-gradient(90deg, #a7f3d0, #d9f99d);
+}
+.terbaru-tgl { margin-top: auto; padding-top: 4px; font-size: 12px; font-weight: 600; color: var(--ink-muted); }
+
+/* --- Paling banyak diunduh --- */
+.populer { max-width: 964px; margin: 0 auto; padding: 40px 26px 0; }
+.populer-daftar { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.populer-daftar a {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px;
+  padding: 14px 18px; border-radius: 14px; text-decoration: none; color: var(--ink);
+  background: var(--kartu); border: 1px solid var(--line);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.populer-daftar a:hover { transform: translateX(4px); box-shadow: 0 10px 24px rgba(20,35,50,0.10); border-color: color-mix(in srgb, var(--g-toska, #0fb5a6) 40%, var(--line)); }
+.pop-no {
+  width: 38px; height: 38px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-weight: 800; font-size: 17px; color: #fff; background-image: var(--grad-isi);
+}
+.populer-daftar li:first-child .pop-no { background: linear-gradient(135deg, #f5c400, #e0a800); color: #3a2c00; }
+.pop-teks { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.pop-teks b { font-family: var(--display); font-weight: 800; font-size: 15.5px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pop-teks span { font-size: 12.5px; color: var(--ink-soft); }
+.pop-n { font-family: var(--display); font-weight: 800; font-size: 18px; color: var(--modul, var(--accent-dark)); text-align: right; line-height: 1.1; }
+.pop-n small { display: block; font-family: var(--sans); font-weight: 600; font-size: 11px; color: var(--ink-muted); }
+@media (max-width: 520px) { .pop-teks b { white-space: normal; } .populer-daftar a { gap: 12px; padding: 12px 14px; } }
+
+/* --- Pita karya bersama mahasiswa --- */
+.kolab-pita { margin-top: 50px; }
+.kolab-pita-rak { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.kp-kartu {
+  display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px;
+  text-decoration: none; color: var(--ink); background: var(--kartu); border: 1px solid var(--line);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.kp-kartu:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(20,35,50,0.12); }
+.kp-inisial {
+  flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-weight: 800; font-size: 15px; color: #fff; background-image: var(--grad-isi);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--g-muda, #86efac) 45%, transparent);
+}
+.kp-teks { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.kp-teks b { font-family: var(--display); font-weight: 800; font-size: 14.5px; line-height: 1.25; }
+.kp-teks span { font-size: 12.5px; line-height: 1.4; color: var(--ink-soft); }
+.kp-semua { display: inline-block; margin-top: 14px; }
+@media (max-width: 860px) { .kolab-pita-rak { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .kolab-pita-rak { grid-template-columns: 1fr; } }
+
+/* --- Ajakan penutup --- */
+.penutup {
+  margin-top: 56px; padding: 38px 34px; border-radius: 22px; text-align: center; color: #eafaf3;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(134,239,172,0.30), transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(15,181,166,0.30), transparent 45%),
+    var(--grad-dalam);
+  box-shadow: 0 18px 44px rgba(2,47,50,0.25);
+}
+body.ak .ak-utama .penutup h2 { color: #fff; margin: 0 0 8px; border: 0; padding: 0; }
+.penutup p { max-width: 36em; margin: 0 auto 22px; color: #cdeee2; text-align: center; }
+.penutup-aksi { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.penutup .tombol-x.utama { background: linear-gradient(135deg, #ffe45c, #ffd21e); background-size: auto; color: #2b2400; box-shadow: 0 8px 22px rgba(255,210,30,0.30); }
+.penutup .tombol-x.kedua { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.35); color: #fff; }
+.penutup .tombol-x.kedua:hover { background: rgba(255,255,255,0.18); color: #fff; border-color: #fff; }
+.ak-catatan { margin-top: 26px; }
+/* Label "Saya datang sebagai" di barisnya sendiri; tiga chip muat satu baris di bawahnya */
+.pintu-saya-label { flex-basis: 100%; margin: 0 0 -2px; }
