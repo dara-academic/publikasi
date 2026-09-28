@@ -46,7 +46,7 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
 <body class="ak" data-grup="mengajar">
 <header class="ak-bar">
   <div class="ak-bar-isi">
-    <a class="ak-nama" href="../index.html">Belajar Bersama Dara</a>
+    <a class="ak-nama" href="../index.html"><svg class="ak-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#e9b949"/><path d="M7.5 10.2c3-.9 5.9-.6 8.5 1.3v12.3c-2.6-1.9-5.5-2.2-8.5-1.3z" fill="#0f4c5c"/><path d="M24.5 10.2c-3-.9-5.9-.6-8.5 1.3v12.3c2.6-1.9 5.5-2.2 8.5-1.3z" fill="#0f4c5c" opacity=".72"/></svg><span>Belajar Bersama Dara</span></a>
     <span class="rekap-siapa">Masuk sebagai <b><?= e($pengguna['nama']) ?></b>
       <?php if ($admin): ?>&middot; <a href="../akun.php">Kelola akun</a><?php endif; ?>
       &middot; <a href="../ganti-sandi.php">Ganti sandi</a>

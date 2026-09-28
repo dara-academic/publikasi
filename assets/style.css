@@ -4398,3 +4398,121 @@ body[data-grup][data-grup] .ak-utama .hero h1::after, body[data-grup][data-grup]
 }
 ::selection { background: #f5dfa6; }
 :root[data-theme="dark"] ::selection { background: rgba(92,200,189,0.35); }
+
+
+/* ============================================================
+   SISTEM DESAIN: skala huruf, sudut, dan bingkai yang seragam
+   ============================================================
+   Audit sebelumnya: beranda memakai 13 ukuran huruf, 6 variasi sudut, dua
+   lebar bingkai yang tepinya tidak segaris, dan semua H2 berbobot 800.
+   Di bawah ini satu skala saja. Jenjang ketebalan: judul halaman 800,
+   judul bagian 700, judul kartu 700, isi 400. */
+:root {
+  --r-kecil: 8px; --r-sedang: 14px; --r-besar: 20px;
+  --lebar-beranda: 1120px;
+}
+
+/* --- Skala judul --- */
+.hero-x h1 { font-size: clamp(36px, 4.6vw, 54px); line-height: 1.05; }
+body.ak .ak-utama h1, body.ak .ak-utama .hero h1, .hal-hero h1 {
+  font-size: clamp(30px, 3.6vw, 40px); font-weight: 800; line-height: 1.12;
+}
+body.ak .ak-utama .paper-head h1 {
+  font-size: clamp(26px, 2.8vw, 34px); font-weight: 700; line-height: 1.2; letter-spacing: -0.015em;
+}
+body.ak .ak-utama h2, body.ak .section-head h2, .karya-kepala h2, .terbaru-kepala h2, .hook-judul, .materi-kepala h2 {
+  font-size: clamp(22px, 2.2vw, 26px); font-weight: 700; letter-spacing: -0.015em;
+}
+body.ak .ak-utama h3, .card h3, .book-body h3 { font-size: 17.5px; font-weight: 700; line-height: 1.35; }
+body.ak .ak-utama .prose p { font-size: 16.5px; line-height: 1.75; }
+.hal-lead, .ak-intro { font-size: 18px !important; line-height: 1.55 !important; font-weight: 400; color: var(--ink-soft) !important; }
+
+/* --- Tiga ukuran sudut --- */
+.card, .book, .value, .terbaru-kartu, .populer-daftar a, .kp-kartu, .stat-strip > a, .mk-ubin, .ak-pintu,
+.bm-kartu, .glos-item, .rs-kartu, .ws-kartu, .simpan-item, .kolab, details.reviewer, .profile, .prose .callout,
+.materi-kartu .materi-sampul, .karya-sampul, .ak-catatan { border-radius: var(--r-sedang); }
+.gerbang-kartu, .penutup, .cta-monitor, .prog-band { border-radius: var(--r-besar); }
+.cari-hasil, .nav-menu, .sitasi-box { border-radius: var(--r-sedang); }
+
+/* --- Beranda: satu lebar bingkai, semua tepi segaris --- */
+.hero-x-isi, .stat-strip, .ramai, .hook, .beranda-bawah {
+  max-width: var(--lebar-beranda); margin-left: auto; margin-right: auto;
+  padding-left: 26px; padding-right: 26px;
+}
+.stat-strip { margin-top: -30px; }
+/* Judul bagian rata kiri seperti bagian lain */
+.hook { text-align: left; margin-top: 48px; }
+.hook-sub { margin: 0 0 22px; max-width: none; }
+.hook-strip { gap: 16px; }
+.hook-item {
+  align-items: flex-start; text-align: left; padding: 18px 20px;
+  border: 1px solid var(--line); border-radius: var(--r-sedang); background: var(--kartu);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.hook-item:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(15,76,92,0.10); border-color: color-mix(in srgb, #0e7c7b 30%, var(--line)); }
+.hook-ikon { width: 46px; height: 46px; margin-bottom: 8px; box-shadow: none; }
+.hook-ikon svg { width: 22px; height: 22px; }
+.hook-ket { max-width: none; }
+@media (max-width: 760px) { .hook-strip { grid-template-columns: 1fr; } }
+
+/* --- Terbaru dan Paling banyak diunduh berdampingan --- */
+.ramai { padding-top: 48px; }
+.ramai .terbaru, .ramai .populer { max-width: none; margin: 0; padding: 0; }
+@media (min-width: 1000px) {
+  .ramai { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 20px 40px; align-items: start; }
+  .ramai .terbaru-rak { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ramai:has(#populer[hidden]) { grid-template-columns: 1fr; }
+  .ramai:has(#populer[hidden]) .terbaru-rak { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+}
+@media (max-width: 999px) { .ramai .populer { margin-top: 40px; } }
+.beranda-bawah { padding-top: 48px; }
+
+/* --- Logo di bilah dan kaki --- */
+.ak-nama { display: inline-flex; align-items: center; gap: 10px; }
+.ak-logo { width: 30px; height: 30px; flex-shrink: 0; display: block; }
+.kaki-brand-nama { display: flex; align-items: center; gap: 10px; }
+.kaki-brand-nama .ak-logo { width: 28px; height: 28px; }
+
+/* --- Kaki halaman empat kolom + baris hak cipta --- */
+.kaki-peta { grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)) minmax(0, 1.15fr); gap: 32px; align-items: start; padding: 34px 0 26px; }
+.kaki-peta .kaki-kolom ul { display: block; overflow: visible; }
+.kaki-peta .kaki-kolom li { margin: 0 0 10px; white-space: normal; }
+.kaki-peta .kaki-kolom a { font-weight: 500; font-size: 14px; }
+.kaki-peta h4 { margin-bottom: 14px; }
+.kaki-bawah { margin: 0; padding: 16px 0 4px; font-size: 12.5px; color: #9fc9c3; }
+@media (max-width: 900px) { .kaki-peta { grid-template-columns: 1fr 1fr; } .kaki-brand { grid-column: 1 / -1; } }
+@media (max-width: 520px) { .kaki-peta { grid-template-columns: 1fr; } }
+
+/* --- Ikon garis pengganti emoji --- */
+.ikon { width: 18px; height: 18px; flex-shrink: 0; display: block; }
+.tema-tombol { color: #f3d58a; }
+.tema-tombol .ikon-matahari { display: none; }
+:root[data-theme="dark"] .tema-tombol .ikon-bulan { display: none; }
+:root[data-theme="dark"] .tema-tombol .ikon-matahari { display: block; }
+.pintu-chip .ikon { width: 17px; height: 17px; color: var(--modul, #0e6e6d); }
+.gerbang-emoji { color: #e9b949; }
+.gerbang-emoji .ikon { width: 26px; height: 26px; }
+.cta-monitor-ikon .ikon { width: 28px; height: 28px; color: #e9b949; }
+
+/* --- Tombol Simpan di baris aksi --- */
+.simpan-aksi.aktif { background: #e3f1ee; color: #0f4c5c; border-color: transparent; }
+:root[data-theme="dark"] .simpan-aksi.aktif { background: #12302e; color: #cdeee8; }
+.simpan-apung { display: inline-flex; align-items: center; gap: 7px; }
+.simpan-apung svg { width: 15px; height: 15px; }
+/* Logo menambah 40 px di bilah; kotak cari dan nama situs dirapatkan supaya menu tetap satu baris */
+@media (min-width: 1080px) { .cari-input { width: clamp(140px, 11.5vw, 184px); } .ak-nama { font-size: 18.5px; } }
+@media (min-width: 1080px) and (max-width: 1220px) { .ak-logo { width: 26px; height: 26px; } .ak-nama { font-size: 16.5px; gap: 8px; } .cari-input { width: 128px; } }
+.kaki-peta .kaki-kolom li { margin: 0 0 4px; line-height: 1.5; }
+.kaki-peta .kaki-kolom a { padding: 4px 0; }
+/* Empat kotak angka di bingkai 1120 px: gambar sedikit diperkecil supaya teks tidak terlipat tiga baris */
+@media (min-width: 1181px) {
+  .stat-bergambar > a { padding: 18px 12px 18px 20px; gap: 6px; }
+  .stat-bergambar .sb-kipas, .stat-bergambar .sb-wajah { transform: scale(0.84); transform-origin: right center; margin-left: -14px; }
+}
+/* Ponsel: logo, nama, hamburger, dan tombol tema muat satu baris */
+@media (max-width: 480px) {
+  .ak-nama { font-size: 16.5px; gap: 8px; }
+  .ak-logo { width: 26px; height: 26px; }
+  .ak-bar-isi { gap: 10px; padding-left: 16px; padding-right: 16px; }
+}
+@media (max-width: 1079px) { .tema-tombol { margin: 0 0 0 auto; } }

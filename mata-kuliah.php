@@ -60,7 +60,7 @@ $masuk = pengguna_sekarang();
 <a class="skip-link" href="#konten">Lewati ke konten utama</a>
 <header class="ak-bar">
   <div class="ak-bar-isi">
-    <a class="ak-nama" href="index.html">Belajar Bersama Dara</a>
+    <a class="ak-nama" href="index.html"><svg class="ak-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#e9b949"/><path d="M7.5 10.2c3-.9 5.9-.6 8.5 1.3v12.3c-2.6-1.9-5.5-2.2-8.5-1.3z" fill="#0f4c5c"/><path d="M24.5 10.2c-3-.9-5.9-.6-8.5 1.3v12.3c2.6-1.9 5.5-2.2 8.5-1.3z" fill="#0f4c5c" opacity=".72"/></svg><span>Belajar Bersama Dara</span></a>
     <button class="nav-toggle" aria-label="Buka menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <div class="cari">
       <label class="sr-only" for="cari">Cari isi situs</label>
@@ -93,7 +93,7 @@ $masuk = pengguna_sekarang();
         <a href="tentang.html">Profil</a>
         <a class="nav-masuk" href="masuk.php"><svg viewBox="0 0 24 24" aria-hidden="true" class="nav-masuk-ikon"><rect x="5" y="10.5" width="14" height="10" rx="2.2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Masuk</a>
     </nav>
-    <button class="tema-tombol" type="button" aria-label="Ganti tema terang/gelap" title="Ganti tema" data-tema-tombol>&#127769;</button>
+    <button class="tema-tombol" type="button" aria-label="Ganti tema terang/gelap" title="Ganti tema" data-tema-tombol><svg class="ikon ikon-bulan" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg><svg class="ikon ikon-matahari" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6L6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></svg></button>
   </div>
 </header>
 
@@ -148,18 +148,40 @@ $masuk = pengguna_sekarang();
   <div class="container">
     <div class="kaki-peta">
       <div class="kaki-brand">
-        <p class="kaki-brand-nama">Dr. Despinur Dara</p>
-        <p class="kaki-brand-ket">Dosen &amp; peneliti Manajemen SDM, Fakultas Ekonomi Universitas Negeri Jakarta. Portal belajar terbuka: materi kuliah, bedah publikasi, dan bimbingan.</p>
+        <p class="kaki-brand-nama"><svg class="ak-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#e9b949"/><path d="M7.5 10.2c3-.9 5.9-.6 8.5 1.3v12.3c-2.6-1.9-5.5-2.2-8.5-1.3z" fill="#0f4c5c"/><path d="M24.5 10.2c-3-.9-5.9-.6-8.5 1.3v12.3c2.6-1.9 5.5-2.2 8.5-1.3z" fill="#0f4c5c" opacity=".72"/></svg>Dr. Despinur Dara</p>
+        <p class="kaki-brand-ket">Dosen Manajemen SDM, Fakultas Ekonomi Universitas Negeri Jakarta. Materi kuliah, publikasi, dan bimbingan dalam satu tempat.</p>
       </div>
-      <div class="kaki-kontak">
+      <div class="kaki-kolom">
+        <h4>Jelajahi</h4>
+        <ul>
+          <li><a href="mata-kuliah/index.html"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.5C10 4 7 3.6 4 4v14c3-.4 6 0 8 1.5 2-1.5 5-1.9 8-1.5V4c-3-.4-6 0-8 1.5z"/><path d="M12 5.5v14"/></svg>Materi kuliah</a></li>
+          <li><a href="bedah-publikasi.html"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20.5 20.5"/><path d="M8 10.5h5M10.5 8v5"/></svg>Bedah publikasi</a></li>
+          <li><a href="penelitian.html"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3.5h5"/><path d="M10.5 3.5v5.2L5.2 17a3 3 0 0 0 2.6 4.5h8.4a3 3 0 0 0 2.6-4.5l-5.3-8.3V3.5"/><path d="M7.5 14.5h9"/></svg>Penelitian</a></li>
+          <li><a href="kolaborasi.html"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8.5" r="3"/><circle cx="16.5" cy="8.5" r="3"/><path d="M2.5 19.5c.6-3 2.8-4.7 5.5-4.7 1.6 0 3 .6 4 1.7 1-1.1 2.4-1.7 4-1.7 2.7 0 4.9 1.7 5.5 4.7"/></svg>Kolaborasi</a></li>
+          <li><a href="tentang.html"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.2" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.6 7-5.6s6.2 2 7 5.6"/></svg>Profil</a></li>
+        </ul>
+      </div>
+      <div class="kaki-kolom">
+        <h4>Profil akademik</h4>
+        <ul>
+          <li><a href="https://scholar.google.com/citations?user=eeb8VR0AAAAJ&amp;hl=id" target="_blank" rel="noopener noreferrer"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4L2.5 9 12 14l9.5-5z"/><path d="M6 11.2V16c0 1.5 2.7 2.6 6 2.6s6-1.1 6-2.6v-4.8"/></svg>Google Scholar</a></li>
+          <li><a href="https://www.scopus.com/authid/detail.uri?authorId=57219945924" target="_blank" rel="noopener noreferrer"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l8.5 4.2-8.5 4.2-8.5-4.2z"/><path d="M3.5 12l8.5 4.2 8.5-4.2"/><path d="M3.5 16.3l8.5 4.2 8.5-4.2"/></svg>Scopus</a></li>
+          <li><a href="https://sinta.kemdiktisaintek.go.id/authors/profile/6728883/" target="_blank" rel="noopener noreferrer"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M8.5 13h7M8.5 16.5h5"/></svg>SINTA</a></li>
+          <li><a href="https://orcid.org/0000-0001-7291-4643" target="_blank" rel="noopener noreferrer"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.2 10.4v6"/><path d="M9.2 7.9h.01"/><path d="M12.7 16.4v-6h1.8a3 3 0 0 1 0 6z"/></svg>ORCID</a></li>
+          <li><a href="https://www.linkedin.com/in/despinur-dara-77674193/" target="_blank" rel="noopener noreferrer"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M7.6 10.6v6M7.6 7.5h.01"/><path d="M11.6 16.6v-6M11.6 13.2c0-1.5 1-2.6 2.5-2.6s2.5 1.1 2.5 2.6v3.4"/></svg>LinkedIn</a></li>
+        </ul>
+      </div>
+      <div class="kaki-kontak kaki-kolom">
         <h4>Butuh sesuatu?</h4>
         <ul>
-          <li><a href="mailto:dara@unj.ac.id">Hubungi lewat surel</a></li>
-          <li><a href="mengajar.html">Semua mata kuliah</a></li>
-          <li><a href="masuk.php">Masuk area bimbingan</a></li>
+          <li><a href="mailto:dara@unj.ac.id"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3 6.5l9 6 9-6"/></svg>Hubungi lewat surel</a></li>
+          <li><a href="tersimpan.html"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-3.8L5.5 20.5v-16a1 1 0 0 1 1-1z"/></svg>Materi tersimpan</a></li>
+          <li><a href="kolaborasi.html"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8.5" r="3"/><circle cx="16.5" cy="8.5" r="3"/><path d="M2.5 19.5c.6-3 2.8-4.7 5.5-4.7 1.6 0 3 .6 4 1.7 1-1.1 2.4-1.7 4-1.7 2.7 0 4.9 1.7 5.5 4.7"/></svg>Ajak kolaborasi riset</a></li>
+          <li><a href="masuk.php"><svg class="kaki-ikon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5.5" y="10.5" width="13" height="9.5" rx="2"/><path d="M8.5 10.5V7.8a3.5 3.5 0 0 1 7 0v2.7"/><path d="M12 14.5v2.5"/></svg>Masuk area bimbingan</a></li>
         </ul>
       </div>
     </div>
+    <p class="kaki-bawah">&copy; 2026 Dr. Despinur Dara &middot; Materi ajar boleh dipakai ulang dengan mencantumkan sumber &middot; Tanpa iklan</p>
   </div>
 </footer>
 

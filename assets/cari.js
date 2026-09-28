@@ -216,8 +216,8 @@
   function pasang(tema) {
     if (tema === 'dark') akar.setAttribute('data-theme', 'dark');
     else akar.removeAttribute('data-theme');
+    /* ikon bulan/matahari sudah ada di tombol; CSS memilih yang tampil */
     document.querySelectorAll('[data-tema-tombol]').forEach(function (b) {
-      b.textContent = tema === 'dark' ? '☀️' : '🌙';
       b.setAttribute('aria-pressed', tema === 'dark' ? 'true' : 'false');
     });
   }
@@ -305,9 +305,17 @@
   var url = location.pathname;
   var judul = (document.title || url).split(/[,|]/)[0].trim() || document.title;
   function ada() { return baca().some(function (x) { return x.url === url; }); }
+  /* Di halaman yang punya baris aksi (Cetak, Sitasi, Bagikan), tombol Simpan
+     ikut di baris itu; di halaman lain ia melayang di pojok. */
+  var baris = document.querySelector('.aksi-row');
+  var IKON_SIMPAN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-3.8L5.5 20.5v-16a1 1 0 0 1 1-1z"/></svg>';
+  var IKON_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   var btn = document.createElement('button');
-  btn.type = 'button'; btn.className = 'simpan-apung';
-  var sync = function () { var s = ada(); btn.classList.toggle('aktif', s); btn.innerHTML = s ? '✓ Tersimpan' : '♡ Simpan untuk nanti'; };
+  btn.type = 'button'; btn.className = baris ? 'aksi-btn simpan-aksi' : 'simpan-apung';
+  var sync = function () {
+    var s = ada(); btn.classList.toggle('aktif', s);
+    btn.innerHTML = s ? IKON_OK + 'Tersimpan' : IKON_SIMPAN + (baris ? 'Simpan' : 'Simpan untuk nanti');
+  };
   btn.addEventListener('click', function () {
     var a = baca();
     if (ada()) a = a.filter(function (x) { return x.url !== url; });
@@ -315,7 +323,12 @@
     tulis(a); sync();
   });
   sync();
-  document.body.appendChild(btn);
+  if (baris) {
+    var bagikan = baris.querySelector('.bagikan');
+    baris.insertBefore(btn, bagikan || null);
+  } else {
+    document.body.appendChild(btn);
+  }
 })();
 
 /* Tanya jawab: memuat komentar yang disetujui dan mengirim pertanyaan baru.
