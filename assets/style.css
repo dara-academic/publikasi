@@ -4289,3 +4289,112 @@ body.ak .ak-utama .penutup h2 { color: #fff; margin: 0 0 8px; border: 0; padding
 .stat-bergambar .sb-datar img:nth-child(3) { top: 50px; }
 /* Empat kotak bergambar butuh sekitar 290 px masing-masing; di bawah itu jadi dua kolom */
 @media (max-width: 1180px) { .stat-strip.stat-bergambar { grid-template-columns: repeat(2, 1fr); } }
+
+
+/* ============================================================
+   PALET A: TEAL AKADEMIK
+   ============================================================
+   Pola 60-30-10: kertas hangat sebagai dasar, satu teal sebagai warna
+   utama di semua halaman, emas lembut sebagai satu-satunya aksen.
+   Sebelumnya ada lima rona bersaing (teal, hijau daun, limau, emas terang,
+   ditambah biru/ungu/oker per modul), sehingga tiap pindah halaman terasa
+   pindah situs. Warna modul kini seragam; gradasi hanya tersisa samar.
+
+   Kontras terukur: putih di bilah #0F4C5C 9,5:1; putih di tombol #0E7C7B
+   5,0:1; judul #0E6E6D di kertas 5,6:1; teks keterangan #5F6B75 lolos 4,5:1;
+   tinta coklat di emas 7,5:1; teal gelap-mode #5CC8BD 8,0:1 di kartu. */
+:root {
+  --bg: #f7f5f0;
+  --ink: #1f2a2e;
+  --ink-soft: #56636b;
+  --ink-muted: #5f6b75;
+  --line: #e6e1d8;
+  --pastel-blue: #e3f1ee;          /* tint sorotan umum (callout, hover menu) kini mint */
+
+  --unj-hijau: #0e6e6d;
+  --unj-hijau-tua: #0b3a46;
+  --unj-emas: #e9b949;
+  --unj-emas-lembut: #faefd4;
+  --accent: #0e7c7b;
+  --accent-dark: #0e6e6d;
+  --aksen-isi: #0e7c7b;
+
+  --g-tua: #0f4c5c; --g-teal: #0e7c7b; --g-toska: #0e7c7b; --g-hijau: #0c6b6a;
+  --g-muda: #e9b949; --g-lime: #e9b949; --g-mint: #e3f1ee;
+
+  --grad-isi: linear-gradient(135deg, #0e7c7b 0%, #0c6b6a 100%);
+  --grad-bilah: linear-gradient(100deg, #0f4c5c 0%, #10535f 100%);
+  --grad-dalam: linear-gradient(135deg, #0b3a46 0%, #0f4c5c 100%);
+  --grad-garis: linear-gradient(90deg, #e9b949, #e9b949);
+  --grad-teks: linear-gradient(120deg, #0e7c7b, #0e6e6d);
+}
+/* satu warna utama untuk semua modul (atribut ganda supaya menang dari aturan per modul) */
+body[data-grup][data-grup] { --modul: #0e6e6d; --modul-isi: #0e7c7b; --modul-tipis: #e3f1ee; }
+:root[data-theme="dark"] {
+  --grad-teks: linear-gradient(120deg, #5cc8bd, #5cc8bd);
+  --pastel-blue: #12302e;
+  --accent: #5cc8bd; --accent-dark: #5cc8bd;
+}
+:root[data-theme="dark"] body[data-grup][data-grup] { --modul: #5cc8bd; --modul-tipis: #12302e; }
+
+body { background: var(--bg); }
+
+/* Bilah: teal gelap yang tenang, garis emas tipis sebagai tanda tangan */
+.ak-bar { border-bottom: 2px solid transparent; border-image: var(--grad-garis) 1; box-shadow: 0 1px 10px rgba(11,58,70,0.18); }
+.ak-bar .nav > a.active, .ak-bar .nav-group.active > .nav-btn { box-shadow: inset 0 -2px 0 #e9b949; }
+.ak-bar .nav > a:hover, .ak-bar .nav-btn:hover { background: rgba(255,255,255,0.10); }
+.ak-nama:hover { color: #f3d58a; }
+.ak-bar .nav > a.nav-masuk { color: #2c2100; }   /* latarnya ikut --unj-emas */
+.site-footer { border-top: 2px solid transparent; border-image: var(--grad-garis) 1; }
+.kaki-peta h4, .kaki-tgl { color: #9fc9c3; }
+.site-footer a:hover, .kaki-peta a:hover { color: #f3d58a; }
+
+/* Hero: kertas dengan rona mint dan emas yang sangat tipis */
+.hero-x {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(14,124,123,0.10), transparent 45%),
+    radial-gradient(circle at 88% 85%, rgba(233,185,73,0.12), transparent 45%),
+    linear-gradient(160deg, #fbfaf6, var(--bg));
+}
+:root[data-theme="dark"] .hero-x {
+  background: radial-gradient(circle at 12% 18%, rgba(92,200,189,0.10), transparent 45%), linear-gradient(160deg, var(--surface), var(--bg));
+}
+.hero-x-kicker { background: #e3f1ee; color: #0f4c5c; border: 1px solid rgba(14,124,123,0.18); }
+.hero-x-bingkai::before { background: linear-gradient(135deg, rgba(14,124,123,0.55), rgba(233,185,73,0.55)); opacity: 0.35; filter: blur(20px); }
+.hero-x-chip::before { background: #0e7c7b; }
+.sorot-kata { background-image: var(--grad-teks); }
+.tombol-x.utama { box-shadow: 0 8px 20px rgba(14,124,123,0.22); }
+.tombol-x.utama:hover { box-shadow: 0 12px 28px rgba(14,124,123,0.30); }
+
+/* Garis tanda tangan di bawah judul halaman: emas pendek */
+.ak-utama .hero h1::after, .ak-utama > h1::after, .ak-utama .paper-head h1::after,
+body[data-grup][data-grup] .ak-utama .hero h1::after, body[data-grup][data-grup] .ak-utama > h1::after { background: #e9b949; width: 52px; }
+
+/* Kotak sorotan di halaman baca: mint dengan tinta teal tua */
+.prose .callout { background: #e3f1ee; color: #0f4c5c; }
+:root[data-theme="dark"] .prose .callout { background: #12302e; color: #cdeee8; }
+
+/* Komponen beranda yang tadinya memakai hijau limau */
+.terbaru-baru { background: #faefd4; color: #6b4e0a; }
+.stat-strip > a::before { background: #0e7c7b; opacity: 1; height: 3px; }
+.stat-bergambar > a { background: radial-gradient(circle at 100% 100%, rgba(14,124,123,0.07), transparent 55%), var(--kartu); }
+.sb-wajah i:nth-child(2) { background-image: linear-gradient(135deg, #0f4c5c, #0e7c7b); }
+.sb-wajah i:nth-child(3) { background-image: linear-gradient(135deg, #1c6f6a, #0e5e5d); }
+.sb-wajah i:nth-child(4) { background-image: linear-gradient(135deg, #0b3a46, #10535f); }
+.sb-wajah i.sb-lagi { background: #e9b949; color: #2c2100; }
+.populer-daftar li:first-child .pop-no { background: #e9b949; color: #2c2100; }
+.kp-inisial { box-shadow: 0 0 0 3px rgba(233,185,73,0.45); }
+.pintu-chip:hover { border-color: #0e7c7b; }
+.penutup {
+  background: radial-gradient(circle at 85% 15%, rgba(233,185,73,0.18), transparent 45%), var(--grad-dalam);
+  color: #e6f3f1;
+}
+.penutup p { color: #c9e4e0; }
+.penutup .tombol-x.utama { background: #e9b949; color: #2c2100; box-shadow: 0 8px 20px rgba(233,185,73,0.25); }
+.gerbang-kartu.besar::before { background: radial-gradient(circle, rgba(233,185,73,0.20), transparent 65%); }
+.gerbang-lencana, .karya-badge.k-q1 { background: #e9b949; color: #2c2100; }
+.materi-sampul-kosong, body[data-grup="mengajar"] .materi-sampul-kosong, body[data-grup="beranda"] .materi-sampul-kosong {
+  background: radial-gradient(circle at 100% 0%, rgba(233,185,73,0.30), transparent 45%), linear-gradient(150deg, #e3f1ee, #b9ddd6);
+}
+::selection { background: #f5dfa6; }
+:root[data-theme="dark"] ::selection { background: rgba(92,200,189,0.35); }
