@@ -18,7 +18,7 @@ foreach (muat_materi() as $m) {
         'judul'   => (string) $m['judul'],
         'ket'     => $MK_NAMA[$mk] ?? 'Materi kuliah',
         'tanggal' => (string) ($m['tanggal'] ?? ''),
-        'url'     => isset($MK_NAMA[$mk]) ? 'mata-kuliah/' . $mk . '.html' : 'mengajar.html',
+        'url'     => isset($MK_NAMA[$mk]) ? mk_url($mk) : 'mengajar.html',   /* mk_url: tambahan admin tak punya .html */
     ];
 }
 foreach (muat_paper() as $p) {

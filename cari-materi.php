@@ -25,7 +25,7 @@ foreach (muat_materi() as $m) {
     $t = mb_strtolower(trim($judul . ' ' . $desk . ' ' . $nama[$mk] . ' materi kuliah'));
     $out[] = [
         'j' => $judul,
-        'u' => 'mata-kuliah/' . $mk . '.html',
+        'u' => isset($nama[$mk]) ? mk_url($mk) : 'mengajar.html',
         'k' => 'Materi kuliah',
         'r' => $r,
         't' => $t,

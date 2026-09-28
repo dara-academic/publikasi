@@ -26,7 +26,7 @@ foreach (muat_materi() as $m) {
     $desk = (string) ($m['deskripsi'] ?? '');
     $items[] = [
         't'   => 'Materi baru: ' . (string) ($m['judul'] ?? ''),
-        'l'   => SITUS . (isset($nama[$mk]) ? 'mata-kuliah/' . $mk . '.html' : 'mengajar.html'),
+        'l'   => SITUS . (isset($nama[$mk]) ? mk_url($mk) : 'mengajar.html'),
         'd'   => $desk !== '' ? $desk : (($nama[$mk] ?? 'Materi kuliah') . ', bisa diunduh.'),
         'g'   => 'materi-' . (string) ($m['berkas'] ?? ''),
         'tgl' => (string) ($m['tanggal'] ?? ''),

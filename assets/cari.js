@@ -575,10 +575,13 @@
     SEM_LALU_V = d.sem_lalu || SEM_LALU_V;
     var kuliah = d.kuliah || {};
 
-    /* Mata kuliah tambahan buatan admin: tampilkan kartunya di daftar. */
+    /* Mata kuliah tambahan buatan admin. Kartunya dibuat per tab: tampil di
+       Semester lalu hanya bila memang punya materi semester lalu, dan tampil
+       di Semester ini bila punya materi semester ini atau belum punya materi
+       sama sekali (mata kuliah baru pasti milik semester berjalan). Dulu
+       semuanya masuk Semester lalu dengan tulisan "0 materi". */
     var IKON_MK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5A2.5 2.5 0 0 1 4 20.5z"/></svg>';
-    (d.tambahan || []).forEach(function (t) {
-      if (!t || !t.slug) return;
+    function kartuTambahan(t, n) {
       var a = el('a', 'materi-kartu');
       a.href = 'mata-kuliah.php?mk=' + encodeURIComponent(t.slug);
       var sampul = el('span', 'materi-sampul materi-sampul-kosong');
@@ -589,8 +592,15 @@
       sampul.appendChild(sj);
       a.appendChild(sampul);
       var b = el('b'); b.textContent = t.nama || t.slug; a.appendChild(b);
-      var jml = el('span', 'materi-jml'); jml.textContent = (t.jml || 0) + ' materi'; a.appendChild(jml);
-      grid.appendChild(a);
+      var jml = el('span', 'materi-jml');
+      jml.textContent = n > 0 ? n + ' materi' : 'Materi segera diunggah';
+      a.appendChild(jml);
+      return a;
+    }
+    var tambahan = (d.tambahan || []).filter(function (t) { return t && t.slug; });
+    tambahan.forEach(function (t) {
+      var nLalu = (kuliah[t.slug] && kuliah[t.slug][SEM_LALU_V]) || 0;
+      if (nLalu > 0) grid.appendChild(kartuTambahan(t, nLalu));
     });
 
     var induk = grid.parentNode;
@@ -616,6 +626,10 @@
         gridIni.appendChild(c);
         ada = true;
       }
+    });
+    tambahan.forEach(function (t) {
+      var nIni = (kuliah[t.slug] && kuliah[t.slug][SEM_INI_V]) || 0;
+      if (nIni > 0 || !(t.jml > 0)) { gridIni.appendChild(kartuTambahan(t, nIni)); ada = true; }
     });
     if (!ada) {
       var kos = el('p', 'hal-sub');
@@ -722,4 +736,36 @@
 
   pasang();
   document.addEventListener('materi:terpasang', pasang);
+})();
+
+
+/* ------------------------------------------------------------------
+   Rak "Semua materi kuliah": mata kuliah baru buatan admin.
+
+   Halaman ini statis dan hanya memuat tujuh mata kuliah bawaan, padahal
+   ia berjanji memajang semua mata kuliah yang materinya sudah ada. Mata
+   kuliah tambahan yang sudah punya materi disisipkan dari
+   materi-ringkas.php, dengan ubin nama sebagai sampul.
+   ------------------------------------------------------------------ */
+(function () {
+  if (!/\/mata-kuliah\/(index\.html)?$/.test(location.pathname)) return;
+  var rak = document.querySelector('.mk-rak');
+  if (!rak) return;
+  fetch('../materi-ringkas.php', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+    (d && d.tambahan || []).forEach(function (t) {
+      if (!t || !t.slug || !(t.jml > 0)) return;
+      var a = document.createElement('a');
+      a.className = 'mk-ubin'; a.href = '../mata-kuliah.php?mk=' + encodeURIComponent(t.slug);
+      a.setAttribute('data-semester', d.sem_ini || '');
+      var s = document.createElement('span'); s.className = 'mk-sampul materi-sampul-kosong'; s.setAttribute('aria-hidden', 'true');
+      var sj = document.createElement('span'); sj.className = 'materi-sampul-judul'; sj.textContent = t.nama || t.slug;
+      s.appendChild(sj); a.appendChild(s);
+      var isi = document.createElement('span'); isi.className = 'mk-isi';
+      var b = document.createElement('b'); b.textContent = t.nama || t.slug; isi.appendChild(b);
+      var k = document.createElement('span'); k.className = 'mk-kode'; k.textContent = 'Semester ' + (d.sem_ini || '') + ' · baru'; isi.appendChild(k);
+      var st = document.createElement('span'); st.className = 'mk-status'; st.textContent = t.jml + ' materi siap unduh'; isi.appendChild(st);
+      a.appendChild(isi);
+      rak.insertBefore(a, rak.firstChild);   /* yang baru di depan */
+    });
+  }).catch(function () {});
 })();

@@ -3861,3 +3861,223 @@ body[data-grup="profil"] { --modul: #8a5a12; --modul-tipis: #f7ecd6; --modul-isi
   background: linear-gradient(150deg, var(--modul-tipis, #d2ecec), color-mix(in srgb, var(--modul, #006569) 22%, var(--modul-tipis, #d2ecec)));
 }
 .tl-unggah .tl-no { color: var(--modul, var(--accent-dark)); background: var(--modul-tipis, var(--pastel-blue)); }
+
+
+/* ============================================================
+   TEMA TOSKA-HIJAU MUDA: gradasi, bukan satu hijau datar
+   ============================================================
+   Dulu bilah, kaki, tombol, dan pita memakai satu teal #006569 yang
+   sama persis, sehingga seluruh situs terasa satu warna. Sekarang
+   warnanya bergerak dari teal tua ke toska lalu hijau daun, dengan
+   hijau muda sebagai cahaya pada garis, sorotan, dan latar hero.
+   Emas almamater tetap ada, dipakai hemat: tombol Masuk, lencana, dan
+   ujung garis bilah.
+
+   Semua titik gradasi yang memikul teks putih sudah diukur: #006b6e
+   7,0:1, #007a74 5,2:1, #12805f 4,9:1. Hijau muda (#86efac, #a3e635)
+   sengaja hanya dipakai sebagai hiasan atau teks di atas latar gelap. */
+:root {
+  --g-tua: #03474b;
+  --g-teal: #006b6e;
+  --g-toska: #0fb5a6;
+  --g-hijau: #12805f;
+  --g-muda: #86efac;
+  --g-lime: #a3e635;
+  --g-mint: #dcf7ec;
+  --grad-isi: linear-gradient(135deg, #006b6e 0%, #007a74 50%, #12805f 100%);
+  --grad-bilah: linear-gradient(100deg, #03474b 0%, #006b6e 36%, #00766f 66%, #0f7a5a 100%);
+  --grad-dalam: linear-gradient(135deg, #022f32 0%, #005f63 50%, #0b634a 100%);
+  --grad-garis: linear-gradient(90deg, #0fb5a6 0%, #4ade80 55%, #a3e635 80%, #ffdd00 100%);
+  --grad-teks: linear-gradient(120deg, #007a78 10%, #16a34a 95%);
+}
+:root[data-theme="dark"] { --grad-teks: linear-gradient(120deg, #2dd4bf 10%, #a3e635 95%); }
+
+/* Modul non-hijau tetap satu rona, hanya diberi kedalaman ke arah lebih gelap. */
+body[data-grup="bedah-publikasi"], body[data-grup="penelitian"],
+body[data-grup="kolaborasi"], body[data-grup="profil"] {
+  --grad-isi: linear-gradient(135deg, var(--modul-isi), color-mix(in srgb, var(--modul-isi) 78%, #000));
+}
+body[data-grup="mengajar"] { --modul-tipis: #d5f3ea; }
+body[data-grup="beranda"]  { --modul-tipis: var(--g-mint); }
+:root[data-theme="dark"] body[data-grup="mengajar"],
+:root[data-theme="dark"] body[data-grup="beranda"] { --modul: #2dd4bf; }
+
+/* --- Bilah atas dan kaki halaman --- */
+.ak-bar {
+  background: var(--grad-bilah);
+  border-bottom: 3px solid transparent; border-image: var(--grad-garis) 1;
+}
+/* Teks menu putih penuh: di ujung kanan bilah yang lebih hijau, warna
+   #d8eeee yang lama hanya 4,1:1. Pil aktif dan sorot digelapkan, bukan
+   diputihkan, supaya kontrasnya naik; penanda aktif dibantu garis hijau muda. */
+.ak-bar .nav > a, .ak-bar .nav-btn { color: #fff; }
+.ak-bar .nav > a:hover, .ak-bar .nav-btn:hover { background: rgba(2,40,40,0.22); color: #fff; }
+.ak-bar .nav > a.active, .ak-bar .nav-group.active > .nav-btn {
+  background: rgba(2,40,40,0.28); color: #fff;
+  box-shadow: inset 0 -2px 0 var(--g-muda);
+}
+.ak-nama:hover { color: var(--g-muda); }
+@media (max-width: 1079px) {
+  .ak-bar .nav.open { background: rgba(2,47,50,0.35); border-radius: 14px; margin-top: 6px; }
+}
+.site-footer {
+  background: var(--grad-dalam);
+  border-top: 3px solid transparent; border-image: var(--grad-garis) 1;
+}
+.kaki-peta h4, .kaki-tgl { color: #bfe3dc; }
+.kaki-brand-ket { color: #c3e2da; }
+.site-footer a:hover, .kaki-peta a:hover { color: var(--g-muda); }
+
+/* --- Isian berwarna: tombol, tab aktif, penanda --- */
+.skip-link,
+.btn.primary,
+.btn.solid,
+.sitasi-tab button.aktif,
+.pk-unduh,
+.mk-chip.aktif,
+.akun-tombol.setuju,
+.masuk-tombol,
+.tombol-x.utama,
+.unduh-aksi,
+.admin-menu a.active,
+.simpan-apung.aktif,
+.sem-tab.aktif,
+.tl-baru,
+.tl-selesai-tanda,
+.tl-selesai .tl-no,
+.ke-atas,
+.materi-progres-isi,
+.tahap-lulus,
+.b-lulus,
+.skip-link:hover,
+.btn.primary:hover,
+.btn.solid:hover,
+.sitasi-tab button.aktif:hover,
+.pk-unduh:hover,
+.mk-chip.aktif:hover,
+.akun-tombol.setuju:hover,
+.masuk-tombol:hover,
+.tombol-x.utama:hover,
+.unduh-aksi:hover,
+.admin-menu a.active:hover,
+.simpan-apung.aktif:hover,
+.sem-tab.aktif:hover,
+.tl-baru:hover,
+.tl-selesai-tanda:hover,
+.tl-selesai .tl-no:hover,
+.ke-atas:hover,
+.materi-progres-isi:hover,
+.tahap-lulus:hover,
+.b-lulus:hover,
+.mod-setuju:hover {
+  background-image: var(--grad-isi); background-size: 160% 100%; background-position: 0 0;
+  filter: none;
+}
+.btn.primary:hover, .pk-unduh:hover, .masuk-tombol:hover, .tombol-x.utama:hover,
+.unduh-aksi:hover, .akun-tombol.setuju:hover, .ke-atas:hover { background-position: 100% 0; }
+.btn.primary, .pk-unduh, .masuk-tombol, .tombol-x.utama, .unduh-aksi {
+  transition: background-position 0.3s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.tombol-x.utama { box-shadow: 0 8px 24px rgba(18,128,95,0.30); }
+.tombol-x.utama:hover { box-shadow: 0 14px 32px rgba(18,128,95,0.40); }
+
+/* --- Pita gelap: papan progres, kartu unggulan, CTA monitoring --- */
+.prog-band, .gerbang-kartu.besar, .cta-monitor { background: var(--grad-dalam); }
+.gerbang-kartu.besar { position: relative; }
+.gerbang-kartu.besar::before {
+  content: ""; position: absolute; right: -60px; top: -60px; width: 240px; height: 240px;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(134,239,172,0.28), transparent 65%);
+}
+.gerbang-kartu.besar > *:not(.gerbang-panah) { position: relative; }
+
+/* --- Beranda: hero bercahaya toska dan hijau muda --- */
+.hero-x {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(15,181,166,0.20), transparent 42%),
+    radial-gradient(circle at 88% 85%, rgba(134,239,172,0.30), transparent 45%),
+    radial-gradient(circle at 60% 0%, rgba(163,230,53,0.10), transparent 35%),
+    linear-gradient(160deg, var(--surface), var(--bg));
+}
+:root[data-theme="dark"] .hero-x {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(15,181,166,0.18), transparent 42%),
+    radial-gradient(circle at 88% 85%, rgba(74,222,128,0.12), transparent 45%),
+    linear-gradient(160deg, var(--surface), var(--bg));
+}
+.hero-x-kicker {
+  background: linear-gradient(90deg, #d2f4ee, #e2f8d6); color: #00625f;
+  border: 1px solid rgba(15,181,166,0.25);
+}
+:root[data-theme="dark"] .hero-x-kicker { background: rgba(45,212,191,0.12); color: #5eead4; border-color: rgba(45,212,191,0.25); }
+.sorot-kata, :root[data-theme="dark"] .sorot-kata { background-image: var(--grad-teks); }
+.hero-x-bingkai::before {
+  content: ""; position: absolute; inset: -12px; border-radius: 32px; z-index: 0;
+  background: var(--grad-garis); filter: blur(22px); opacity: 0.38;
+}
+.hero-x-chip::before { background: linear-gradient(135deg, var(--g-toska), #22c55e); }
+.ak-potret::before { background: linear-gradient(135deg, var(--g-toska), var(--g-muda)); }
+
+/* Angka dan judul bergradasi di halaman hijau */
+body[data-grup="beranda"] .stat-strip b, body[data-grup="mengajar"] .stat-strip b,
+body[data-grup="beranda"] .ak-angka b, body[data-grup="mengajar"] .ak-angka b {
+  background-image: var(--grad-teks);
+}
+body[data-grup="beranda"] .ak-utama .hero h1::after, body[data-grup="mengajar"] .ak-utama .hero h1::after,
+body[data-grup="beranda"] .ak-utama > h1::after, body[data-grup="mengajar"] .ak-utama > h1::after {
+  background: var(--grad-garis); width: 64px;
+}
+::selection { background: #c6f3de; }
+:root[data-theme="dark"] ::selection { background: rgba(45,212,191,0.35); }
+
+/* Ubin sampul pengganti ikut palet baru */
+body[data-grup="mengajar"] .materi-sampul-kosong,
+body[data-grup="beranda"] .materi-sampul-kosong {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(163,230,53,0.35), transparent 45%),
+    linear-gradient(150deg, #d5f3ea, #a7e3d3);
+}
+:root[data-theme="dark"] body[data-grup="mengajar"] .materi-sampul-kosong {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(163,230,53,0.14), transparent 45%),
+    linear-gradient(150deg, #14312c, #184a3f);
+}
+
+/* ============================================================
+   HURUF: Bricolage Grotesque untuk judul, Figtree untuk isi
+   ============================================================
+   Plus Jakarta Sans dan Inter rapi tetapi netral; di situs belajar yang
+   ingin terasa hangat, keduanya terbaca seperti dasbor kantor. Bricolage
+   Grotesque punya sumbu ukuran optik, jadi judul besar tampil tegas dan
+   berkarakter sementara ukuran kecil tetap tenang. Figtree untuk paragraf:
+   bentuknya bundar dan ramah, tinggi huruf kecilnya besar sehingga tetap
+   nyaman dibaca panjang, dan sedikit lebih ramping dari Inter sehingga bilah
+   menu punya ruang lebih. */
+:root {
+  --sans: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --display: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+}
+body { font-family: var(--sans); }
+body.ak h1, .hero-x h1, .prog-band h1, .admin-band h1, .masuk-kartu h1 { letter-spacing: -0.02em; }
+body.ak .ak-utama h2, body.ak .section-head h2 { letter-spacing: -0.015em; }
+.ak-nama { letter-spacing: -0.015em; }
+
+/* Mode gelap: empat warna teks yang ditulis mati dan tidak ikut berbalik.
+   Ditemukan pemindai kontras saat tema baru diuji; semuanya sudah ada
+   sebelum tema ini, bukan akibatnya. */
+.ak-utama .hero h1 { color: var(--ink); }   /* judul halaman mata kuliah: dulu #1c3a5e, 1,5:1 di gelap */
+:root[data-theme="dark"] .band-buku .section-note { color: var(--ink-soft); }
+:root[data-theme="dark"] .bm-segera p { color: #e2c56a; }
+:root[data-theme="dark"] .glos-alias { color: #e2c56a; }
+:root[data-theme="dark"] .glos-tutup p { color: #bfe8cf; }
+
+/* Menu ponsel: label grup adalah judul bagian, bukan tombol. Gaya pil aktif
+   dari bilah desktop tidak berlaku di sini; label cukup diberi hijau muda. */
+@media (max-width: 1079px) {
+  .ak-bar .nav-btn, .ak-bar .nav-group.active > .nav-btn {
+    color: #a7f3d0; background: none; box-shadow: none;
+  }
+}
+/* Batang kemajuan belajar: lintasannya ikut mint, bukan biru sisa palet lama */
+body[data-grup="mengajar"] .materi-progres-rel { background: #d5f3ea; }
+:root[data-theme="dark"] body[data-grup="mengajar"] .materi-progres-rel { background: #14312c; }
