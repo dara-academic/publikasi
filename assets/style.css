@@ -4081,3 +4081,6 @@ body.ak .ak-utama h2, body.ak .section-head h2 { letter-spacing: -0.015em; }
 /* Batang kemajuan belajar: lintasannya ikut mint, bukan biru sisa palet lama */
 body[data-grup="mengajar"] .materi-progres-rel { background: #d5f3ea; }
 :root[data-theme="dark"] body[data-grup="mengajar"] .materi-progres-rel { background: #14312c; }
+
+/* Garis puncak kartu Masuk disamakan dengan garis bilah */
+.masuk-kartu::before { background: var(--grad-garis); }
