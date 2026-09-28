@@ -16,7 +16,7 @@
 <link rel="canonical" href="https://despinurdara.id/">
 <link rel="alternate" type="application/rss+xml" title="Kabar Belajar bersama Dr. Dara" href="feed.php">
 <link rel="icon" href="assets/favicon.svg?v=500dc24e" type="image/svg+xml">
-<link rel="stylesheet" href="assets/style.css?v=c0cd992b">
+<link rel="stylesheet" href="assets/style.css?v=d05453f0">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://despinurdara.id/#dara", "name": "Despinur Dara", "givenName": "Despinur", "familyName": "Dara", "honorificPrefix": "Dr.", "jobTitle": "Praktisi sumber daya manusia, dosen, dan peneliti", "email": "mailto:dara@unj.ac.id", "url": "https://despinurdara.id/", "image": "https://despinurdara.id/assets/foto-dara-portal.jpg?v=60d96713", "worksFor": {"@type": "CollegeOrUniversity", "name": "Universitas Negeri Jakarta", "department": {"@type": "Organization", "name": "Fakultas Ekonomi"}, "url": "https://www.unj.ac.id/"}, "knowsAbout": ["Manajemen sumber daya manusia", "Talent management", "Pelatihan dan pengembangan", "Employee well-being", "Job crafting", "Transformasi digital dunia kerja"], "knowsLanguage": ["id", "en"], "sameAs": ["https://orcid.org/0000-0001-7291-4643", "https://www.scopus.com/authid/detail.uri?authorId=57219945924", "https://scholar.google.com/citations?user=eeb8VR0AAAAJ", "https://sinta.kemdiktisaintek.go.id/authors/profile/6728883/", "https://www.linkedin.com/in/despinur-dara-77674193/"]}, {"@type": "WebSite", "@id": "https://despinurdara.id/#situs", "url": "https://despinurdara.id/", "name": "Belajar bersama Dr. Dara", "inLanguage": "id", "publisher": {"@id": "https://despinurdara.id/#dara"}, "description": "Ruang belajar terbuka Dr. Despinur Dara: materi kuliah manajemen dan SDM, bedah proses publikasi ilmiah, riset, dan bimbingan karya ilmiah."}, {"@type": "ProfilePage", "url": "https://despinurdara.id/", "mainEntity": {"@id": "https://despinurdara.id/#dara"}, "inLanguage": "id"}]}</script>
@@ -104,11 +104,23 @@
 
 <!-- Barisan bukti: angka yang sudah nyata. Kotak keempat diisi beranda.php
      (total unduhan bila sudah bermakna, bila belum jumlah materi terbuka). -->
-<div class="stat-strip" aria-label="Capaian dalam angka">
-  <a href="scopus/index.html"><b>6</b><span>paper Scopus, 3 di antaranya Q1</span></a>
-  <a href="buku/index.html"><b>6</b><span>buku dari riset ke panduan praktis</span></a>
-  <a href="kolaborasi.html"><b>20</b><span>karya terbit bersama mahasiswa &amp; rekan</span></a>
-  <a href="mata-kuliah/index.html" id="stat-hidup"><b>51</b><span>materi kuliah terbuka untuk diunduh</span></a>
+<div class="stat-strip stat-bergambar" aria-label="Capaian dalam angka">
+  <a href="scopus/index.html" class="sb-paper">
+    <span class="sb-teks"><b>6</b><span>paper Scopus, 3 di antaranya Q1</span><em>Lihat papernya &rarr;</em></span>
+    <span class="sb-kipas sb-tegak" aria-hidden="true"><img src="assets/covers/jwam.webp?v=72ce0f16" alt="" width="400" height="552" loading="lazy"><img src="assets/covers/heswbl.webp?v=d63a2a0c" alt="" width="400" height="552" loading="lazy"><img src="assets/covers/ijoa.webp?v=e5303db3" alt="" width="400" height="546" loading="lazy"></span>
+  </a>
+  <a href="buku/index.html" class="sb-buku">
+    <span class="sb-teks"><b>6</b><span>buku dari riset ke panduan praktis</span><em>Lihat bukunya &rarr;</em></span>
+    <span class="sb-kipas sb-tegak" aria-hidden="true"><img src="assets/buku/skill-up.webp?v=b97811fa" alt="" width="700" height="1050" loading="lazy"><img src="assets/buku/human-at-work.webp?v=f1e9e35e" alt="" width="700" height="1050" loading="lazy"><img src="assets/buku/mengukur-kualitas-kerja-asn.webp?v=ad2f043f" alt="" width="700" height="1050" loading="lazy"></span>
+  </a>
+  <a href="kolaborasi.html" class="sb-kolab">
+    <span class="sb-teks"><b>20</b><span>karya terbit bersama mahasiswa &amp; rekan</span><em>Lihat karyanya &rarr;</em></span>
+    <span class="sb-wajah" aria-hidden="true"><i>FU</i><i>JS</i><i>MR</i><i>LS</i><i class="sb-lagi">+16</i></span>
+  </a>
+  <a href="mata-kuliah/index.html" id="stat-hidup" class="sb-materi">
+    <span class="sb-teks"><b>51</b><span>materi kuliah terbuka untuk diunduh</span><em>Buka materinya &rarr;</em></span>
+    <span class="sb-kipas sb-datar" aria-hidden="true"><img src="assets/mk/simulasi-bisnis.webp?v=a4aa60f7" alt="" width="640" height="360" loading="lazy"><img src="assets/mk/pengantar-manajemen.webp?v=525c71de" alt="" width="640" height="360" loading="lazy"><img src="assets/mk/kompensasi-perlindungan-sdm.webp?v=8a37e491" alt="" width="640" height="360" loading="lazy"></span>
+  </a>
 </div>
 
 <main class="ak-utama" id="konten">
@@ -373,10 +385,12 @@ document.addEventListener('keydown', function (e) {
     var ang = function (n) { return n.toLocaleString('id-ID'); };
     var kotak = document.getElementById('stat-hidup');
     /* total unduhan baru ditampilkan kalau sudah bermakna; sebelum itu jumlah materi */
-    if (kotak && d.unduhan >= 100) {
-      kotak.innerHTML = '<b>' + ang(d.unduhan) + '</b><span>kali materi kuliah diunduh</span>';
-    } else if (kotak && d.materi) {
-      kotak.innerHTML = '<b>' + ang(d.materi) + '</b><span>materi kuliah terbuka untuk diunduh</span>';
+    /* hanya angka dan keterangan yang diganti, gambar sampulnya tetap */
+    var kb = kotak && kotak.querySelector('.sb-teks b'), ks = kotak && kotak.querySelector('.sb-teks > span');
+    if (kb && d.unduhan >= 100) {
+      kb.textContent = ang(d.unduhan); ks.textContent = 'kali materi kuliah diunduh';
+    } else if (kb && d.materi) {
+      kb.textContent = ang(d.materi); ks.textContent = 'materi kuliah terbuka untuk diunduh';
     }
     var pop = d.populer || [];
     if (pop.length < 3) return;

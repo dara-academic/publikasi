@@ -4201,3 +4201,91 @@ body.ak .ak-utama .penutup h2 { color: #fff; margin: 0 0 8px; border: 0; padding
 .ak-catatan { margin-top: 26px; }
 /* Label "Saya datang sebagai" di barisnya sendiri; tiga chip muat satu baris di bawahnya */
 .pintu-saya-label { flex-basis: 100%; margin: 0 0 -2px; }
+
+/* ============================================================
+   Kotak angka bergambar: tiap angka ditemani karyanya sendiri
+   ============================================================
+   Angka tanpa gambar terasa seperti laporan. Di sini tiap kotak memakai
+   sampul asli: jurnal Scopus, buku, sampul slide kuliah, dan inisial
+   penulis kolaborasi. Bukan gambar stok, karena bukti paling meyakinkan
+   adalah karyanya sendiri. Kipas sampul sedikit mengembang saat disentuh. */
+.stat-bergambar > a {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  min-height: 150px; padding: 18px 16px 18px 22px;
+  background:
+    radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--g-muda, #86efac) 26%, transparent), transparent 55%),
+    var(--kartu);
+}
+.stat-bergambar .sb-teks { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.stat-bergambar .sb-teks > span { font-size: 13.5px; line-height: 1.4; color: var(--ink-soft); }
+.stat-bergambar .sb-teks em {
+  font-style: normal; font-family: var(--display); font-weight: 700; font-size: 12.5px;
+  color: var(--modul, var(--accent-dark)); margin-top: 6px; opacity: 0; transform: translateX(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.stat-bergambar > a:hover .sb-teks em, .stat-bergambar > a:focus-visible .sb-teks em { opacity: 1; transform: none; }
+
+/* kipas sampul */
+.sb-kipas { position: relative; display: block; flex-shrink: 0; }
+.sb-kipas img {
+  position: absolute; display: block; object-fit: cover; border-radius: 5px;
+  box-shadow: 0 6px 16px rgba(20,35,50,0.22); border: 2px solid #fff;
+  transition: transform 0.25s ease;
+}
+.sb-tegak { width: 92px; height: 104px; }
+.sb-tegak img { width: 58px; height: 80px; top: 12px; }
+.sb-tegak img:nth-child(1) { left: 0;    transform: rotate(-12deg); }
+.sb-tegak img:nth-child(2) { left: 17px; transform: rotate(-2deg); top: 6px; }
+.sb-tegak img:nth-child(3) { left: 34px; transform: rotate(9deg); top: 14px; }
+.stat-bergambar > a:hover .sb-tegak img:nth-child(1) { transform: rotate(-18deg) translateX(-6px); }
+.stat-bergambar > a:hover .sb-tegak img:nth-child(3) { transform: rotate(15deg) translateX(6px); }
+.sb-datar { width: 104px; height: 96px; }
+.sb-datar img { width: 88px; height: 50px; left: 8px; }
+.sb-datar img:nth-child(1) { top: 4px;  transform: rotate(-8deg); }
+.sb-datar img:nth-child(2) { top: 24px; transform: rotate(3deg); left: 14px; }
+.sb-datar img:nth-child(3) { top: 44px; transform: rotate(-3deg); left: 4px; }
+.stat-bergambar > a:hover .sb-datar img:nth-child(1) { transform: rotate(-13deg) translateY(-5px); }
+.stat-bergambar > a:hover .sb-datar img:nth-child(3) { transform: rotate(-1deg) translateY(5px); }
+
+/* wajah penulis kolaborasi: inisial bertumpuk */
+.sb-wajah { display: grid; grid-template-columns: repeat(3, 34px); gap: 4px; flex-shrink: 0; }
+.sb-wajah i {
+  width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  font-style: normal; font-family: var(--display); font-weight: 800; font-size: 12.5px; color: #fff;
+  background-image: var(--grad-isi); border: 2px solid var(--kartu);
+  box-shadow: 0 4px 10px rgba(20,35,50,0.16); transition: transform 0.2s ease;
+}
+.sb-wajah i:nth-child(2) { background-image: linear-gradient(135deg, #0f9f8f, #16a34a); }
+.sb-wajah i:nth-child(3) { background-image: linear-gradient(135deg, #2c5580, #0b7d81); }
+.sb-wajah i:nth-child(4) { background-image: linear-gradient(135deg, #574083, #2c5580); }
+.sb-wajah i.sb-lagi { background: linear-gradient(135deg, #ffe45c, #ffd21e); color: #3a2c00; font-size: 11.5px; }
+.stat-bergambar > a:hover .sb-wajah i:nth-child(odd) { transform: translateY(-3px); }
+
+:root[data-theme="dark"] .sb-kipas img { border-color: #2a333f; }
+:root[data-theme="dark"] .stat-bergambar > a {
+  background: radial-gradient(circle at 100% 100%, rgba(45,212,191,0.12), transparent 55%), var(--kartu);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sb-kipas img, .sb-wajah i, .stat-bergambar .sb-teks em { transition: none; }
+}
+/* layar sedang: dua kolom, gambar tetap; ponsel: gambar mengecil */
+@media (max-width: 460px) {
+  .stat-bergambar > a { grid-template-columns: 1fr; min-height: 0; padding: 16px; }
+  .stat-bergambar .sb-kipas, .stat-bergambar .sb-wajah { order: -1; transform: scale(0.8); transform-origin: left top; margin-bottom: -14px; }
+  .stat-bergambar .sb-teks em { opacity: 1; transform: none; }
+}
+/* Aturan lama ".stat-strip span { display:block }" lebih spesifik dari .sb-wajah,
+   jadi tata letaknya dikunci ulang lewat induknya. Sampul dibesarkan supaya
+   mengisi kotak, bukan tempelan kecil di pojok. */
+.stat-bergambar .sb-wajah { display: grid; grid-template-columns: repeat(3, 38px); gap: 5px; }
+.stat-bergambar .sb-wajah i { width: 40px; height: 40px; }
+.stat-bergambar .sb-tegak { width: 118px; height: 124px; }
+.stat-bergambar .sb-tegak img { width: 72px; height: 99px; }
+.stat-bergambar .sb-tegak img:nth-child(2) { left: 22px; }
+.stat-bergambar .sb-tegak img:nth-child(3) { left: 44px; }
+.stat-bergambar .sb-datar { width: 128px; height: 112px; }
+.stat-bergambar .sb-datar img { width: 108px; height: 61px; }
+.stat-bergambar .sb-datar img:nth-child(2) { top: 27px; }
+.stat-bergambar .sb-datar img:nth-child(3) { top: 50px; }
+/* Empat kotak bergambar butuh sekitar 290 px masing-masing; di bawah itu jadi dua kolom */
+@media (max-width: 1180px) { .stat-strip.stat-bergambar { grid-template-columns: repeat(2, 1fr); } }
