@@ -40,5 +40,9 @@ foreach (muat_buku() as $b) {
     ];
 }
 
+/* ?tipe=materi: beranda hanya butuh materi, karena paper dan buku sudah tampil di Karya terbaru */
+if (($_GET['tipe'] ?? '') === 'materi') {
+    $items = array_values(array_filter($items, fn($x) => $x['tipe'] === 'Materi'));
+}
 usort($items, fn($a, $b) => strcmp($b['tanggal'], $a['tanggal']));
 echo json_encode(['items' => array_slice($items, 0, 6)], JSON_UNESCAPED_UNICODE);
