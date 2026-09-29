@@ -44,7 +44,7 @@ function tgl_indo(string $t, array $B): string {
   <nav class="remah" aria-label="Jejak lokasi"><a href="../index.html">Beranda</a><span class="remah-pisah">&rsaquo;</span><a href="progres.php">Monitoring bimbingan</a><span class="remah-pisah">&rsaquo;</span><span class="remah-kini">Lulusan</span></nav>
   <div class="container">
     <header class="hal-hero hero-bergambar">
-      <img class="hero-ilustrasi" src="../assets/ilustrasi/lulusan.svg" alt="" width="300" height="220" loading="lazy" decoding="async">
+      <figure class="hero-foto"><img src="../assets/foto/wisuda.webp" alt="Wisudawati memegang map ijazah" width="800" height="600" decoding="async" fetchpriority="high"><figcaption>Foto: <a href="https://unsplash.com/photos/cwVb-V0e9aE" target="_blank" rel="noopener">Galuh hari setiawan / Unsplash</a></figcaption></figure>
       <p class="kicker">Bimbingan</p>
       <h1>Lulusan bimbingan</h1>
       <p class="hal-lead"><?= count($lulus) ?> mahasiswa lulus: <?= count($per_j['S1']) ?> S1, <?= count($per_j['S2']) ?> S2, <?= count($per_j['S3']) ?> S3.</p>
