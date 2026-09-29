@@ -40,7 +40,7 @@ function e($s): string { return htmlspecialchars((string) $s, ENT_QUOTES); }
       &middot; <a href="../keluar.php">Keluar</a></span>
   </div>
 </header>
-<div class="ak-halaman">
+<div class="ak-halaman bim-lebar">
 <main class="ak-utama" id="konten">
   <nav class="remah" aria-label="Jejak lokasi"><a href="../index.html">Beranda</a><span class="remah-pisah">&rsaquo;</span><a href="progres.php">Monitoring bimbingan</a><span class="remah-pisah">&rsaquo;</span><span class="remah-kini">Rincian bimbingan</span></nav>
 

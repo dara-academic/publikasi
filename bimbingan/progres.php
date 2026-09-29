@@ -80,7 +80,7 @@ function kelas_status(array $m): string {
   </div>
 </div>
 
-<div class="ak-halaman">
+<div class="ak-halaman bim-lebar">
 <main class="ak-utama" id="konten">
   <nav class="remah" aria-label="Jejak lokasi"><a href="../index.html">Beranda</a><span class="remah-pisah">&rsaquo;</span><a href="index.html">Bimbingan karya ilmiah</a><span class="remah-pisah">&rsaquo;</span><span class="remah-kini">Monitoring bimbingan</span></nav>
 

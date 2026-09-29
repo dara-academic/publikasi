@@ -39,7 +39,7 @@ function tgl_indo(string $t, array $B): string {
       &middot; <a href="../masuk.php">Masuk</a></span>
   </div>
 </header>
-<div class="ak-halaman">
+<div class="ak-halaman bim-lebar">
 <main class="ak-utama" id="konten">
   <nav class="remah" aria-label="Jejak lokasi"><a href="../index.html">Beranda</a><span class="remah-pisah">&rsaquo;</span><a href="progres.php">Monitoring bimbingan</a><span class="remah-pisah">&rsaquo;</span><span class="remah-kini">Lulusan</span></nav>
   <div class="container">
