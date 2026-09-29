@@ -10,7 +10,7 @@
    unggahan dibaca dari manifes materi. Yang keluar hanya angka agregat
    dan judul materi publik.
    ------------------------------------------------------------------ */
-require __DIR__ . '/sesi.php';
+require __DIR__ . '/bimbingan-inti.php';
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: public, max-age=300');
 
@@ -40,7 +40,10 @@ foreach (baca_statistik() as $k => $n) {
 }
 usort($per, fn($a, $b) => $b['n'] <=> $a['n']);
 
+$bim = muat_mhs();
+$bim_lulus = count(array_filter($bim, 'sudah_lulus'));
 echo json_encode([
+    'bimbingan' => ['aktif' => count($bim) - $bim_lulus, 'lulus' => $bim_lulus],
     'materi'  => count($peta) + count($unggah),
     'unduhan' => $total,
     'populer' => array_slice(array_values(array_filter($per, fn($x) => $x['n'] >= 2)), 0, 5),

@@ -7,7 +7,7 @@
    Bimbingan & akun, Materi kuliah, dan Bedah paper. Tiap kartu membawa
    ringkasan angka bagiannya.
    ------------------------------------------------------------------ */
-require __DIR__ . '/sesi.php';
+require __DIR__ . '/bimbingan-inti.php';
 $pengguna = wajib_masuk_segar();
 if ($pengguna['peran'] !== 'admin') {
     header('Location: /bimbingan/rekap.php');
@@ -16,9 +16,9 @@ if ($pengguna['peran'] !== 'admin') {
 
 function ee($s): string { return htmlspecialchars((string) $s, ENT_QUOTES); }
 
-$antre   = muat_antrean();
+$antre   = array_merge(muat_daftar_akun(), muat_antrean());
 $akun    = muat_pengguna();
-$rekap_b = muat_bimbingan()['mahasiswa'] ?? [];
+$rekap_b = muat_mhs();
 $materi  = muat_materi();
 $paper   = muat_paper();
 $buku    = muat_buku();
@@ -62,11 +62,19 @@ $komentar_pending = count(array_filter(komentar_semua(), fn($k) => ($k['status']
 <main class="ak-utama admin-utama" id="konten">
   <div class="admin-pintu-rak">
 
-    <a class="admin-pintu" href="akun.php">
+    <a class="admin-pintu" href="admin-bimbingan.php">
       <span class="admin-pintu-ikon" aria-hidden="true">&#127891;</span>
-      <b>Bimbingan &amp; akun</b>
-      <span class="admin-pintu-ket">Verifikasi pendaftar, kelola akun mahasiswa, dan pantau monitoring bimbingan.</span>
-      <span class="admin-pintu-tanda"><?= count($antre) ?> menunggu &middot; <?= count($akun) ?> akun &middot; <?= count($rekap_b) ?> mahasiswa</span>
+      <b>Manajemen bimbingan</b>
+      <span class="admin-pintu-ket">Tambah mahasiswa S1, S2, S3, perbarui status, dan setujui pendaftaran akun.</span>
+      <span class="admin-pintu-tanda"><?= count($antre) ?> menunggu &middot; <?= count($rekap_b) ?> mahasiswa &middot; <?= count(array_filter($rekap_b, 'sudah_lulus')) ?> lulus</span>
+      <span class="admin-pintu-panah" aria-hidden="true">&rarr;</span>
+    </a>
+
+    <a class="admin-pintu" href="akun.php">
+      <span class="admin-pintu-ikon" aria-hidden="true">&#128273;</span>
+      <b>Akun</b>
+      <span class="admin-pintu-ket">Tambah akun dosen atau admin, reset kode akses, hapus akun.</span>
+      <span class="admin-pintu-tanda"><?= count($akun) ?> akun</span>
       <span class="admin-pintu-panah" aria-hidden="true">&rarr;</span>
     </a>
 

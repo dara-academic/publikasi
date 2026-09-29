@@ -4516,3 +4516,94 @@ body.ak .ak-utama .prose p { font-size: 16.5px; line-height: 1.75; }
   .ak-bar-isi { gap: 10px; padding-left: 16px; padding-right: 16px; }
 }
 @media (max-width: 1079px) { .tema-tombol { margin: 0 0 0 auto; } }
+
+/* ============================================================
+   MANAJEMEN BIMBINGAN: panel admin, papan monitoring, rincian
+   ============================================================ */
+.bim-kecil { display: block; font-size: 12.5px; font-weight: 400; color: var(--ink-muted); margin-top: 2px; white-space: normal; }
+
+/* lencana status: awal, tengah, lulus, menunggu */
+.bim-st { display: inline-block; font-size: 12.5px; font-weight: 600; border-radius: 999px; padding: 3px 11px; white-space: nowrap; }
+.bim-st-awal   { background: #eceff2; color: #56636b; }
+.bim-st-tengah { background: #e3f1ee; color: #0e6e6d; }
+.bim-st-lulus  { background: #0e7c7b; color: #fff; }
+.bim-st-tunggu { background: #fdf2d0; color: #7a5d06; }
+.prog-avatar.bim-av-awal   { background: #eceff2; color: #56636b; }
+.prog-avatar.bim-av-tengah { background: #e3f1ee; color: #0e6e6d; }
+.prog-avatar.bim-av-lulus  { background: #0e7c7b; color: #fff; }
+.prog-avatar.bim-av-tunggu { background: #fdf2d0; color: #7a5d06; }
+:root[data-theme="dark"] .bim-st-awal, :root[data-theme="dark"] .prog-avatar.bim-av-awal { background: rgba(255,255,255,0.08); color: var(--ink-soft); }
+:root[data-theme="dark"] .bim-st-tengah, :root[data-theme="dark"] .prog-avatar.bim-av-tengah { background: #12302e; color: #5cc8bd; }
+:root[data-theme="dark"] .bim-st-tunggu, :root[data-theme="dark"] .prog-avatar.bim-av-tunggu { background: rgba(233,185,73,0.16); color: #f3d58a; }
+.mon-nama > span:last-child { white-space: normal; }
+.mon-judul { font-size: 13.5px; color: var(--ink-soft); min-width: 220px; max-width: 360px; }
+
+/* alur per jenjang di papan monitoring */
+.bim-alur { margin: 0 0 22px; }
+.bim-alur-judul { margin: 0 0 8px; font-size: 14px; color: var(--ink-muted); }
+.bim-alur-judul b { font-family: var(--display); font-size: 16px; color: var(--ink); margin-right: 6px; }
+.bim-alur-tahap {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;
+  grid-template-columns: repeat(var(--n, 5), minmax(96px, 1fr)); overflow-x: auto; padding-bottom: 4px;
+}
+.bim-alur-tahap li {
+  display: flex; flex-direction: column; gap: 3px; padding: 12px 12px 10px;
+  border-radius: var(--r-sedang, 14px); border: 1px solid var(--line); background: var(--kartu);
+  border-top: 3px solid #d6dde3;
+}
+.bim-alur-tahap li.isi { border-top-color: #0e7c7b; }
+.bim-alur-tahap li.akhir { border-top-color: #e9b949; background: color-mix(in srgb, #e9b949 10%, var(--kartu)); }
+.bim-alur-tahap b { font-family: var(--display); font-size: 24px; font-weight: 800; line-height: 1; color: var(--ink); }
+.bim-alur-tahap li:not(.isi) b { color: var(--ink-muted); }
+.bim-alur-tahap span { font-size: 12.5px; line-height: 1.3; color: var(--ink-soft); }
+
+/* panel admin */
+.bim-halaman { max-width: var(--lebar-bingkai, 1216px); }
+.bim-halaman h2 { margin-top: 34px; }
+.bim-migrasi { border: 1px solid #e9b949; background: color-mix(in srgb, #e9b949 8%, var(--kartu)); border-radius: var(--r-sedang, 14px); padding: 20px 22px; }
+.bim-migrasi h2 { margin-top: 0; }
+.bim-aturan { font-size: 14px; color: var(--ink-soft); }
+.bim-dua { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+@media (max-width: 860px) { .bim-dua { grid-template-columns: 1fr; } }
+.bim-form { display: grid; gap: 10px; padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--r-sedang, 14px); background: var(--kartu); }
+.bim-form .masuk-label { display: grid; gap: 5px; margin: 0; }
+.bim-baris { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.bim-tombol { width: auto; justify-self: start; padding-left: 22px; padding-right: 22px; }
+.bim-massal { font-family: var(--sans); font-size: 13.5px; }
+.bim-bantu { font-size: 13px; color: var(--ink-muted); margin: 0; }
+.bim-pilih { min-width: 180px; padding: 7px 10px; font-size: 13.5px; }
+.bim-saring { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 6px 0 12px; }
+.bim-saring .masuk-input { width: auto; flex: 1 1 180px; padding: 8px 12px; font-size: 14px; }
+.bim-hitung { font-size: 13px; color: var(--ink-muted); }
+.bim-massal-bar {
+  position: sticky; top: 70px; z-index: 5; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  padding: 10px 12px; margin-bottom: 12px; border-radius: var(--r-sedang, 14px);
+  background: #e3f1ee; border: 1px solid color-mix(in srgb, #0e7c7b 25%, transparent);
+}
+:root[data-theme="dark"] .bim-massal-bar { background: #12302e; }
+.bim-massal-bar b { font-size: 13.5px; color: #0f4c5c; margin-right: 4px; }
+:root[data-theme="dark"] .bim-massal-bar b { color: #cdeee8; }
+.bim-massal-bar .masuk-input, .bim-status-form .masuk-input { width: auto; padding: 6px 9px; font-size: 13px; }
+.bim-status-form { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.bim-status-form input[name="catatan"] { width: 120px; }
+.bim-tabel td { vertical-align: top; }
+.bim-detail > td { background: color-mix(in srgb, #0e7c7b 4%, var(--kartu)); }
+.bim-riwayat { list-style: none; margin: 6px 0 16px; padding: 0 0 0 14px; border-left: 2px solid #cfe5e1; }
+.bim-riwayat li { position: relative; margin: 0 0 10px; font-size: 14px; }
+.bim-riwayat li::before { content: ""; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: #0e7c7b; }
+.bim-riwayat span { display: block; font-size: 12.5px; color: var(--ink-muted); }
+
+/* rincian milik mahasiswa */
+.bim-saya { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; padding: 22px 24px; border: 1px solid var(--line); border-radius: var(--r-sedang, 14px); background: var(--kartu); }
+@media (max-width: 760px) { .bim-saya { grid-template-columns: 1fr; } }
+.bim-saya-nama { font-family: var(--display); font-size: 22px; font-weight: 800; margin: 0; }
+.bim-saya-judul { font-size: 16px; margin: 12px 0; }
+.bim-tahapan { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.bim-tahapan li { position: relative; padding-left: 26px; font-size: 14px; color: var(--ink-muted); }
+.bim-tahapan li::before { content: ""; position: absolute; left: 0; top: 4px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #cfd8de; background: var(--kartu); }
+.bim-tahapan li.sudah { color: var(--ink); }
+.bim-tahapan li.sudah::before { background: #0e7c7b; border-color: #0e7c7b; }
+.bim-tahapan li.kini { color: var(--ink); font-weight: 700; }
+.bim-tahapan li.kini::before { border-color: #0e7c7b; box-shadow: 0 0 0 4px rgba(14,124,123,0.18); }
+.bim-kurang { display: inline-block; margin-top: 4px; font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #fdf2d0; color: #7a5d06; }
+:root[data-theme="dark"] .bim-kurang { background: rgba(233,185,73,0.16); color: #f3d58a; }

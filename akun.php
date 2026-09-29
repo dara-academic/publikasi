@@ -2,16 +2,13 @@
 /* ------------------------------------------------------------------
    Panel kelola. Hanya admin.
 
-   Dua pekerjaan di sini. Pertama, antrean verifikasi: pendaftar dari
-   formulir publik disetujui atau ditolak. Disetujui berarti masuk
-   rekap bimbingan resmi dengan tahap belum berjalan, dibuatkan akun,
-   dan kode aksesnya ditampilkan sekali untuk dikirim ke surel yang
-   didaftarkan. Kedua, kelola akun: tambah, reset kode, hapus.
+   Kelola akun: tambah, reset kode, hapus. Persetujuan pendaftar dan data
+   mahasiswa ada di admin-bimbingan.php.
 
    Kode akses hasil tambah dan reset hanya ditampilkan sekali, karena
    yang disimpan di server cuma hash-nya.
    ------------------------------------------------------------------ */
-require __DIR__ . '/sesi.php';
+require __DIR__ . '/bimbingan-inti.php';
 $pengguna = wajib_masuk_segar();
 if ($pengguna['peran'] !== 'admin') {
     header('Location: /bimbingan/rekap.php');
@@ -31,32 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && csrf_sah()) {
     $aksi = (string) ($_POST['aksi'] ?? '');
     $semua = muat_pengguna();
 
-    if ($aksi === 'setujui' || $aksi === 'tolak') {
-        $calon = ambil_antrean((int) ($_POST['nomor'] ?? -1));
-        if ($calon !== null) {
-            if ($aksi === 'setujui') {
-                tambah_mahasiswa_bimbingan([
-                    'nama' => $calon['nama'], 'kelompok' => $calon['kelompok'],
-                    'peran' => '-', 'tahap' => 'belum',
-                    'keterangan' => 'Terdaftar lewat formulir, diverifikasi ' . date('Y-m-d'),
-                ]);
-                $u = slug_nama($calon['nama']);
-                foreach ($semua as $p) {
-                    if ($p['email'] === $u) { $u .= '2'; break; }
-                }
-                $kode = kode_akses();
-                tambah_pengguna(['email' => $u, 'nama' => $calon['nama'],
-                    'peran' => 'mahasiswa',
-                    'sandi' => password_hash($kode, PASSWORD_DEFAULT),
-                    'wajib_ganti' => true, 'dibuat' => date('Y-m-d')]);
-                $_SESSION['pesan_akun'] = 'DISETUJUI: ' . $calon['nama']
-                    . ' | pengguna: ' . $u . ' | kode akses: ' . $kode
-                    . ' | kirim ke: ' . $calon['kontak'];
-            } else {
-                $_SESSION['pesan_akun'] = 'Ditolak dan dihapus dari antrean: ' . $calon['nama'];
-            }
-        }
-    } elseif ($aksi === 'tambah') {
+    if ($aksi === 'tambah') {
         $nama = trim(preg_replace('/\s+/', ' ', strip_tags((string) ($_POST['nama'] ?? ''))));
         $u = trim(strtolower((string) ($_POST['pengguna'] ?? ''))) ?: slug_nama($nama);
         $peran = in_array($_POST['peran'] ?? '', ['mahasiswa', 'dosen', 'admin'], true)
@@ -112,7 +84,7 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Kelola Akun, Portal Dr. Despinur Dara</title>
+<title>Akun, Portal Dr. Despinur Dara</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/style.css?v=<?= filemtime(__DIR__ . '/assets/style.css') ?>">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,17 +102,17 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
   </div>
 </header>
 <?php
-$rekap_b = muat_bimbingan()['mahasiswa'] ?? [];
-$n_lulus_b = count(array_filter($rekap_b, fn($m) => $m['tahap'] === 'lulus'));
+$rekap_b = muat_mhs();
+$antre = array_merge(muat_daftar_akun(), $antre);
+$n_lulus_b = count(array_filter($rekap_b, 'sudah_lulus'));
 ?>
 <div class="admin-band">
   <div class="admin-band-isi">
     <p class="admin-lencana">Panel admin</p>
-    <h1>Bimbingan &amp; akun</h1>
-    <p class="admin-band-lead">Verifikasi pendaftar, kelola akun, dan pantau
-    monitoring bimbingan dari satu tempat, <?= htmlspecialchars($pengguna['nama'], ENT_QUOTES) ?>.</p>
+    <h1>Akun</h1>
+    <p class="admin-band-lead">Tambah akun dosen atau admin, reset kode akses, dan hapus akun.</p>
     <div class="prog-band-angka">
-      <div class="<?= $antre ? 'admin-menyala' : '' ?>"><b><?= count($antre) ?></b><span>menunggu verifikasi</span></div>
+      <div class="<?= $antre ? 'admin-menyala' : '' ?>"><b><?= count($antre) ?></b><span>menunggu persetujuan</span></div>
       <div><b><?= count($daftar_pengguna) ?></b><span>akun terdaftar</span></div>
       <div><b><?= count($rekap_b) ?></b><span>mahasiswa di rekap</span></div>
       <div><b><?= $n_lulus_b ?></b><span>lulus</span></div>
@@ -151,7 +123,8 @@ $n_lulus_b = count(array_filter($rekap_b, fn($m) => $m['tahap'] === 'lulus'));
 <main class="ak-utama" id="konten">
   <nav class="admin-menu" aria-label="Menu panel admin">
     <a href="admin.php">&larr; Panel admin</a>
-    <a href="akun.php" class="active">Bimbingan &amp; akun</a>
+    <a href="admin-bimbingan.php">Bimbingan</a>
+    <a href="akun.php" class="active">Akun</a>
     <a href="admin-materi.php">Materi kuliah</a>
     <a href="admin-bedah.php">Bedah paper</a>
     <a href="admin-buku.php">Buku</a>
@@ -164,29 +137,8 @@ $n_lulus_b = count(array_filter($rekap_b, fn($m) => $m['tahap'] === 'lulus'));
     <p class="akun-pesan" role="status"><?= e($pesan) ?></p>
 <?php endif; ?>
 
-    <h2>Menunggu verifikasi <span class="rekap-jumlah"><?= count($antre) ?></span></h2>
-<?php if (!$antre): ?>
-    <p>Tidak ada pendaftar baru. Formulirnya ada di
-      <a href="bimbingan/daftar.php">halaman pendaftaran</a>.</p>
-<?php else: ?>
-    <div class="rekap-gulir"><table class="rekap-tabel">
-      <thead><tr><th>Nama</th><th>Kelompok</th><th>Surel</th><th>Waktu daftar</th><th>Tindakan</th></tr></thead>
-      <tbody>
-<?php foreach ($antre as $a): $i = $a['id']; ?>
-        <tr>
-          <td><?= e($a['nama']) ?></td>
-          <td><?= e($a['kelompok']) ?></td>
-          <td><?= e($a['kontak']) ?></td>
-          <td><?= e(substr($a['waktu'], 0, 10)) ?></td>
-          <td class="akun-aksi">
-            <form method="post"><input type="hidden" name="csrf" value="<?= $csrf ?>"><input type="hidden" name="aksi" value="setujui"><input type="hidden" name="nomor" value="<?= $i ?>"><button class="akun-tombol setuju">Setujui</button></form>
-            <form method="post" onsubmit="return confirm('Tolak dan hapus <?= e($a['nama']) ?>?')"><input type="hidden" name="csrf" value="<?= $csrf ?>"><input type="hidden" name="aksi" value="tolak"><input type="hidden" name="nomor" value="<?= $i ?>"><button class="akun-tombol bahaya">Tolak</button></form>
-          </td>
-        </tr>
-<?php endforeach; ?>
-      </tbody>
-    </table></div>
-<?php endif; ?>
+    <p>Persetujuan pendaftar dan data mahasiswa kini ada di
+      <a href="admin-bimbingan.php">Manajemen bimbingan</a>.</p>
 
     <h2>Tambah akun</h2>
     <form method="post" class="akun-form">

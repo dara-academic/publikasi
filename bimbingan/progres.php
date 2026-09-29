@@ -1,52 +1,43 @@
 <?php
 /* ------------------------------------------------------------------
-   Monitoring Pelaksanaan Bimbingan Tugas Akhir Mahasiswa. Fitur unggulan portal, terbuka penuh.
+   Monitoring Pelaksanaan Bimbingan Tugas Akhir Mahasiswa. Terbuka penuh.
 
-   Statusnya open data yang sudah dikonfirmasi Dr. Dara dan kampus:
-   nama mahasiswa dan tahap kemajuannya boleh tampil terbuka. Catatan
-   bimbingan per orang tetap di balik pintu masuk.
-
-   Desainnya dibuat sebagai papan hidup: pita gelap-teal dengan angka
-   besar, alur tahapan sebagai pipa bertingkat, kartu mahasiswa dengan
-   inisial berwarna tahapnya, pencarian nama seketika, dan pendaftar
-   baru yang belum diverifikasi ikut tampil abu-abu. Halaman ini
-   dinamis, membaca berkas data server langsung, supaya pendaftaran
-   dan hasil verifikasi muncul seketika.
+   Yang tampil publik hanya nama, judul penelitian, jenjang, dan status
+   (ketetapan Dr. Dara). NIM, surel, dan catatan tidak pernah dikirim ke
+   halaman ini. Status mengikuti urutan per jenjang di sesi.php:
+   S1 lima tahap, S2 lima tahap, S3 sembilan tahap. Pendaftar yang belum
+   disetujui ikut tampil dengan status menunggu.
    ------------------------------------------------------------------ */
-require __DIR__ . '/../sesi.php';
+require __DIR__ . '/../bimbingan-inti.php';
 
-$LABEL = ['lulus' => 'Lulus', 'sempro' => 'Sempro', 'judul' => 'Tahap judul',
-          'belum' => 'Belum berjalan', 'tunggu' => 'Menunggu verifikasi'];
-
-$data = muat_bimbingan();
-$daftar = $data['mahasiswa'] ?? [];
-$antre = muat_antrean();
-
-$kelompok = [];
-foreach ($daftar as $m) {
-    $m['status'] = $m['tahap'];
-    $kelompok[$m['kelompok']][] = $m;
-}
-foreach ($antre as $a) {
-    $kelompok[$a['kelompok']][] = ['nama' => $a['nama'], 'status' => 'tunggu'];
+$mhs = muat_mhs();
+$tunggu = [];
+foreach (muat_daftar_akun() as $a) $tunggu[] = ['nama' => $a['nama'], 'jenjang' => $a['jenjang'], 'kelompok' => kelompok_bawaan($a['jenjang'], $a['angkatan']), 'judul' => ''];
+foreach (muat_antrean() as $a) {
+    $k = (string) $a['kelompok'];
+    $j = mb_stripos($k, 'Disertasi') !== false ? 'S3' : (mb_stripos($k, 'Tesis') !== false ? 'S2' : 'S1');
+    $tunggu[] = ['nama' => $a['nama'], 'jenjang' => $j, 'kelompok' => $k, 'judul' => ''];
 }
 
-$hit = fn($t) => count(array_filter($daftar, fn($m) => $m['tahap'] === $t));
-$total = count($daftar);
-$n = ['judul' => $hit('judul'), 'sempro' => $hit('sempro'),
-      'lulus' => $hit('lulus'), 'belum' => $hit('belum'), 'tunggu' => count($antre)];
-
-function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
-function jenjang(string $kelompok): string {
-    if (mb_stripos($kelompok, 'Disertasi') !== false) return 'disertasi';
-    if (mb_stripos($kelompok, 'Tesis') !== false) return 'tesis';
-    return 'skripsi';
+$total = count($mhs);
+$n_lulus = count(array_filter($mhs, 'sudah_lulus'));
+$per_j = [];
+foreach (JENJANG as $j => $_) {
+    $anggota = array_filter($mhs, fn($m) => $m['jenjang'] === $j);
+    $hit = [];
+    foreach (status_jenjang($j) as $k => $_l) $hit[$k] = count(array_filter($anggota, fn($m) => $m['status'] === $k));
+    $per_j[$j] = ['n' => count($anggota), 'hit' => $hit];
 }
+usort($mhs, fn($a, $b) => [$a['jenjang'], $a['kelompok'], $a['nama']] <=> [$b['jenjang'], $b['kelompok'], $b['nama']]);
+
+function e($s): string { return htmlspecialchars((string) $s, ENT_QUOTES); }
 function inisial(string $nama): string {
     $k = preg_split('/\s+/', trim($nama));
-    $a = mb_substr($k[0], 0, 1);
-    $b = count($k) > 1 ? mb_substr($k[1], 0, 1) : '';
-    return mb_strtoupper($a . $b);
+    return mb_strtoupper(mb_substr($k[0], 0, 1) . (count($k) > 1 ? mb_substr($k[1], 0, 1) : ''));
+}
+function kelas_status(array $m): string {
+    if (sudah_lulus($m)) return 'lulus';
+    return urut_status($m['jenjang'], $m['status']) <= 0 ? 'awal' : 'tengah';
 }
 ?>
 <!DOCTYPE html>
@@ -55,7 +46,7 @@ function inisial(string $nama): string {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Monitoring Pelaksanaan Bimbingan Tugas Akhir Mahasiswa, Dr. Despinur Dara</title>
-<meta name="description" content="Monitoring pelaksanaan bimbingan tugas akhir <?= $total ?> mahasiswa Dr. Despinur Dara dari skripsi sampai disertasi: <?= $n['lulus'] ?> lulus, diperbarui langsung dari rekap bimbingan.">
+<meta name="description" content="Monitoring bimbingan tugas akhir <?= $total ?> mahasiswa S1, S2, dan S3 Dr. Despinur Dara: <?= $n_lulus ?> lulus. Nama, judul, dan status diperbarui langsung.">
 <link rel="canonical" href="https://despinurdara.id/bimbingan/progres.php">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/style.css?v=<?= filemtime(__DIR__ . '/../assets/style.css') ?>">
@@ -67,6 +58,7 @@ function inisial(string $nama): string {
   <div class="ak-bar-isi">
     <a class="ak-nama" href="../index.html"><svg class="ak-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#e9b949"/><path d="M7.5 10.2c3-.9 5.9-.6 8.5 1.3v12.3c-2.6-1.9-5.5-2.2-8.5-1.3z" fill="#0f4c5c"/><path d="M24.5 10.2c-3-.9-5.9-.6-8.5 1.3v12.3c2.6-1.9 5.5-2.2 8.5-1.3z" fill="#0f4c5c" opacity=".72"/></svg><span>Belajar Bersama Dara</span></a>
     <span class="rekap-siapa"><a href="index.html">Bimbingan</a>
+      &middot; <a href="lulus.php">Lulusan</a>
       &middot; <a href="daftar.php">Daftar</a>
       &middot; <a href="../masuk.php">Masuk</a></span>
   </div>
@@ -76,15 +68,13 @@ function inisial(string $nama): string {
   <div class="prog-band-isi">
     <p class="prog-band-kicker">Monitoring bimbingan <span class="langsung"><i></i>Data langsung</span></p>
     <h1>Monitoring Pelaksanaan Bimbingan Tugas Akhir Mahasiswa</h1>
-    <p class="prog-band-lead">Dari topik pertama sampai lulus, progres seluruh
-    mahasiswa bimbingan Dr. Dara terbuka sebagai data publik dan diperbarui
-    langsung dari rekap.</p>
-<?php if ($daftar): ?>
+    <p class="prog-band-lead">Status bimbingan mahasiswa S1, S2, dan S3, dari pengajuan topik sampai lulus.</p>
+<?php if ($mhs): ?>
     <div class="prog-band-angka">
       <div><b class="hitung" data-akhir="<?= $total ?>"><?= $total ?></b><span>mahasiswa</span></div>
-      <div><b class="hitung" data-akhir="<?= $n['lulus'] ?>"><?= $n['lulus'] ?></b><span>lulus</span></div>
-      <div><b class="hitung" data-akhir="<?= $n['sempro'] ?>"><?= $n['sempro'] ?></b><span>sampai sempro</span></div>
-      <div><b>3</b><span>jenjang, S1 sampai S3</span></div>
+      <div><b class="hitung" data-akhir="<?= $total - $n_lulus ?>"><?= $total - $n_lulus ?></b><span>sedang berjalan</span></div>
+      <div><b class="hitung" data-akhir="<?= $n_lulus ?>"><?= $n_lulus ?></b><span>lulus</span></div>
+      <div><b><?= $per_j['S1']['n'] ?> / <?= $per_j['S2']['n'] ?> / <?= $per_j['S3']['n'] ?></b><span>S1 / S2 / S3</span></div>
     </div>
 <?php endif; ?>
   </div>
@@ -95,62 +85,67 @@ function inisial(string $nama): string {
   <nav class="remah" aria-label="Jejak lokasi"><a href="../index.html">Beranda</a><span class="remah-pisah">&rsaquo;</span><a href="index.html">Bimbingan karya ilmiah</a><span class="remah-pisah">&rsaquo;</span><span class="remah-kini">Monitoring bimbingan</span></nav>
 
   <div class="container">
-<?php if (!$daftar): ?>
-    <p class="masuk-galat">Data bimbingan belum terunggah di server.</p>
+<?php if (!$mhs): ?>
+    <p class="masuk-galat">Data bimbingan belum tersedia.</p>
 <?php else: ?>
 
-    <div class="prog-alur" role="img"
-         aria-label="Alur bimbingan: <?= $n['judul'] ?> di tahap judul, <?= $n['sempro'] ?> sampai sempro, <?= $n['lulus'] ?> lulus, <?= $n['belum'] ?> belum berjalan, <?= $n['tunggu'] ?> menunggu verifikasi">
-      <div class="prog-alur-tahap t-judul"><b><?= $n['judul'] ?></b><span>Tahap judul</span></div>
-      <span class="prog-alur-panah" aria-hidden="true">&rsaquo;</span>
-      <div class="prog-alur-tahap t-sempro"><b><?= $n['sempro'] ?></b><span>Sempro</span></div>
-      <span class="prog-alur-panah" aria-hidden="true">&rsaquo;</span>
-      <div class="prog-alur-tahap t-lulus"><b><?= $n['lulus'] ?></b><span>Lulus</span></div>
-      <div class="prog-alur-samping">
-        <span><b><?= $n['belum'] ?></b> belum berjalan</span>
-        <span><b><?= $n['tunggu'] ?></b> menunggu verifikasi</span>
-      </div>
+    <h2>Tahapan per jenjang</h2>
+<?php foreach (JENJANG as $j => $t): if (!$per_j[$j]['n']) continue; $akhir = status_akhir($j); ?>
+    <div class="bim-alur">
+      <p class="bim-alur-judul"><b><?= $j ?> &middot; <?= $t ?></b> <span><?= $per_j[$j]['n'] ?> mahasiswa</span></p>
+      <ol class="bim-alur-tahap" style="--n: <?= count(status_jenjang($j)) ?>">
+<?php foreach (status_jenjang($j) as $k => $lbl): ?>
+        <li class="<?= $k === $akhir ? 'akhir' : '' ?><?= $per_j[$j]['hit'][$k] ? ' isi' : '' ?>"><b><?= $per_j[$j]['hit'][$k] ?></b><span><?= e($lbl) ?></span></li>
+<?php endforeach; ?>
+      </ol>
     </div>
+<?php endforeach; ?>
 
+    <h2>Daftar mahasiswa</h2>
     <div class="prog-kendali">
-      <label class="sr-only" for="prog-cari">Cari nama mahasiswa</label>
-      <input class="prog-cari" id="prog-cari" type="search"
-             placeholder="Cari nama mahasiswa" autocomplete="off">
+      <label class="sr-only" for="prog-cari">Cari nama atau judul</label>
+      <input class="prog-cari" id="prog-cari" type="search" placeholder="Cari nama atau judul" autocomplete="off">
       <nav class="mk-saring" aria-label="Saring menurut status">
         <button class="mk-chip aktif" data-saring="semua" aria-pressed="true">Semua</button>
-<?php foreach ($LABEL as $k => $t): ?>
-        <button class="mk-chip" data-saring="<?= $k ?>" aria-pressed="false"><?= $t ?></button>
-<?php endforeach; ?>
+        <button class="mk-chip" data-saring="berjalan" aria-pressed="false">Sedang berjalan</button>
+        <button class="mk-chip" data-saring="lulus" aria-pressed="false">Lulus</button>
+<?php if ($tunggu): ?>
+        <button class="mk-chip" data-saring="tunggu" aria-pressed="false">Menunggu persetujuan</button>
+<?php endif; ?>
       </nav>
       <nav class="mk-saring mk-saring-jenjang" aria-label="Saring menurut jenjang">
         <span class="mk-saring-label">Jenjang</span>
         <button class="mk-chip aktif" data-jenjang="semua" aria-pressed="true">Semua</button>
-        <button class="mk-chip" data-jenjang="skripsi" aria-pressed="false">Skripsi</button>
-        <button class="mk-chip" data-jenjang="tesis" aria-pressed="false">Tesis</button>
-        <button class="mk-chip" data-jenjang="disertasi" aria-pressed="false">Disertasi</button>
+<?php foreach (JENJANG as $j => $t): ?>
+        <button class="mk-chip" data-jenjang="<?= $j ?>" aria-pressed="false"><?= $j ?></button>
+<?php endforeach; ?>
       </nav>
       <span class="mk-saring-hasil" role="status"></span>
     </div>
 
     <div class="rekap-gulir">
       <table class="rekap-tabel mon-tabel">
-        <thead><tr><th>Mahasiswa</th><th>Kelompok</th><th>Perjalanan</th><th>Status</th></tr></thead>
+        <thead><tr><th>Mahasiswa</th><th>Judul penelitian</th><th>Perjalanan</th><th>Status</th></tr></thead>
         <tbody id="mon-badan">
-<?php foreach ($kelompok as $nama_k => $anggota): ?>
-<?php foreach ($anggota as $m):
-        $maju = ['tunggu' => 0, 'belum' => 1, 'judul' => 2, 'sempro' => 3, 'lulus' => 4][$m['status']];
-?>
-          <tr class="mon-baris" data-status="<?= e($m['status']) ?>" data-jenjang="<?= jenjang($nama_k) ?>" data-nama="<?= e(mb_strtolower($m['nama'])) ?>">
-            <td class="mon-nama"><span class="prog-avatar status-<?= e($m['status']) ?>-a" aria-hidden="true"><?= e(inisial($m['nama'])) ?></span><?= e($m['nama']) ?></td>
-            <td class="mon-kel"><?= e($nama_k) ?></td>
-            <td><span class="alur-mini alur-datar" role="img" aria-label="Tahap: <?= e($LABEL[$m['status']]) ?>">
-<?php foreach ([1, 2, 3, 4] as $tk): ?>
-              <span class="alur-titik <?= $maju >= $tk ? 'sudah' : '' ?> <?= $maju === $tk - 1 ? 'kini' : '' ?>"><i></i></span>
+<?php foreach ($mhs as $m): $ks = kelas_status($m); $urut = urut_status($m['jenjang'], $m['status']); ?>
+          <tr class="mon-baris" data-status="<?= $ks === 'lulus' ? 'lulus' : 'berjalan' ?>" data-jenjang="<?= e($m['jenjang']) ?>" data-nama="<?= e(mb_strtolower($m['nama'] . ' ' . $m['judul'])) ?>">
+            <td class="mon-nama"><span class="prog-avatar bim-av-<?= $ks ?>" aria-hidden="true"><?= e(inisial($m['nama'])) ?></span><span><?= e($m['nama']) ?><small class="bim-kecil"><?= e($m['jenjang']) ?> &middot; <?= e($m['kelompok']) ?></small></span></td>
+            <td class="mon-judul"><?= e($m['judul'] ?: '-') ?></td>
+            <td><span class="alur-mini alur-datar" role="img" aria-label="Tahap <?= $urut + 1 ?> dari <?= count(status_jenjang($m['jenjang'])) ?>">
+<?php foreach (array_keys(status_jenjang($m['jenjang'])) as $i => $_k): ?>
+              <span class="alur-titik <?= $i <= $urut ? 'sudah' : '' ?> <?= $i === $urut + 1 ? 'kini' : '' ?>"><i></i></span>
 <?php endforeach; ?>
             </span></td>
-            <td><span class="rekap-tahap tahap-<?= e($m['status']) ?>"><?= e($LABEL[$m['status']]) ?></span></td>
+            <td><span class="bim-st bim-st-<?= $ks ?>"><?= e(label_status($m['jenjang'], $m['status'])) ?></span></td>
           </tr>
 <?php endforeach; ?>
+<?php foreach ($tunggu as $m): ?>
+          <tr class="mon-baris" data-status="tunggu" data-jenjang="<?= e($m['jenjang']) ?>" data-nama="<?= e(mb_strtolower($m['nama'])) ?>">
+            <td class="mon-nama"><span class="prog-avatar bim-av-tunggu" aria-hidden="true"><?= e(inisial($m['nama'])) ?></span><span><?= e($m['nama']) ?><small class="bim-kecil"><?= e($m['jenjang']) ?> &middot; <?= e($m['kelompok']) ?></small></span></td>
+            <td class="mon-judul">-</td>
+            <td></td>
+            <td><span class="bim-st bim-st-tunggu">Menunggu persetujuan</span></td>
+          </tr>
 <?php endforeach; ?>
         </tbody>
       </table>
@@ -163,18 +158,16 @@ function inisial(string $nama): string {
 
     <div class="prog-ajak">
       <div>
-        <b>Mahasiswa bimbingan baru?</b>
-        <p>Daftarkan diri Anda; nama Anda tampil di papan monitoring begitu terkirim,
-        berstatus menunggu sampai diverifikasi Dr. Dara.</p>
+        <b>Mahasiswa bimbingan baru</b>
+        <p>Buat akun dengan NIM Anda. Akun aktif setelah disetujui Dr. Dara.</p>
       </div>
       <div class="prog-ajak-tombol">
-        <a class="btn primary" href="daftar.php">Daftar bimbingan</a>
-        <a class="btn" href="../masuk.php">Masuk area bimbingan</a>
+        <a class="btn primary" href="daftar.php">Daftar akun</a>
+        <a class="btn" href="lulus.php">Daftar lulusan</a>
       </div>
     </div>
-    <p class="bim-catatan">Rekap diperbarui <?= e($data['diperbarui'] ?? '-') ?>.
-    Nama dan tahap adalah data terbuka yang sudah dikonfirmasi program studi;
-    catatan bimbingan per mahasiswa hanya terbuka bagi yang bersangkutan dan dosen.</p>
+    <p class="bim-catatan">Diperbarui <?= e(tanggal_data_mhs()) ?>. Yang ditampilkan hanya nama,
+    judul, dan status bimbingan.</p>
 <?php endif; ?>
   </div>
 </main>
@@ -190,6 +183,7 @@ function inisial(string $nama): string {
   var tHalaman = document.getElementById('mon-halaman');
   var bMundur = document.getElementById('mon-mundur');
   var bMaju = document.getElementById('mon-maju');
+  if (!cari) return;
   var status = 'semua', jenjang = 'semua', hal = 1;
 
   function terapkan() {

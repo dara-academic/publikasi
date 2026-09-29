@@ -171,7 +171,8 @@ $jml   = count($paper);
 
 <nav class="admin-menu" aria-label="Menu panel admin">
   <a href="admin.php">&larr; Panel admin</a>
-  <a href="akun.php">Bimbingan &amp; akun</a>
+    <a href="admin-bimbingan.php">Bimbingan</a>
+  <a href="akun.php">Akun</a>
   <a href="admin-materi.php">Materi kuliah</a>
   <a href="admin-bedah.php" class="active">Bedah paper</a>
     <a href="admin-buku.php">Buku</a>

@@ -16,7 +16,7 @@
 <link rel="canonical" href="https://despinurdara.id/">
 <link rel="alternate" type="application/rss+xml" title="Kabar Belajar bersama Dr. Dara" href="feed.php">
 <link rel="icon" href="assets/favicon.svg?v=144d16ec" type="image/svg+xml">
-<link rel="stylesheet" href="assets/style.css?v=8fca428a">
+<link rel="stylesheet" href="assets/style.css?v=8bcfbc5f">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://despinurdara.id/#dara", "name": "Despinur Dara", "givenName": "Despinur", "familyName": "Dara", "honorificPrefix": "Dr.", "jobTitle": "Praktisi sumber daya manusia, dosen, dan peneliti", "email": "mailto:dara@unj.ac.id", "url": "https://despinurdara.id/", "image": "https://despinurdara.id/assets/foto-dara-portal.jpg?v=60d96713", "worksFor": {"@type": "CollegeOrUniversity", "name": "Universitas Negeri Jakarta", "department": {"@type": "Organization", "name": "Fakultas Ekonomi"}, "url": "https://www.unj.ac.id/"}, "knowsAbout": ["Manajemen sumber daya manusia", "Talent management", "Pelatihan dan pengembangan", "Employee well-being", "Job crafting", "Transformasi digital dunia kerja"], "knowsLanguage": ["id", "en"], "sameAs": ["https://orcid.org/0000-0001-7291-4643", "https://www.scopus.com/authid/detail.uri?authorId=57219945924", "https://scholar.google.com/citations?user=eeb8VR0AAAAJ", "https://sinta.kemdiktisaintek.go.id/authors/profile/6728883/", "https://www.linkedin.com/in/despinur-dara-77674193/"]}, {"@type": "WebSite", "@id": "https://despinurdara.id/#situs", "url": "https://despinurdara.id/", "name": "Belajar bersama Dr. Dara", "inLanguage": "id", "publisher": {"@id": "https://despinurdara.id/#dara"}, "description": "Ruang belajar terbuka Dr. Despinur Dara: materi kuliah manajemen dan SDM, bedah proses publikasi ilmiah, riset, dan bimbingan karya ilmiah."}, {"@type": "ProfilePage", "url": "https://despinurdara.id/", "mainEntity": {"@id": "https://despinurdara.id/#dara"}, "inLanguage": "id"}]}</script>
@@ -157,7 +157,7 @@
       <a class="gerbang-kartu besar" href="bimbingan/progres.php">
         <span class="gerbang-atas"><span class="gerbang-emoji" aria-hidden="true"><svg class="ikon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span class="gerbang-lencana">Fitur unggulan</span></span>
         <b>Monitoring Bimbingan Tugas Akhir</b>
-        <span class="gerbang-ket">69 mahasiswa aktif, dari pengajuan topik sampai lulus. Datanya terbuka, dan mahasiswa baru dapat mendaftar di sini.</span>
+        <span class="gerbang-ket"><span id="bim-aktif">69</span> mahasiswa aktif, dari pengajuan topik sampai lulus. Datanya terbuka, dan mahasiswa baru dapat mendaftar di sini.</span>
         <span class="gerbang-panah" aria-hidden="true">→</span>
       </a>
     </div>
@@ -354,6 +354,8 @@ document.addEventListener('keydown', function (e) {
     } else if (kb && d.materi) {
       kb.textContent = ang(d.materi); ks.textContent = 'materi kuliah terbuka untuk diunduh';
     }
+    var ba = document.getElementById('bim-aktif');
+    if (ba && d.bimbingan && d.bimbingan.aktif) ba.textContent = ang(d.bimbingan.aktif);
     var pop = d.populer || [];
     if (pop.length < 3) return;
     document.getElementById('populer-daftar').innerHTML = pop.map(function (p, i) {

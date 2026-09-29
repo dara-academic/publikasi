@@ -1,35 +1,22 @@
 <?php
 /* ------------------------------------------------------------------
-   Rincian bimbingan. Hanya untuk yang sudah masuk.
+   Rincian bimbingan, area terbatas.
 
-   Admin dan dosen melihat seluruh tabel. Mahasiswa melihat rekap
-   agregat ditambah barisnya sendiri saja, karena kemajuan skripsi
-   orang lain bukan konsumsi teman seangkatannya. Pencocokan baris
-   memakai nama pada akun.
+   Mahasiswa melihat datanya sendiri: status, tahapan jenjangnya, dan
+   riwayat perubahan status. Baris dicari lewat tautan akun (NIM), lalu
+   nama sebagai cadangan. Dosen melihat seluruh daftar tanpa bisa
+   mengubah; pengubahan hanya di panel Manajemen bimbingan milik admin.
    ------------------------------------------------------------------ */
-require __DIR__ . '/../sesi.php';
+require __DIR__ . '/../bimbingan-inti.php';
 $pengguna = wajib_masuk_segar();
-$admin = in_array($pengguna['peran'], ['admin', 'dosen'], true);
+$admin = $pengguna['peran'] === 'admin';
+$lihat_semua = in_array($pengguna['peran'], ['admin', 'dosen'], true);
 
-$data = muat_bimbingan();
-$daftar = $data['mahasiswa'] ?? [];
+$mhs = muat_mhs();
+usort($mhs, fn($a, $b) => [$a['jenjang'], $a['kelompok'], $a['nama']] <=> [$b['jenjang'], $b['kelompok'], $b['nama']]);
+$milikku = $lihat_semua ? null : mhs_milik($pengguna['email'], $pengguna['nama']);
 
-$LABEL = ['lulus' => 'Lulus', 'sempro' => 'Sampai sempro',
-          'judul' => 'Tahap judul/topik', 'belum' => 'Belum ada kemajuan'];
-
-$kelompok = [];
-foreach ($daftar as $m) $kelompok[$m['kelompok']][] = $m;
-
-$milikku = null;
-if (!$admin) {
-    foreach ($daftar as $m) {
-        if (strcasecmp(trim($m['nama']), trim($pengguna['nama'])) === 0) {
-            $milikku = $m;
-            break;
-        }
-    }
-}
-function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
+function e($s): string { return htmlspecialchars((string) $s, ENT_QUOTES); }
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -48,64 +35,66 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
   <div class="ak-bar-isi">
     <a class="ak-nama" href="../index.html"><svg class="ak-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#e9b949"/><path d="M7.5 10.2c3-.9 5.9-.6 8.5 1.3v12.3c-2.6-1.9-5.5-2.2-8.5-1.3z" fill="#0f4c5c"/><path d="M24.5 10.2c-3-.9-5.9-.6-8.5 1.3v12.3c2.6-1.9 5.5-2.2 8.5-1.3z" fill="#0f4c5c" opacity=".72"/></svg><span>Belajar Bersama Dara</span></a>
     <span class="rekap-siapa">Masuk sebagai <b><?= e($pengguna['nama']) ?></b>
-      <?php if ($admin): ?>&middot; <a href="../akun.php">Kelola akun</a><?php endif; ?>
+      <?php if ($admin): ?>&middot; <a href="../admin-bimbingan.php">Kelola bimbingan</a><?php endif; ?>
       &middot; <a href="../ganti-sandi.php">Ganti sandi</a>
       &middot; <a href="../keluar.php">Keluar</a></span>
   </div>
 </header>
 <div class="ak-halaman">
 <main class="ak-utama" id="konten">
-  <nav class="remah" aria-label="Jejak lokasi"><a href="../index.html">Beranda</a><span class="remah-pisah">&rsaquo;</span><a href="index.html">Bimbingan karya ilmiah</a><span class="remah-pisah">&rsaquo;</span><span class="remah-kini">Rincian bimbingan</span></nav>
+  <nav class="remah" aria-label="Jejak lokasi"><a href="../index.html">Beranda</a><span class="remah-pisah">&rsaquo;</span><a href="progres.php">Monitoring bimbingan</a><span class="remah-pisah">&rsaquo;</span><span class="remah-kini">Rincian bimbingan</span></nav>
 
   <section class="hero hero-tipis">
     <div class="container">
       <p class="kicker">Area terbatas</p>
-      <h1>Rincian bimbingan</h1>
-      <p class="lead">Rekap per <?= e($data['diperbarui'] ?? '-') ?>.
-        <?= $admin ? 'Anda melihat seluruh daftar sebagai ' . e($pengguna['peran']) . '.'
-                   : 'Anda melihat rekap keseluruhan dan baris Anda sendiri.' ?></p>
+      <h1><?= $lihat_semua ? 'Rincian bimbingan' : 'Bimbingan saya' ?></h1>
+      <p class="lead">Diperbarui <?= e(tanggal_data_mhs()) ?>.</p>
     </div>
   </section>
 
   <div class="container">
-<?php if (!$daftar): ?>
-    <p class="masuk-galat">Berkas data bimbingan belum terunggah di server.
-      Unggah <code>bimbingan.json</code> ke folder <code>data/</code>.</p>
-<?php elseif ($admin): ?>
-<?php foreach ($kelompok as $nama_k => $anggota): ?>
-    <h2><?= e($nama_k) ?> <span class="rekap-jumlah"><?= count($anggota) ?> mahasiswa</span></h2>
+<?php if ($lihat_semua): ?>
+<?php if ($admin): ?>
+    <p><a class="btn primary" href="../admin-bimbingan.php">Buka manajemen bimbingan</a></p>
+<?php endif; ?>
     <div class="rekap-gulir"><table class="rekap-tabel">
-      <thead><tr><th>Nama</th><th>Peran</th><th>Tahap</th><th>Keterangan</th></tr></thead>
+      <thead><tr><th>Nama</th><th>Jenjang</th><th>NIM</th><th>Judul</th><th>Status</th></tr></thead>
       <tbody>
-<?php foreach ($anggota as $m): ?>
-        <tr>
-          <td><?= e($m['nama']) ?></td>
-          <td><?= e($m['peran']) ?></td>
-          <td><span class="rekap-tahap tahap-<?= e($m['tahap']) ?>"><?= e($LABEL[$m['tahap']]) ?></span></td>
-          <td class="rekap-ket"><?= e($m['keterangan']) ?></td>
-        </tr>
+<?php foreach ($mhs as $m): ?>
+        <tr><td><b><?= e($m['nama']) ?></b><small class="bim-kecil"><?= e($m['kelompok']) ?> &middot; <?= e($m['peran']) ?></small></td>
+          <td><?= e($m['jenjang']) ?></td><td><?= e($m['nim'] ?: '-') ?></td>
+          <td class="rekap-ket"><?= e($m['judul'] ?: '-') ?></td>
+          <td><?= e(label_status($m['jenjang'], $m['status'])) ?><?= $m['tgl_status'] !== '' ? '<small class="bim-kecil">sejak ' . e($m['tgl_status']) . '</small>' : '' ?></td></tr>
 <?php endforeach; ?>
       </tbody>
     </table></div>
+<?php elseif ($milikku): $m = $milikku; $urut = urut_status($m['jenjang'], $m['status']); ?>
+    <div class="bim-saya">
+      <div>
+        <p class="bim-saya-nama"><?= e($m['nama']) ?></p>
+        <p class="bim-kecil"><?= e($m['jenjang']) ?> &middot; <?= e(JENJANG[$m['jenjang']] ?? '') ?> &middot; <?= e($m['kelompok']) ?><?= $m['nim'] !== '' ? ' &middot; NIM ' . e($m['nim']) : '' ?></p>
+        <p class="bim-saya-judul"><?= e($m['judul'] ?: 'Judul penelitian belum tercatat.') ?></p>
+        <p>Status: <span class="bim-st bim-st-<?= sudah_lulus($m) ? 'lulus' : ($urut <= 0 ? 'awal' : 'tengah') ?>"><?= e(label_status($m['jenjang'], $m['status'])) ?></span></p>
+      </div>
+      <ol class="bim-tahapan">
+<?php foreach (array_values(status_jenjang($m['jenjang'])) as $i => $lbl): ?>
+        <li class="<?= $i < $urut ? 'sudah' : ($i === $urut ? 'kini' : '') ?>"><?= e($lbl) ?></li>
 <?php endforeach; ?>
-<?php else: ?>
-    <h2>Status Anda</h2>
-<?php if ($milikku): ?>
-    <div class="rekap-gulir"><table class="rekap-tabel">
-      <thead><tr><th>Nama</th><th>Kelompok</th><th>Peran pembimbing</th><th>Tahap</th></tr></thead>
-      <tbody><tr>
-        <td><?= e($milikku['nama']) ?></td>
-        <td><?= e($milikku['kelompok']) ?></td>
-        <td><?= e($milikku['peran']) ?></td>
-        <td><span class="rekap-tahap tahap-<?= e($milikku['tahap']) ?>"><?= e($LABEL[$milikku['tahap']]) ?></span></td>
-      </tr></tbody>
-    </table></div>
-    <p>Kalau status ini tidak sesuai dengan kondisi Anda, sampaikan lewat
-      <a href="mailto:dara@unj.ac.id">dara@unj.ac.id</a> supaya rekapnya dibetulkan.</p>
-<?php else: ?>
-    <p>Baris atas nama <b><?= e($pengguna['nama']) ?></b> belum ada di rekap.
-      Hubungi <a href="mailto:dara@unj.ac.id">dara@unj.ac.id</a> untuk pencocokan nama akun.</p>
+      </ol>
+    </div>
+    <h2>Riwayat status</h2>
+    <ol class="bim-riwayat">
+<?php foreach (array_reverse($m['riwayat'] ?? []) as $r): ?>
+      <li><b><?= e(label_status($m['jenjang'], $r['ke'])) ?></b> <span><?= e($r['tgl']) ?><?= $r['catatan'] !== '' ? ' &middot; ' . e($r['catatan']) : '' ?></span></li>
+<?php endforeach; ?>
+<?php if (empty($m['riwayat'])): ?>
+      <li><span>Belum ada riwayat.</span></li>
 <?php endif; ?>
+    </ol>
+    <p>Bila data ini tidak sesuai, sampaikan lewat <a href="mailto:dara@unj.ac.id">dara@unj.ac.id</a>.</p>
+<?php else: ?>
+    <p>Akun <b><?= e($pengguna['nama']) ?></b> belum tertaut ke data bimbingan.
+      Hubungi <a href="mailto:dara@unj.ac.id">dara@unj.ac.id</a>.</p>
 <?php endif; ?>
   </div>
 </main>
