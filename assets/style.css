@@ -3719,18 +3719,16 @@ body[data-grup="beranda"] .materi-sampul-kosong {
 }
 
 /* ============================================================
-   HURUF: Bricolage Grotesque untuk judul, Figtree untuk isi
+   HURUF: Plus Jakarta Sans untuk judul, Figtree untuk isi
    ============================================================
-   Plus Jakarta Sans dan Inter rapi tetapi netral; di situs belajar yang
-   ingin terasa hangat, keduanya terbaca seperti dasbor kantor. Bricolage
-   Grotesque punya sumbu ukuran optik, jadi judul besar tampil tegas dan
-   berkarakter sementara ukuran kecil tetap tenang. Figtree untuk paragraf:
-   bentuknya bundar dan ramah, tinggi huruf kecilnya besar sehingga tetap
-   nyaman dibaca panjang, dan sedikit lebih ramping dari Inter sehingga bilah
-   menu punya ruang lebih. */
+   Diganti dari Bricolage Grotesque pada 29 Sep 2026 atas pilihan pemilik
+   situs: Bricolage tebal terasa seperti situs agensi, sedangkan Plus
+   Jakarta Sans (dirancang di Jakarta) tegas dan profesional untuk portal
+   akademik. Judul h1 sampai h3 memakai bobot 700. Figtree untuk paragraf:
+   tinggi huruf kecilnya besar sehingga nyaman dibaca panjang. */
 :root {
   --sans: "Figtree", "Segoe UI", system-ui, sans-serif;
-  --display: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  --display: "Plus Jakarta Sans", "Figtree", system-ui, sans-serif;
 }
 body { font-family: var(--sans); }
 body.ak h1, .hero-x h1, .prog-band h1, .admin-band h1, .masuk-kartu h1 { letter-spacing: -0.02em; }
@@ -4382,3 +4380,6 @@ body.ak .ak-utama .prose p { font-size: 16.5px; line-height: 1.75; }
 :root[data-theme="dark"] .langkah-item h3 { color: #8fe0ad; }
 :root[data-theme="dark"] .langkah-item a { color: #d2f3de; }
 :root[data-theme="dark"] .glos-kosong, :root[data-theme="dark"] .prose .placeholder { color: #eedb94; }
+
+/* Bobot judul Plus Jakarta Sans: 700 sudah tegas; 800 terlalu berat untuk judul. */
+h1, h2, h3 { font-weight: 700 !important; letter-spacing: -0.02em !important; }
