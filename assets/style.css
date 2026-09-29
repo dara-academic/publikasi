@@ -4665,3 +4665,25 @@ body.ak .ak-utama .prose p { font-size: 16.5px; line-height: 1.75; }
 .bim-pemicu .tombol-x { padding: 10px 18px; font-size: 14.5px; }
 /* tautan di butir daftar panduan ikut warna modul, supaya terbaca di mode gelap */
 .pd-aturan a, .pd-langkah a { color: var(--modul, var(--accent-dark)); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Kotak angka disatukan: satu kartu lebar, empat bagian bersekat tipis.
+   Posisi dan isinya tetap; yang berubah hanya bingkainya. Lebarnya diambil
+   dari margin, bukan padding, supaya tepi kartu segaris dengan isi bagian lain. */
+.stat-strip.stat-bergambar {
+  gap: 0; padding: 0; width: calc(100% - 52px); max-width: calc(var(--lebar-beranda, 1120px) - 52px);
+  background: var(--kartu); border: 1px solid var(--line); border-top: 3px solid #0e7c7b;
+  border-radius: var(--r-besar, 20px); box-shadow: var(--bayang-kartu); overflow: hidden;
+}
+.stat-strip.stat-bergambar > a {
+  border: 0; border-radius: 0; box-shadow: none; background: transparent;
+}
+.stat-strip.stat-bergambar > a::before { display: none; }
+.stat-strip.stat-bergambar > a:hover { transform: none; box-shadow: none; background: color-mix(in srgb, #0e7c7b 5%, transparent); }
+@media (min-width: 1181px) {
+  .stat-strip.stat-bergambar > a + a { border-left: 1px solid var(--line); }
+}
+@media (max-width: 1180px) {
+  .stat-strip.stat-bergambar > a:nth-child(2n) { border-left: 1px solid var(--line); }
+  .stat-strip.stat-bergambar > a:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+:root[data-theme="dark"] .stat-strip.stat-bergambar { border-top-color: #5cc8bd; }
