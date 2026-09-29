@@ -4611,3 +4611,57 @@ body.ak .ak-utama .prose p { font-size: 16.5px; line-height: 1.75; }
 .bim-alur-tahap { grid-template-columns: repeat(auto-fill, minmax(106px, 1fr)); overflow: visible; }
 /* Halaman tabel bimbingan memakai bingkai lebar, bukan lebar halaman baca */
 .ak-halaman.bim-lebar { max-width: 1120px; }
+
+/* Panduan mahasiswa bimbingan */
+.pd-alur { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 6px 0 18px; }
+@media (max-width: 760px) { .pd-alur { grid-template-columns: 1fr; } }
+.pd-jenjang { border: 1px solid var(--line); border-radius: var(--r-sedang, 14px); background: var(--kartu); padding: 14px 16px; }
+.pd-jenjang > b { display: block; font-family: var(--display); font-size: 16px; margin-bottom: 8px; }
+.pd-jenjang ol { margin: 0; padding: 0 0 0 20px; display: grid; gap: 4px; }
+.pd-jenjang li { font-size: 14px; color: var(--ink-soft); }
+.pd-jenjang li.akhir { color: #0e6e6d; font-weight: 700; }
+:root[data-theme="dark"] .pd-jenjang li.akhir { color: #5cc8bd; }
+.pd-istilah { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 18px; margin: 0; font-size: 14.5px; }
+.pd-istilah dt { font-weight: 700; color: var(--ink); }
+.pd-istilah dd { margin: 0; color: var(--ink-soft); }
+@media (max-width: 640px) { .pd-istilah { grid-template-columns: 1fr; gap: 2px; } .pd-istilah dd { margin-bottom: 8px; } }
+.pd-langkah { list-style: none; counter-reset: langkah; margin: 0 0 16px; padding: 0; display: grid; gap: 10px; }
+.pd-langkah li { counter-increment: langkah; position: relative; padding: 12px 16px 12px 58px; border: 1px solid var(--line); border-radius: var(--r-sedang, 14px); background: var(--kartu); }
+.pd-langkah li::before { content: counter(langkah); position: absolute; left: 16px; top: 12px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 14px; color: #fff; background: #0e7c7b; }
+.pd-langkah b { display: block; font-size: 15.5px; }
+.pd-langkah span { font-size: 14px; color: var(--ink-soft); }
+.pd-aksi { display: flex; flex-wrap: wrap; gap: 10px; }
+.pd-aturan { margin: 0; padding: 0 0 0 22px; display: grid; gap: 8px; font-size: 15.5px; }
+.pd-data { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 640px) { .pd-data { grid-template-columns: 1fr; } }
+.pd-data > div { padding: 14px 16px; border-radius: var(--r-sedang, 14px); border: 1px solid var(--line); background: var(--kartu); }
+.pd-data b { display: block; margin-bottom: 4px; }
+.pd-data span { font-size: 14px; color: var(--ink-soft); }
+.pd-pintu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+@media (max-width: 640px) { .pd-pintu { grid-template-columns: 1fr; } }
+.pd-pintu a { display: flex; flex-direction: column; gap: 3px; padding: 14px 16px; border-radius: var(--r-sedang, 14px); border: 1px solid var(--line); background: var(--kartu); text-decoration: none; color: var(--ink); }
+.pd-pintu a:hover { border-color: #0e7c7b; }
+.pd-pintu b { color: #0e6e6d; }
+.pd-pintu span { font-size: 13.5px; color: var(--ink-soft); }
+:root[data-theme="dark"] .pd-pintu b { color: #5cc8bd; }
+.pd-setuju { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0 4px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+.pd-setuju input { margin-top: 3px; width: 17px; height: 17px; accent-color: #0e7c7b; flex-shrink: 0; }
+
+/* Pemicu mahasiswa bimbingan di beranda */
+.bim-pemicu {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; margin-top: 14px;
+  padding: 16px 20px; border-radius: var(--r-sedang, 14px); background: #e3f1ee;
+  border: 1px solid color-mix(in srgb, #0e7c7b 22%, transparent);
+}
+:root[data-theme="dark"] .bim-pemicu { background: #12302e; }
+.bim-pemicu-ikon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: #0e7c7b; color: #fff; flex-shrink: 0; }
+.bim-pemicu-ikon .ikon { width: 22px; height: 22px; }
+.bim-pemicu-teks { flex: 1 1 260px; display: flex; flex-direction: column; gap: 2px; }
+.bim-pemicu-teks b { font-family: var(--display); font-size: 17px; color: #0f4c5c; }
+.bim-pemicu-teks span { font-size: 14px; color: #3f5a60; }
+:root[data-theme="dark"] .bim-pemicu-teks b { color: #e6f3f1; }
+:root[data-theme="dark"] .bim-pemicu-teks span { color: #b9d6d1; }
+.bim-pemicu-aksi { display: flex; flex-wrap: wrap; gap: 8px; }
+.bim-pemicu .tombol-x { padding: 10px 18px; font-size: 14.5px; }
+/* tautan di butir daftar panduan ikut warna modul, supaya terbaca di mode gelap */
+.pd-aturan a, .pd-langkah a { color: var(--modul, var(--accent-dark)); text-decoration: underline; text-underline-offset: 3px; }

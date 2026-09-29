@@ -59,6 +59,7 @@ function kelas_status(array $m): string {
     <a class="ak-nama" href="../index.html"><svg class="ak-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#e9b949"/><path d="M7.5 10.2c3-.9 5.9-.6 8.5 1.3v12.3c-2.6-1.9-5.5-2.2-8.5-1.3z" fill="#0f4c5c"/><path d="M24.5 10.2c-3-.9-5.9-.6-8.5 1.3v12.3c2.6-1.9 5.5-2.2 8.5-1.3z" fill="#0f4c5c" opacity=".72"/></svg><span>Belajar Bersama Dara</span></a>
     <span class="rekap-siapa"><a href="index.html">Bimbingan</a>
       &middot; <a href="lulus.php">Lulusan</a>
+      &middot; <a href="panduan.html">Panduan</a>
       &middot; <a href="daftar.php">Daftar</a>
       &middot; <a href="../masuk.php">Masuk</a></span>
   </div>
@@ -159,11 +160,11 @@ function kelas_status(array $m): string {
     <div class="prog-ajak">
       <div>
         <b>Mahasiswa bimbingan baru</b>
-        <p>Buat akun dengan NIM Anda. Akun aktif setelah disetujui Dr. Dara.</p>
+        <p>Baca alur bimbingan dan aturannya, lalu buat akun dengan NIM Anda.</p>
       </div>
       <div class="prog-ajak-tombol">
         <a class="btn primary" href="daftar.php">Daftar akun</a>
-        <a class="btn" href="lulus.php">Daftar lulusan</a>
+        <a class="btn" href="panduan.html">Panduan mahasiswa</a>
       </div>
     </div>
     <p class="bim-catatan">Diperbarui <?= e(tanggal_data_mhs()) ?>. Yang ditampilkan hanya nama,

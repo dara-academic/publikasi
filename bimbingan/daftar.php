@@ -46,6 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $galat = 'Kata sandi minimal 8 karakter.';
     } elseif ($sandi !== $sandi2) {
         $galat = 'Kedua kata sandi tidak sama.';
+    } elseif (empty($_POST['setuju'])) {
+        $galat = 'Centang persetujuan penampilan data di papan monitoring.';
     } else {
         $menunggu = muat_daftar_akun();
         $nim_antre = array_column($menunggu, 'nim');
@@ -60,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'nama' => $isi['nama'], 'nim' => $isi['nim'], 'jenjang' => $isi['jenjang'],
                 'angkatan' => $isi['angkatan'], 'judul' => mb_substr($isi['judul'], 0, 300),
                 'kontak' => $isi['kontak'], 'sandi' => password_hash($sandi, PASSWORD_DEFAULT),
-                'waktu' => date('c'),
+                'waktu' => date('c'), 'setuju_tampil' => date('c'),
             ]);
             catat_gagal('daftar-' . $ip);     /* sekaligus penjatah: 5 kiriman per 15 menit */
             $sukses = true;
@@ -100,7 +102,7 @@ function e($s): string { return htmlspecialchars((string) $s, ENT_QUOTES); }
     <p class="kicker">Mahasiswa bimbingan</p>
     <h1>Daftar akun</h1>
     <p class="masuk-keterangan">Untuk mahasiswa S1, S2, dan S3 yang dibimbing Dr. Dara.
-      Akun aktif setelah disetujui.</p>
+      Akun aktif setelah disetujui. <a href="panduan.html">Baca panduan</a> sebelum mendaftar.</p>
 <?php if ($galat): ?>
     <p class="masuk-galat" role="alert"><?= e($galat) ?></p>
 <?php endif; ?>
@@ -137,6 +139,8 @@ function e($s): string { return htmlspecialchars((string) $s, ENT_QUOTES); }
       <label class="masuk-label" for="sandi2">Ulangi kata sandi</label>
       <input class="masuk-input" id="sandi2" name="sandi2" type="password" minlength="8"
              autocomplete="new-password" required>
+      <label class="pd-setuju"><input type="checkbox" name="setuju" value="1" required<?= !empty($_POST['setuju']) ? ' checked' : '' ?>>
+        <span>Saya setuju nama, judul penelitian, dan status bimbingan saya ditampilkan di papan monitoring.</span></label>
       <button class="masuk-tombol" type="submit">Kirim pendaftaran</button>
     </form>
     <p class="masuk-kaki">NIM dan surel tidak ditampilkan di mana pun. Papan monitoring
