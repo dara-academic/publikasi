@@ -80,7 +80,7 @@ $masuk = pengguna_sekarang();
 
   <?php if ($jml === 0): ?>
     <section class="hal-bagian">
-      <p class="admin-kosong">Belum ada buku yang ditambahkan. Sementara ini, daftar buku ada di <a href="buku/index.html">etalase buku</a>.</p>
+      <p class="admin-kosong">Belum ada buku yang ditambahkan. Sementara ini, daftar buku ada di <a href="buku/index.html">daftar buku</a>.</p>
     </section>
   <?php else: ?>
     <section class="hal-bagian">
