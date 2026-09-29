@@ -4383,3 +4383,75 @@ body.ak .ak-utama .prose p { font-size: 16.5px; line-height: 1.75; }
 
 /* Bobot judul Plus Jakarta Sans: 700 sudah tegas; 800 terlalu berat untuk judul. */
 h1, h2, h3 { font-weight: 700 !important; letter-spacing: -0.02em !important; }
+
+/* ===== Gaya C "startup ringan" (29 Sep 2026): label pengumuman, tekstur titik, kartu membulat ===== */
+.pil-baru {
+  display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px;
+  padding: 5px 14px 5px 5px; border-radius: 999px; font-size: 14px; font-weight: 600;
+  text-decoration: none; color: #0f4c5c; background: #fff;
+  border: 1px solid rgba(14,124,123,0.2); box-shadow: 0 4px 14px -6px rgba(14,124,123,0.35);
+  transition: box-shadow .2s, transform .2s;
+}
+.pil-baru b { padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .02em; color: #fff; background: #0e7c7b; }
+.pil-baru span { transition: transform .2s; }
+.pil-baru:hover { box-shadow: 0 8px 20px -8px rgba(14,124,123,0.5); transform: translateY(-1px); }
+.pil-baru:hover span { transform: translateX(3px); }
+:root[data-theme="dark"] .pil-baru { color: #cdeee8; background: rgba(255,255,255,0.06); border-color: rgba(94,234,212,0.25); box-shadow: none; }
+:root[data-theme="dark"] .pil-baru b { color: #062a26; background: #2dd4bf; }
+.hero-x {
+  background:
+    radial-gradient(circle at 10% 15%, rgba(14,124,123,0.13), transparent 42%),
+    radial-gradient(circle at 92% 80%, rgba(233,185,73,0.16), transparent 42%),
+    radial-gradient(rgba(14,124,123,0.13) 1px, transparent 1.4px) 0 0 / 22px 22px,
+    linear-gradient(160deg, #fbfaf6, var(--bg));
+}
+:root[data-theme="dark"] .hero-x {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(92,200,189,0.12), transparent 45%),
+    radial-gradient(rgba(94,234,212,0.08) 1px, transparent 1.4px) 0 0 / 22px 22px,
+    linear-gradient(160deg, var(--surface), var(--bg));
+}
+.stat-strip.stat-bergambar { border-radius: 20px; box-shadow: 0 24px 50px -24px rgba(15,76,92,0.35); }
+.hook-item { border-radius: 18px; transition: transform .2s, box-shadow .2s; }
+.hook-item:hover { transform: translateY(-4px); box-shadow: 0 18px 36px -18px rgba(14,124,123,0.4); }
+@media (prefers-reduced-motion: reduce) { .pil-baru, .pil-baru span, .hook-item { transition: none; } }
+
+/* ===== Ilustrasi unDraw (29 Sep 2026) ===== */
+.hook-gambar {
+  display: flex; align-items: center; justify-content: center; align-self: stretch;
+  height: 150px; margin: -18px -20px 12px; padding: 16px 20px 10px;
+  background: linear-gradient(160deg, #eef7f5, #f8f4e6); border-radius: 18px 18px 0 0;
+}
+.hook-gambar img { max-width: 100%; max-height: 100%; width: auto; height: auto; transition: transform .25s ease; }
+.hook-item:hover .hook-gambar img { transform: scale(1.04); }
+:root[data-theme="dark"] .hook-gambar { background: linear-gradient(160deg, #d9ebe7, #ebe4cc); }
+.gerbang-kartu.besar { padding-right: 330px; min-height: 210px; }
+.gerbang-kartu.besar > .gerbang-ilustrasi {
+  position: absolute; right: 64px; bottom: 16px; width: 250px; height: auto; max-height: 180px;
+  pointer-events: none; transition: transform .3s ease;
+}
+.gerbang-kartu.besar:hover .gerbang-ilustrasi { transform: translateY(-3px); }
+@media (max-width: 860px) {
+  .gerbang-kartu.besar { padding-right: 28px; min-height: 0; }
+  .gerbang-kartu.besar > .gerbang-ilustrasi { display: none; }
+}
+.hero-bergambar { display: grid; grid-template-columns: 1fr auto; column-gap: 32px; align-items: center; }
+.hero-bergambar > :not(.hero-ilustrasi):not(.hero-foto) { grid-column: 1; }
+.hero-ilustrasi {
+  grid-column: 2; grid-row: 1 / span 4; width: 260px; height: auto;
+  padding: 18px; border-radius: 22px; background: linear-gradient(160deg, #eef7f5, #f8f4e6);
+}
+:root[data-theme="dark"] .hero-ilustrasi { background: linear-gradient(160deg, #d9ebe7, #ebe4cc); }
+@media (max-width: 760px) { .hero-bergambar { display: block; } .hero-ilustrasi { display: block; width: 190px; margin: 0 0 18px; } }
+.nf .kode-gambar { font-size: 0; margin-bottom: 18px; }
+.nf .kode-gambar img { width: min(380px, 80vw); height: auto; }
+
+/* ===== Foto Unsplash di hero (29 Sep 2026) ===== */
+.hero-bergambar > .hero-foto { grid-column: 2; grid-row: 1 / span 5; margin: 0; width: 340px; }
+.hero-foto img {
+  display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: 22px; box-shadow: 0 22px 44px -22px rgba(15,76,92,0.45);
+}
+.hero-foto figcaption { margin-top: 8px; font-size: 12px; color: var(--ink-muted); text-align: right; }
+.hero-foto figcaption a { color: inherit; }
+@media (max-width: 760px) { .hero-bergambar > .hero-foto { width: 100%; max-width: 420px; margin: 0 0 18px; } }
