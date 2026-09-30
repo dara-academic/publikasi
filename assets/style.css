@@ -1843,7 +1843,7 @@ body.ak .ak-utama .ws-isi p {
   display: grid; grid-template-columns: 1fr 1.35fr; gap: 40px; align-items: center;
   padding: 26px 0 22px; border-bottom: 1px solid var(--line); margin-bottom: 18px;
 }
-.kaki-peta h4 {
+.kaki-peta h2 {
   font-family: var(--sans); font-size: 12px; font-weight: 700;
   letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--ink-muted); margin: 0 0 10px;
@@ -1916,7 +1916,7 @@ body.ak .ak-utama .ws-isi p {
 .site-footer a { color: #d6dfe8; font-weight: 600; }
 .site-footer a:hover { color: #fff; }
 .kaki-peta { border-bottom: 1px solid rgba(255,255,255,0.12); }
-.kaki-peta h4 { color: #7e93a6; }
+.kaki-peta h2 { color: #7e93a6; }
 .kaki-peta a { color: #c6d2dd; }
 .kaki-peta a:hover { color: #fff; }
 
@@ -1928,7 +1928,7 @@ body.ak .ak-utama .paper-head h1, body.ak .ak-utama h2, body.ak .section-head h2
   font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em;
 }
 /* Label kecil tetap sans: ia penunjuk arah, bukan judul. */
-body.ak .lanjut h2, body.ak .kaki-peta h4, body.ak .toc p.toc-title { font-family: var(--sans); }
+body.ak .lanjut h2, body.ak .kaki-peta h2, body.ak .toc p.toc-title { font-family: var(--sans); }
 
 /* Tanda tangan modul: garis pendek di bawah judul halaman */
 .ak-utama .hero h1::after, .ak-utama > h1::after, .ak-utama .paper-head h1::after {
@@ -2314,7 +2314,7 @@ body[data-grup="beranda"]  { --modul: var(--unj-hijau); --modul-tipis: var(--unj
 .site-footer a { color: #eaf6f6; }
 .site-footer a:hover { color: #fff; }
 .kaki-peta { border-bottom-color: rgba(255,255,255,0.18); }
-.kaki-peta h4 { color: #a8d3d4; }
+.kaki-peta h2 { color: #a8d3d4; }
 .kaki-peta a { color: #d8eeee; }
 .kaki-peta a:hover { color: #fff; }
 
@@ -3601,7 +3601,7 @@ body[data-grup="beranda"]  { --modul-tipis: var(--g-mint); }
   background: var(--grad-dalam);
   border-top: 3px solid transparent; border-image: var(--grad-garis) 1;
 }
-.kaki-peta h4, .kaki-tgl { color: #bfe3dc; }
+.kaki-peta h2, .kaki-tgl { color: #bfe3dc; }
 .kaki-brand-ket { color: #c3e2da; }
 .site-footer a:hover, .kaki-peta a:hover { color: var(--g-muda); }
 
@@ -4000,7 +4000,7 @@ body { background: var(--bg); }
 .ak-nama:hover { color: #f3d58a; }
 .ak-bar .nav > a.nav-masuk { color: #2c2100; }   /* latarnya ikut --unj-emas */
 .site-footer { border-top: 2px solid transparent; border-image: var(--grad-garis) 1; }
-.kaki-peta h4, .kaki-tgl { color: #9fc9c3; }
+.kaki-peta h2, .kaki-tgl { color: #9fc9c3; }
 .site-footer a:hover, .kaki-peta a:hover { color: #f3d58a; }
 
 /* Hero: kertas dengan rona mint dan emas yang sangat tipis */
@@ -4131,7 +4131,7 @@ body.ak .ak-utama .prose p { font-size: 16.5px; line-height: 1.75; }
 .kaki-peta .kaki-kolom ul { display: block; overflow: visible; }
 .kaki-peta .kaki-kolom li { margin: 0 0 10px; white-space: normal; }
 .kaki-peta .kaki-kolom a { font-weight: 500; font-size: 14px; }
-.kaki-peta h4 { margin-bottom: 14px; }
+.kaki-peta h2 { margin-bottom: 14px; }
 .kaki-bawah { margin: 0; padding: 16px 0 4px; font-size: 12.5px; color: #9fc9c3; }
 @media (max-width: 900px) { .kaki-peta { grid-template-columns: 1fr 1fr; } .kaki-brand { grid-column: 1 / -1; } }
 @media (max-width: 520px) { .kaki-peta { grid-template-columns: 1fr; } }
@@ -4382,7 +4382,7 @@ body.ak .ak-utama .prose p { font-size: 16.5px; line-height: 1.75; }
 :root[data-theme="dark"] .glos-kosong, :root[data-theme="dark"] .prose .placeholder { color: #eedb94; }
 
 /* Bobot judul Plus Jakarta Sans: 700 sudah tegas; 800 terlalu berat untuk judul. */
-h1, h2, h3 { font-weight: 700 !important; letter-spacing: -0.02em !important; }
+h1, h2:not(.kaki-judul), h3 { font-weight: 700 !important; letter-spacing: -0.02em !important; }
 
 /* ===== Gaya C "startup ringan" (29 Sep 2026): label pengumuman, tekstur titik, kartu membulat ===== */
 .pil-baru {
@@ -4451,3 +4451,24 @@ h1, h2, h3 { font-weight: 700 !important; letter-spacing: -0.02em !important; }
 .hero-foto figcaption { margin-top: 8px; font-size: 12px; color: var(--ink-muted); text-align: right; }
 .hero-foto figcaption a { color: inherit; }
 @media (max-width: 760px) { .hero-bergambar > .hero-foto { width: 100%; max-width: 420px; margin: 0 0 18px; } }
+
+/* Judul kontak di Tentang kini h2 (urutan judul benar); tampilan tetap seperti h3 lama */
+body.ak .ak-utama .kontak-blok h2 { font-family: var(--sans); font-size: 18px; line-height: 1.3; margin: 0 0 10px; color: var(--ink); }
+
+/* Dampak riset di halaman Tentang (angka Google Scholar) */
+.dampak { margin: 8px 0 30px; }
+body.ak .ak-utama .dampak h2 { font-family: var(--sans); font-size: 18px; line-height: 1.3; margin: 0 0 12px; color: var(--ink); }
+.dampak-angka { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.dampak-angka div {
+  padding: 16px 18px; border-radius: 16px; background: var(--kartu);
+  border: 1px solid var(--line); box-shadow: 0 12px 28px -20px rgba(15,76,92,0.35);
+}
+.dampak-angka b {
+  display: block; font-family: var(--display); font-size: 34px; font-weight: 800; line-height: 1.05;
+  letter-spacing: -0.02em; background-image: var(--grad-teks, linear-gradient(120deg, #0e7c7b, #a98c00));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.dampak-angka span { display: block; margin-top: 4px; font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+body.ak .ak-utama .prose .dampak-sumber { font-size: 13px; color: var(--ink-muted); margin: 10px 0 0; }
+.dampak-sumber a { color: inherit; }
+@media (max-width: 420px) { .dampak-angka b { font-size: 28px; } .dampak-angka div { padding: 13px 12px; } }

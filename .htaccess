@@ -113,6 +113,11 @@ RedirectMatch 404 ^/data/
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header set X-Frame-Options "SAMEORIGIN"
+  # Peramban diminta selalu memakai HTTPS selama setahun. Tanpa includeSubDomains
+  # supaya subdomain lain milik akun hosting tidak ikut terkunci.
+  Header always set Strict-Transport-Security "max-age=31536000"
+  # Situs tidak memakai kamera, mikrofon, lokasi, atau pembayaran; akses itu ditolak.
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
 </IfModule>
 
 # Sembunyikan daftar isi folder
