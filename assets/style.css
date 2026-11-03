@@ -4554,3 +4554,13 @@ body.ak .ak-utama .dp-rujukan h2 { font-family: var(--sans); font-size: 15px; ma
 :root[data-theme="dark"] .ak-angka > div { background: var(--kartu); border-color: var(--line); }
 :root[data-theme="dark"] .ak-angka span { color: #a9b8c6; }
 .dp-cek-hitung { font-variant-numeric: tabular-nums; }
+
+/* Kartu versi slide di halaman Desain penelitian */
+.dp-slide-wadah { padding-top: 0; }
+.dp-slide { display: flex; align-items: center; justify-content: space-between; gap: 22px; flex-wrap: wrap; padding: 22px 26px;
+  border-radius: 20px; border: 1px solid var(--line); background: linear-gradient(135deg, #e5f3f1, #fdf4dc); }
+:root[data-theme="dark"] .dp-slide { background: var(--kartu); }
+.dp-slide-teks { max-width: 560px; }
+body.ak .ak-utama .dp-slide h2 { font-size: 22px; margin: 4px 0 6px; color: var(--ink); }
+body.ak .ak-utama .dp-slide p { font-size: 15px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+.dp-slide-aksi { display: flex; gap: 10px; flex-wrap: wrap; }
