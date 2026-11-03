@@ -239,7 +239,9 @@
    nol saat masuk layar, sekali saja. Dimatikan bila gerak dikurangi.
    ------------------------------------------------------------------ */
 (function () {
-  var angka = document.querySelectorAll('.hitung');
+  /* hanya angka yang punya target; label lain bernama .hitung (misalnya "10 publikasi")
+     dulu ikut tertimpa menjadi 0 */
+  var angka = document.querySelectorAll('.hitung[data-akhir]');
   if (!angka.length) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
     return; /* biarkan angka akhir apa adanya */
@@ -311,7 +313,9 @@
   var IKON_SIMPAN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-3.8L5.5 20.5v-16a1 1 0 0 1 1-1z"/></svg>';
   var IKON_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   var btn = document.createElement('button');
-  btn.type = 'button'; btn.className = baris ? 'aksi-btn simpan-aksi' : 'simpan-apung';
+  /* tanpa baris aksi: masuk ke baris jejak lokasi bila ada, baru mengambang sebagai cadangan */
+  var remah = !baris && document.querySelector('main .remah');
+  btn.type = 'button'; btn.className = baris ? 'aksi-btn simpan-aksi' : (remah ? 'simpan-remah' : 'simpan-apung');
   var sync = function () {
     var s = ada(); btn.classList.toggle('aktif', s);
     btn.innerHTML = s ? IKON_OK + 'Tersimpan' : IKON_SIMPAN + (baris ? 'Simpan' : 'Simpan untuk nanti');
@@ -326,6 +330,8 @@
   if (baris) {
     var bagikan = baris.querySelector('.bagikan');
     baris.insertBefore(btn, bagikan || null);
+  } else if (remah) {
+    remah.appendChild(btn);
   } else {
     document.body.appendChild(btn);
   }

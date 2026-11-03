@@ -213,3 +213,10 @@ body.b2 .ak-utama .b2-judul.terang { color: #fff; margin-bottom: 14px; }
 body.b2 .ak-utama .ubin h3 { font-family: var(--display); font-size: 26px; line-height: 1.15; margin: 0 0 10px; color: inherit; }
 body.b2 .ak-utama .u-desain h3 { font-size: 34px; }
 body.b2 .ak-utama .ubin p:not(.u-tanda):not(.u-angka) { font-size: 15.5px; }
+/* HP: bilah kredibilitas bertumpuk rapi, nama di bawah foto tidak tertutup lencana */
+@media (max-width: 720px) {
+  .b2-percaya .b2-wadah { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .b2-percaya ul { flex: none; width: 100%; justify-content: flex-start; gap: 6px 20px; }
+  .b2-lencana.l3 { bottom: 96px; }
+  .b2-nama { margin-top: 22px; }
+}

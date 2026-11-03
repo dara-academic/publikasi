@@ -4785,3 +4785,76 @@ body.ak .ak-utama .hal-hero + .isi-hal, body.ak .ak-utama .isi-hal { margin-bott
   .simpan-apung { left: auto; right: 22px; bottom: 78px; }
 }
 body.ak .ak-halaman .ak-utama .container { max-width: none; padding-left: 0; padding-right: 0; }
+
+/* =====================================================================
+   PRESISI DESAIN (Nov 2026): kepala halaman seragam, kartu, dan blok lanjutan
+   ===================================================================== */
+/* kepala gaya lama yang kini dibungkus pita */
+body.ak .ak-utama .hal-hero-lama .ak-intro { font-size: clamp(17px, 1.4vw, 19px); line-height: 1.6; max-width: 66ch; color: var(--ink-soft); margin: 0; }
+body.ak .ak-utama .hal-hero-lama h1 { max-width: 34ch; font-size: clamp(30px, 3.4vw, 46px); }
+body.ak .ak-utama .hal-hero-lama .statbar, body.ak .ak-utama .hal-hero-lama .ak-angka { margin: 22px 0 0; }
+body.ak .ak-utama .hal-hero-lama .kicker a { color: inherit; }
+body.ak .ak-utama .hal-hero-lama + * { margin-top: 8px; }
+
+/* hiasan garis emas di bawah judul dihapus di seluruh situs */
+.ak-utama .hero h1::after, .ak-utama > h1::after, .ak-utama .paper-head h1::after,
+body[data-grup][data-grup] .ak-utama .hero h1::after, body[data-grup][data-grup] .ak-utama > h1::after { display: none !important; content: none !important; }
+
+/* kepala paper: pita yang sama, sampul di kiri */
+body.ak .ak-utama .paper-head { margin: 6px 0 8px; padding: 34px 38px; border: 1px solid var(--line); border-radius: 28px;
+  background: radial-gradient(circle at 0% 0%, rgba(14,124,123,.10), transparent 40%), radial-gradient(circle at 100% 100%, rgba(233,185,73,.13), transparent 45%), linear-gradient(180deg, #f8fbfa, #ffffff); }
+:root[data-theme="dark"] body.ak .ak-utama .paper-head { background: radial-gradient(circle at 0% 0%, rgba(92,200,189,.12), transparent 40%), linear-gradient(180deg, var(--surface), var(--bg)); }
+body.ak .ak-utama .paper-head .head-grid { gap: 36px; }
+body.ak .ak-utama .paper-head .head-grid .cover { border-radius: 12px; overflow: hidden; box-shadow: 0 18px 36px -20px rgba(10,60,66,.55); }
+body.ak .ak-utama .paper-head h1 { font-size: clamp(26px, 2.6vw, 36px); line-height: 1.18; max-width: 32ch; }
+
+/* kepala detail mata kuliah: dua kolom, sampul di kanan */
+body.ak .ak-utama .mk-hero { margin: 6px 0 10px; }
+body.ak .ak-utama .mk-hero > .container { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); column-gap: 48px; align-items: center;
+  padding: 38px 42px; border: 1px solid var(--line); border-radius: 28px;
+  background: radial-gradient(circle at 0% 0%, rgba(14,124,123,.10), transparent 40%), radial-gradient(circle at 100% 100%, rgba(233,185,73,.13), transparent 45%), linear-gradient(180deg, #f8fbfa, #ffffff); }
+:root[data-theme="dark"] body.ak .ak-utama .mk-hero > .container { background: radial-gradient(circle at 0% 0%, rgba(92,200,189,.12), transparent 40%), linear-gradient(180deg, var(--surface), var(--bg)); }
+body.ak .ak-utama .mk-hero > .container > * { grid-column: 1; }
+body.ak .ak-utama .mk-hero .mk-hero-sampul { grid-column: 2; grid-row: 1 / span 5; margin: 0; max-width: none; }
+body.ak .ak-utama .mk-hero h1 { font-size: clamp(32px, 3.6vw, 48px); line-height: 1.08; }
+@media (max-width: 900px) {
+  body.ak .ak-utama .mk-hero > .container { grid-template-columns: 1fr; padding: 26px 22px; }
+  body.ak .ak-utama .mk-hero .mk-hero-sampul { grid-column: 1; grid-row: auto; margin-bottom: 20px; }
+}
+
+/* ubin workshop tidak lagi selebar halaman */
+.ws-rak { grid-template-columns: repeat(auto-fill, minmax(300px, 380px)); }
+
+/* blok Lanjut membaca menjadi kisi kartu */
+body.ak .lanjut { margin-top: 56px; padding-top: 28px; }
+body.ak .lanjut h2 { font-size: 12.5px; letter-spacing: .16em; margin-bottom: 16px; }
+body.ak .lanjut ul { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+body.ak .lanjut li { position: relative; padding: 16px 18px 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--kartu);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+body.ak .lanjut li:hover { transform: translateY(-3px); border-color: var(--modul, #0e7c7b); box-shadow: 0 14px 28px -20px rgba(10,60,66,.6); }
+body.ak .lanjut li a { font-family: var(--display); font-size: 16px; font-weight: 700; }
+body.ak .lanjut li a::after { content: ""; position: absolute; inset: 0; }
+body.ak .lanjut li a:hover { text-decoration: none; }
+
+/* kartu 404 dan kisi kartu umum */
+.nf ~ .section .card-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+@media (prefers-reduced-motion: reduce) { body.ak .lanjut li { transition: none; } }
+
+/* tombol Simpan di baris jejak lokasi (tidak mengambang) */
+body.ak .ak-utama .remah { display: flex; align-items: center; gap: 0; }
+.simpan-remah { margin-left: auto; flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px; border-radius: 999px;
+  font: inherit; font-size: 13px; font-weight: 700; color: var(--ink); background: var(--kartu); border: 1px solid var(--line); cursor: pointer;
+  transition: border-color .15s ease, color .15s ease; }
+.simpan-remah svg { width: 15px; height: 15px; }
+.simpan-remah:hover { border-color: var(--modul, #0e7c7b); color: var(--modul, #0e7c7b); }
+.simpan-remah.aktif { background: var(--modul-isi, #0e7c7b); color: #fff; border-color: transparent; }
+@media (max-width: 560px) { .simpan-remah { font-size: 0; gap: 0; padding: 7px; } .simpan-remah svg { width: 16px; height: 16px; } }
+/* deret angka di kepala mata kuliah tidak terlipat di tengah */
+body.ak .ak-utama .mk-hero .statbar { flex-wrap: wrap; }
+body.ak .ak-utama .mk-hero .statbar .s { white-space: nowrap; }
+/* HP: judul panjang di kepala halaman tidak memenuhi layar */
+@media (max-width: 720px) {
+  body.ak .ak-utama .hal-hero h1, body.ak .ak-utama .hal-hero-lama h1 { font-size: clamp(26px, 7.4vw, 32px); }
+  body.ak .ak-utama .hal-hero-lama .kicker { font-size: 11.5px; letter-spacing: .12em; }
+}
+@media (max-width: 720px) { body.ak .ak-utama .hal-hero-lama h1 { font-size: clamp(22px, 6.2vw, 27px); line-height: 1.15; } }
