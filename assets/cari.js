@@ -830,3 +830,39 @@
   }, { rootMargin: '-90px 0px -65% 0px' });
   butir.forEach(function (b) { io.observe(b.el); });
 })();
+
+/* Sentuhan modern: muncul halus saat digulir, sorotan cahaya mengikuti kursor,
+   dan bayangan bilah navigasi saat halaman digulir. Semua dimatikan bila
+   pengguna memilih gerak dikurangi. */
+(function () {
+  var gerakKurang = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bar = document.querySelector('.ak-bar');
+  if (bar) {
+    var cek = function () { bar.classList.toggle('tergulir', window.scrollY > 8); };
+    window.addEventListener('scroll', cek, { passive: true }); cek();
+  }
+  if (gerakKurang) return;
+  if ('IntersectionObserver' in window) {
+    var SASARAN = '.ubin, .b2-jalur-k, .hook-item, .karya-kartu, .kp-kartu, .b2-angka > div, .lanjut li, .dp-tahap, .card, .rs-kartu, .kolab, .mbaru-ubin, .tp-daftar li, .ws-ubin, .book';
+    var el = Array.prototype.slice.call(document.querySelectorAll(SASARAN));
+    var io = new IntersectionObserver(function (isi) {
+      isi.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('tampak'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    el.forEach(function (x) {
+      var r = x.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.92) return;   /* yang sudah terlihat saat dibuka tidak dianimasikan */
+      var urut = Array.prototype.indexOf.call(x.parentElement.children, x) % 4;
+      x.style.transitionDelay = (urut * 70) + 'ms';
+      x.classList.add('tampak-awal'); io.observe(x);
+    });
+  }
+  var sorot = document.querySelectorAll('.ubin, .b2-jalur-k');
+  Array.prototype.forEach.call(sorot, function (k) {
+    k.classList.add('sorot-kursor');
+    if (getComputedStyle(k).position === 'static') k.style.position = 'relative';
+    k.addEventListener('pointermove', function (e) {
+      var r = k.getBoundingClientRect();
+      k.style.setProperty('--mx', (e.clientX - r.left) + 'px'); k.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+})();

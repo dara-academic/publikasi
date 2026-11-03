@@ -4858,3 +4858,32 @@ body.ak .ak-utama .mk-hero .statbar .s { white-space: nowrap; }
   body.ak .ak-utama .hal-hero-lama .kicker { font-size: 11.5px; letter-spacing: .12em; }
 }
 @media (max-width: 720px) { body.ak .ak-utama .hal-hero-lama h1 { font-size: clamp(22px, 6.2vw, 27px); line-height: 1.15; } }
+
+/* =====================================================================
+   SENTUHAN MODERN (Nov 2026, benchmark Vercel, Raycast, Framer, Brilliant)
+   ===================================================================== */
+/* 1. muncul halus saat digulir (kelas diberikan cari.js; tanpa JS semua tampil) */
+.tampak-awal { opacity: 0; transform: translateY(18px); transition: opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); }
+.tampak-awal.tampak { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .tampak-awal { opacity: 1; transform: none; transition: none; } }
+@media print { .tampak-awal { opacity: 1 !important; transform: none !important; } }
+
+/* 2. sorotan cahaya mengikuti kursor */
+.sorot-kursor { --mx: 50%; --my: 50%; }
+.sorot-kursor::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s ease;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(14,124,123,.10), transparent 60%); }
+.sorot-kursor:hover::after { opacity: 1; }
+:root[data-theme="dark"] .sorot-kursor::after { background: radial-gradient(420px circle at var(--mx) var(--my), rgba(94,234,212,.10), transparent 60%); }
+.u-monitor.sorot-kursor::after { background: radial-gradient(420px circle at var(--mx) var(--my), rgba(246,210,122,.16), transparent 60%); }
+
+/* 3. bilah navigasi berbayang saat halaman digulir */
+.ak-bar { transition: box-shadow .25s ease; }
+.ak-bar.tergulir { box-shadow: 0 10px 30px -12px rgba(5,47,51,.55); }
+
+/* 4. tulisan merek raksasa yang samar di kaki halaman */
+.site-footer { position: relative; overflow: hidden; }
+.site-footer::after { content: "Belajar Bersama Dara"; display: block; text-align: center; white-space: nowrap; pointer-events: none;
+  font-family: var(--display); font-weight: 800; font-size: clamp(44px, 9.6vw, 148px); line-height: .9; letter-spacing: -.05em;
+  margin: 18px 0 -0.16em; color: transparent; background-image: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0));
+  -webkit-background-clip: text; background-clip: text; }
+@media print { .site-footer::after { display: none; } }
