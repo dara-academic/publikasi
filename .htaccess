@@ -75,6 +75,12 @@ RedirectMatch 404 ^/data/
   RewriteRule ^assets/materi/123/.*$ /mata-kuliah/ [R=301,L]
 </IfModule>
 
+# Tipe berkas Office untuk unduhan (slide PPTX, pedoman DOCX). Tanpa ini
+# server mengirimnya sebagai text/plain dan sebagian peramban menampilkannya sebagai teks.
+AddType application/vnd.openxmlformats-officedocument.presentationml.presentation .pptx
+AddType application/vnd.openxmlformats-officedocument.wordprocessingml.document .docx
+AddType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet .xlsx
+
 # Pemampatan
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
