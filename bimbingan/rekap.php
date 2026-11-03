@@ -82,6 +82,7 @@ function e($s): string { return htmlspecialchars((string) $s, ENT_QUOTES); }
 <?php endforeach; ?>
       </ol>
     </div>
+    <p class="bim-lanjut-panduan">Langkah berikutnya sesuai status Anda ada di <a href="desain-penelitian.html#status">panduan desain penelitian</a>.</p>
     <h2>Riwayat status</h2>
     <ol class="bim-riwayat">
 <?php foreach (array_reverse($m['riwayat'] ?? []) as $r): ?>

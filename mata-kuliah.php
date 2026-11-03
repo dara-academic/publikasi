@@ -76,6 +76,7 @@ $masuk = pengguna_sekarang();
             <a href="mata-kuliah/index.html">Semua materi kuliah</a>
             <a href="bimbingan/index.html">Bimbingan karya ilmiah</a>
             <a href="bimbingan/panduan.html">Panduan mahasiswa bimbingan</a>
+            <a href="bimbingan/desain-penelitian.html">Desain penelitian</a>
             <a href="tersimpan.html">Materi tersimpan</a>
           </div>
         </div>
