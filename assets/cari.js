@@ -782,3 +782,45 @@
     });
   }).catch(function () {});
 })();
+
+/* Tata letak lebar: navigasi "Di halaman ini" menempel di samping pada layar lebar.
+   Dibangun dari judul bagian (h2) halaman; halaman paper, kisi materi, glosarium, admin,
+   dan halaman masuk dilewati karena punya tata letak sendiri. */
+(function () {
+  var wadah = document.querySelector('.ak-halaman');
+  var main = wadah && wadah.querySelector('main.ak-utama');
+  if (!main || document.querySelector('.paper-body, .admin-band, .masuk-panggung, .mk-rak, .glos-item')) return;
+  var lewati = /^(Lanjut membaca|Tanya jawab|Rujukan)$/i;
+  var judul = Array.prototype.filter.call(main.querySelectorAll('h2'), function (h) {
+    return !h.closest('aside, .lanjut, .dp-rujukan, .sr-only, .hal-hero') && !h.classList.contains('sr-only') && !lewati.test(h.textContent.trim());
+  });
+  if (judul.length < 3) return;
+  var dipakai = {};
+  var butir = judul.map(function (h) {
+    var sasaran = h.closest('section[id]') || h;
+    if (!sasaran.id) {
+      var dasar = h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'bagian';
+      var id = dasar, n = 2; while (document.getElementById(id) || dipakai[id]) id = dasar + '-' + n++;
+      sasaran.id = id;
+    }
+    dipakai[sasaran.id] = 1;
+    return { el: sasaran, teks: h.textContent.trim() };
+  });
+  var rel = document.createElement('aside');
+  rel.className = 'ak-rel'; rel.setAttribute('aria-label', 'Di halaman ini');
+  rel.innerHTML = '<p class="ak-rel-judul">Di halaman ini</p><ol>' + butir.map(function (b) {
+    var t = document.createElement('span'); t.textContent = b.teks;
+    return '<li><a href="#' + b.el.id + '">' + t.innerHTML + '</a></li>';
+  }).join('') + '</ol><a class="ak-rel-atas" href="#konten">Kembali ke atas</a>';
+  wadah.classList.add('dk');
+  wadah.appendChild(rel);
+  var tautan = rel.querySelectorAll('ol a');
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (isi) {
+    isi.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      tautan.forEach(function (a) { a.classList.toggle('aktif', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-90px 0px -65% 0px' });
+  butir.forEach(function (b) { io.observe(b.el); });
+})();
