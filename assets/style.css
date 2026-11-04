@@ -4887,3 +4887,16 @@ body.ak .ak-utama .mk-hero .statbar .s { white-space: nowrap; }
   margin: 18px 0 -0.16em; color: transparent; background-image: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0));
   -webkit-background-clip: text; background-clip: text; }
 @media print { .site-footer::after { display: none; } }
+
+/* Unduhan pedoman dan templat (3 Nov 2026) */
+.dp-unduh { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.dp-unduh-kartu { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 22px; border: 1px solid var(--line); border-radius: 18px;
+  background: var(--kartu); box-shadow: 0 14px 30px -24px rgba(15,76,92,0.4); transition: transform .2s ease, box-shadow .2s ease; }
+.dp-unduh-kartu:hover { transform: translateY(-3px); box-shadow: 0 20px 36px -22px rgba(15,76,92,0.45); }
+.dp-unduh-ikon { width: 44px; height: 44px; padding: 10px; border-radius: 12px; background: #e6f2ef; fill: none; stroke: #0e7c7b;
+  stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body.ak .ak-utama .dp-unduh-kartu h3 { font-size: 18px; margin: 6px 0 0; color: var(--ink); }
+.dp-unduh-kartu p { font-size: 14px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 6px; }
+.dp-unduh-aksi { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+.dp-unduh-aksi .btn { font-size: 14px; padding: 9px 16px; }
+:root[data-theme="dark"] .dp-unduh-ikon { background: rgba(45,212,191,0.12); stroke: #8fe0d2; }

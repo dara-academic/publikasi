@@ -843,7 +843,7 @@
   }
   if (gerakKurang) return;
   if ('IntersectionObserver' in window) {
-    var SASARAN = '.ubin, .b2-jalur-k, .hook-item, .karya-kartu, .kp-kartu, .b2-angka > div, .lanjut li, .dp-tahap, .card, .rs-kartu, .kolab, .mbaru-ubin, .tp-daftar li, .ws-ubin, .book';
+    var SASARAN = '.ubin, .b2-jalur-k, .hook-item, .karya-kartu, .kp-kartu, .b2-angka > div, .lanjut li, .dp-tahap, .card, .rs-kartu, .kolab, .mbaru-ubin, .tp-daftar li, .ws-ubin, .book, .dp-unduh-kartu';
     var el = Array.prototype.slice.call(document.querySelectorAll(SASARAN));
     var io = new IntersectionObserver(function (isi) {
       isi.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('tampak'); io.unobserve(e.target); } });

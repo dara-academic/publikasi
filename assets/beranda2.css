@@ -220,3 +220,22 @@ body.b2 .ak-utama .ubin p:not(.u-tanda):not(.u-angka) { font-size: 15.5px; }
   .b2-lencana.l3 { bottom: 96px; }
   .b2-nama { margin-top: 22px; }
 }
+
+/* Ikon di pita "Terbit dan terindeks di" (3 Nov 2026) */
+.b2-percaya li { display: inline-flex; align-items: center; gap: 10px; transition: color .2s ease; }
+.b2-pi { flex: none; width: 34px; height: 34px; padding: 7px; border-radius: 10px; fill: none; stroke: #0e7c7b; stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round; background: #e6f2ef; transition: transform .2s ease, background .2s ease; }
+.b2-percaya li:hover { color: var(--ink); }
+.b2-percaya li:hover .b2-pi { transform: translateY(-2px); background: #d3ebe6; }
+:root[data-theme="dark"] .b2-pi { stroke: #8fe0d2; background: rgba(45,212,191,0.12); }
+@media (max-width: 1100px) { .b2-pi { width: 28px; height: 28px; padding: 5.5px; border-radius: 8px; } .b2-percaya li { gap: 8px; } }
+@media (max-width: 720px) { .b2-percaya ul { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; } }
+.b2-percaya li { white-space: nowrap; }
+@media (min-width: 1101px) {
+  .b2-percaya .b2-wadah { flex-wrap: nowrap; gap: 32px; }
+  .b2-percaya p { flex: none; max-width: 130px; line-height: 1.5; }
+  .b2-percaya ul { flex-wrap: nowrap; gap: 18px; }
+  .b2-percaya li { font-size: 17px; gap: 9px; }
+  .b2-pi { width: 30px; height: 30px; padding: 6px; border-radius: 9px; }
+}
+@media (max-width: 720px) { .b2-percaya li { font-size: 14.5px; gap: 8px; } .b2-pi { width: 26px; height: 26px; padding: 5px; } }
