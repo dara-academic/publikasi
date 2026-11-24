@@ -14,6 +14,7 @@
    mengeksekusi skrip lewat .htaccess.
    ------------------------------------------------------------------ */
 require __DIR__ . '/sesi.php';
+require __DIR__ . '/potongan.php';
 $pengguna = wajib_masuk_segar();
 if ($pengguna['peran'] !== 'admin') {
     header('Location: /bimbingan/rekap.php');
@@ -25,6 +26,11 @@ const MAKS_UKURAN = 31457280; /* 30 MB */
 const MAKS_SAMPUL = 5242880;  /* 5 MB */
 const DIR_UNGGAH  = __DIR__ . '/unggahan';
 const SAMPUL_MIME = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+
+/* Potongan berkas dari assets/unggah-potong.js dijawab lebih dulu dalam JSON. */
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['aksi'] ?? '') === 'potong') {
+    potong_layani(MAKS_UKURAN);
+}
 
 function ee($s): string { return htmlspecialchars((string) $s, ENT_QUOTES); }
 function slugkan(string $s): string {
@@ -93,12 +99,12 @@ function tebak_judul(string $nama): string {
 function simpan_pdf(array $f, string $dir, string $dasar, ?string &$galat = null): string {
     if (($f['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) { $galat = 'gagal diunggah'; return ''; }
     if (($f['size'] ?? 0) <= 0 || $f['size'] > MAKS_UKURAN)     { $galat = 'ukuran tidak sah'; return ''; }
-    if (!is_uploaded_file($f['tmp_name']))                      { $galat = 'berkas tidak sah'; return ''; }
+    if (!berkas_sah($f))                                        { $galat = 'berkas tidak sah'; return ''; }
     $ext  = strtolower(pathinfo((string) $f['name'], PATHINFO_EXTENSION));
     $mime = (new finfo(FILEINFO_MIME_TYPE))->file($f['tmp_name']);
     if ($ext !== 'pdf' || $mime !== 'application/pdf')          { $galat = 'bukan PDF'; return ''; }
     $berkas = $dasar . '-' . date('Ymd-His') . '-' . substr(bin2hex(random_bytes(3)), 0, 4) . '.pdf';
-    if (!@move_uploaded_file($f['tmp_name'], $dir . '/' . $berkas)) { $galat = 'gagal disimpan'; return ''; }
+    if (!berkas_pindah($f, $dir . '/' . $berkas))               { $galat = 'gagal disimpan'; return ''; }
     @chmod($dir . '/' . $berkas, 0644);
     return $berkas;
 }
@@ -169,11 +175,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mk       = (string) ($_POST['mk'] ?? '');
             $semester = (string) ($_POST['semester'] ?? SEM_INI);
             if (!in_array($semester, semester_pilihan(), true)) $semester = SEM_INI;
-            $ff = $_FILES['massal'] ?? null;
+            $daftar = berkas_form_banyak('massal', MAKS_UKURAN);
 
             if (!array_key_exists($mk, $MK)) {
                 $galat = 'Mata kuliah tidak sah.';
-            } elseif (!$ff || !is_array($ff['name'] ?? null) || !count(array_filter((array) $ff['name']))) {
+            } elseif (!$daftar) {
                 $galat = 'Pilih dulu berkas PDF yang mau diunggah.';
             } else {
                 $dir = DIR_UNGGAH . '/' . $mk;
@@ -182,11 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $galat = 'Folder unggahan belum bisa ditulis di server. Cek izin folder unggahan.';
                 } else {
                     $sukses = 0; $gagal = [];
-                    foreach (array_keys($ff['name']) as $i) {
-                        if (($ff['name'][$i] ?? '') === '') continue;
-                        $satu = ['name' => $ff['name'][$i], 'type' => $ff['type'][$i] ?? '',
-                                 'tmp_name' => $ff['tmp_name'][$i] ?? '', 'error' => $ff['error'][$i] ?? UPLOAD_ERR_NO_FILE,
-                                 'size' => $ff['size'][$i] ?? 0];
+                    foreach ($daftar as $satu) {
                         $judul = tebak_judul((string) $satu['name']);
                         $dasar = slugkan($judul) ?: 'materi';
                         $sebab = null;
@@ -238,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!in_array($semester, semester_pilihan(), true)) $semester = SEM_INI;
             $pertemuan = (int) ($_POST['pertemuan'] ?? 0);
             if ($pertemuan < 0 || $pertemuan > 40) $pertemuan = 0;
-            $f         = $_FILES['berkas'] ?? null;
+            $f         = berkas_form('berkas', MAKS_UKURAN);
 
             if (!array_key_exists($mk, $MK)) {
                 $galat = 'Mata kuliah tidak sah.';
@@ -252,7 +254,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     : 'Berkas gagal diunggah. Pastikan Anda memilih satu berkas PDF.';
             } elseif (($f['size'] ?? 0) <= 0 || $f['size'] > MAKS_UKURAN) {
                 $galat = 'Ukuran berkas harus di atas 0 dan maksimal 30 MB.';
-            } elseif (!is_uploaded_file($f['tmp_name'])) {
+            } elseif (!berkas_sah($f)) {
                 $galat = 'Berkas tidak sah.';
             } else {
                 $ext  = strtolower(pathinfo((string) $f['name'], PATHINFO_EXTENSION));
@@ -269,15 +271,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         if ($dasar === '') $dasar = 'materi';
                         $berkas = $dasar . '-' . date('Ymd-His') . '.pdf';
                         $tujuan = $dir . '/' . $berkas;
-                        if (@move_uploaded_file($f['tmp_name'], $tujuan)) {
+                        if (berkas_pindah($f, $tujuan)) {
                             @chmod($tujuan, 0644);
 
                             /* Gambar sampul opsional: gambar slide halaman 1. */
                             $sampul = '';
-                            $cf = $_FILES['sampul'] ?? null;
+                            $cf = berkas_form('sampul', MAKS_SAMPUL);
                             if ($cf && is_array($cf)
                                 && ($cf['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK
-                                && is_uploaded_file($cf['tmp_name'])
+                                && berkas_sah($cf)
                                 && ($cf['size'] ?? 0) > 0 && $cf['size'] <= MAKS_SAMPUL) {
                                 $cmime = (new finfo(FILEINFO_MIME_TYPE))->file($cf['tmp_name']);
                                 if (isset(SAMPUL_MIME[$cmime])) {
@@ -288,7 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         @chmod($dir . '/' . $sampul, 0644);
                                     } else {
                                         $cnama = $dasar . '-' . date('Ymd-His') . '-sampul.' . SAMPUL_MIME[$cmime];
-                                        if (@move_uploaded_file($cf['tmp_name'], $dir . '/' . $cnama)) {
+                                        if (berkas_pindah($cf, $dir . '/' . $cnama)) {
                                             @chmod($dir . '/' . $cnama, 0644);
                                             $sampul = $cnama;
                                         }
@@ -416,7 +418,7 @@ $jml = count($materi);
 
   <section class="admin-kartu">
     <h2>Unggah materi baru</h2>
-    <form method="post" action="admin-materi.php" enctype="multipart/form-data" class="materi-form">
+    <form method="post" action="admin-materi.php" enctype="multipart/form-data" class="materi-form" data-potong>
       <input type="hidden" name="csrf" value="<?= $csrf ?>">
       <input type="hidden" name="aksi" value="unggah">
 
@@ -454,7 +456,7 @@ $jml = count($materi);
       <input class="masuk-input" id="berkas" name="berkas" type="file" accept="application/pdf,.pdf" required>
 
       <label class="masuk-label" for="sampul">Gambar sampul (opsional, maks. 5 MB)</label>
-      <input class="masuk-input" id="sampul" name="sampul" type="file" accept="image/jpeg,image/png,image/webp">
+      <input class="masuk-input" id="sampul" name="sampul" type="file" accept="image/jpeg,image/png,image/webp" data-maks="5242880">
       <p class="masuk-bantu">Untuk sekarang pakai gambar slide halaman 1. JPG, PNG, atau WebP. Kalau dikosongkan, dipakai ikon dokumen.</p>
 
       <button class="masuk-tombol" type="submit">Unggah materi</button>
@@ -467,7 +469,7 @@ $jml = count($materi);
     judul dan nomor pertemuannya ditebak dari nama berkas. Nama seperti
     <b>p03-perencanaan-strategis.pdf</b> atau <b>Pertemuan 3 Perencanaan.pdf</b> paling rapi hasilnya.
     Tebakan yang meleset bisa dirapikan lewat tombol Ubah di daftar bawah.</p>
-    <form method="post" action="admin-materi.php" enctype="multipart/form-data">
+    <form method="post" action="admin-materi.php" enctype="multipart/form-data" data-potong>
       <input type="hidden" name="csrf" value="<?= $csrf ?>">
       <input type="hidden" name="aksi" value="unggah_massal">
       <div class="materi-form-baris">
@@ -554,5 +556,6 @@ $jml = count($materi);
 
   <p class="admin-pulang"><a href="akun.php">&larr; Kembali ke panel akun</a></p>
 </main>
+<script src="assets/unggah-potong.js?v=<?= filemtime(__DIR__ . '/assets/unggah-potong.js') ?>"></script>
 </body>
 </html>
